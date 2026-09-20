@@ -2,7 +2,10 @@
   "servers": {
     "github": {
       "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/"
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer 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"
+      }
     }
   }
 }
