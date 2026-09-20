@@ -1,0 +1,463 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// -----------------------------------------------------------------------------
+// USER & RBAC
+// -----------------------------------------------------------------------------
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // STUDENT, ADMIN, VERIFIER, CURATOR
+  description String?
+  createdAt   DateTime @default(now())
+
+  users       User[]
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  roleId        String?
+  avatarUrl     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  role          Role?          @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  submissions   Submission[]
+  bookmarks     Bookmark[]
+  progress      UserProgress[]
+  testAttempts  TestAttempt[]
+  revisions     RevisionItem[]
+
+  @@index([email])
+  @@index([roleId])
+}
+
+// -----------------------------------------------------------------------------
+// QUESTION & NORMALIZED COMPONENTS
+// -----------------------------------------------------------------------------
+
+model Question {
+  id                 String             @id @default(cuid())
+  title              String
+  slug               String             @unique
+  description        String             // Detailed problem statement in Markdown
+  inputFormat        String?
+  outputFormat       String?
+  constraints        String?
+  
+  // Difficulty: EASY, MEDIUM, HARD
+  difficulty         String             @default("MEDIUM")
+  // QuestionType: CODING, SQL, HTML_CSS_JS, DEBUGGING, MCQ, MOCK_TEST
+  questionType       String             @default("CODING")
+  // SourceType: REPORTED_PYQ, SHIFT_REPORTED, CANDIDATE_REPORTED, COMPANY_PATTERN, PRACTICE, GENERAL_INTERVIEW
+  sourceType         String             @default("PRACTICE")
+  // Primary Master Category: ACCENTURE_PYQ, ACCENTURE_REPORTED, ACCENTURE_PATTERN, GENERAL_DSA, GENERAL_SQL, GENERAL_FRONTEND
+  category           String?
+  // Importance: MUST_DO, HIGH, MEDIUM, LOW
+  importance         String             @default("MEDIUM")
+  importanceReason   String?            // Explainable rationale
+  
+  // Provenance & Audit
+  // VerificationStatus: UNVERIFIED, COMMUNITY_VERIFIED, OFFICIALLY_VERIFIED, HIGH_CONFIDENCE
+  verificationStatus String             @default("UNVERIFIED")
+  frequency          Int                @default(1)
+  similarityHash     String?            // For duplicate detection
+
+  // Backward-compatibility JSON caches for direct client hydration
+  starterCode        String?            // JSON string: Record<language, code>
+  solution           String?            // Quick reference code
+  explanation        String?            // Editorial Markdown
+  hints              String?            // JSON string: string[]
+  examples           String?            // JSON string: Example[]
+  testCases          String?            // JSON string: TestCase[]
+  topics             String?            // JSON string: string[]
+  companies          String?            // JSON string: string[]
+  languages          String?            // JSON string: string[]
+  sourceDocument     String?            // Quick text document reference
+  sourcePage         Int?
+  sourceDate         DateTime?
+  sourceShift        String?
+
+  // Step 11: Production Verified Solutions & Progressive Hints
+  javaSolution       String?            // Complete, verified Java 21 solution
+  sqlSolution        String?            // Complete, verified PostgreSQL/MySQL solution
+  approach           String?            // Detailed editorial approach, algorithm & complexity
+  commonMistakes     String?            // Specific pitfalls and edge cases
+
+  // SQL & Frontend specific attributes
+  sqlSchemaSql       String?
+  sqlSeedData        String?
+  sqlExpectedQuery   String?
+  htmlTemplate       String?
+  cssTemplate        String?
+  jsTemplate         String?
+  frontendTestSpec   String?
+
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  // Normalized Relations
+  examplesList       QuestionExample[]
+  testCasesList      QuestionTestCase[]
+  hintsList          QuestionHint[]
+  solutionsList      QuestionSolution[]
+  questionTopics     QuestionTopic[]
+  questionCompanies  QuestionCompany[]
+  questionTags       QuestionTag[]
+  questionSources    QuestionSource[]
+
+  submissions        Submission[]
+  bookmarks          Bookmark[]
+  progress           UserProgress[]
+  revisions          RevisionItem[]
+  mockTestQuestions  MockTestQuestion[]
+  testAttemptQuestions TestAttemptQuestion[]
+
+  @@index([slug])
+  @@index([difficulty])
+  @@index([questionType])
+  @@index([sourceType])
+  @@index([category])
+  @@index([importance])
+  @@index([frequency])
+}
+
+model QuestionExample {
+  id          String   @id @default(cuid())
+  questionId  String
+  input       String
+  output      String
+  explanation String?
+  orderIndex  Int      @default(0)
+
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model QuestionTestCase {
+  id             String   @id @default(cuid())
+  questionId     String
+  input          String
+  expectedOutput String
+  isHidden       Boolean  @default(false)
+  orderIndex     Int      @default(0)
+
+  question       Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model QuestionHint {
+  id         String   @id @default(cuid())
+  questionId String
+  content    String
+  orderIndex Int      @default(0)
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model QuestionSolution {
+  id              String   @id @default(cuid())
+  questionId      String
+  language        String   // javascript, python, java, cpp, sql
+  code            String
+  approach        String?  // e.g. "Optimal Two Pointers", "Prefix Sum"
+  timeComplexity  String?  // e.g. "O(N)"
+  spaceComplexity String?  // e.g. "O(1)"
+  createdAt       DateTime @default(now())
+
+  question        Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+// -----------------------------------------------------------------------------
+// TOPICS, COMPANIES & TAGS
+// -----------------------------------------------------------------------------
+
+model Topic {
+  id          String          @id @default(cuid())
+  name        String
+  slug        String          @unique
+  category    String          @default("DSA") // DSA, SQL, FRONTEND
+  description String?
+  createdAt   DateTime        @default(now())
+
+  questionTopics QuestionTopic[]
+
+  @@index([slug])
+  @@index([category])
+}
+
+model Company {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  logo        String?
+  description String?
+  createdAt   DateTime          @default(now())
+
+  questionCompanies QuestionCompany[]
+  mockTests         MockTest[]
+  sourceDocuments   SourceDocument[]
+
+  @@index([slug])
+}
+
+model Tag {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+
+  questionTags QuestionTag[]
+
+  @@index([slug])
+}
+
+model QuestionTopic {
+  id         String   @id @default(cuid())
+  questionId String
+  topicId    String
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  topic      Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, topicId])
+  @@index([topicId])
+  @@index([questionId])
+}
+
+model QuestionCompany {
+  id         String   @id @default(cuid())
+  questionId String
+  companyId  String
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, companyId])
+  @@index([companyId])
+  @@index([questionId])
+}
+
+model QuestionTag {
+  id         String   @id @default(cuid())
+  questionId String
+  tagId      String
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, tagId])
+  @@index([tagId])
+  @@index([questionId])
+}
+
+// -----------------------------------------------------------------------------
+// SOURCE DOCUMENTS & PROVENANCE
+// -----------------------------------------------------------------------------
+
+model SourceDocument {
+  id                 String           @id @default(cuid())
+  title              String
+  fileName           String
+  company            String           // e.g. "Accenture", "TCS"
+  companyId          String?
+  sourceDate         DateTime?
+  description        String?
+  totalPages         Int              @default(1)
+  verificationStatus String           @default("OFFICIALLY_VERIFIED")
+  createdAt          DateTime         @default(now())
+
+  companyRef         Company?         @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  questionSources    QuestionSource[]
+
+  @@index([company])
+  @@index([companyId])
+}
+
+model QuestionSource {
+  id               String          @id @default(cuid())
+  questionId       String
+  sourceDocumentId String?
+  page             Int?
+  shift            String?         // e.g. "Shift 1 (10:00 AM)"
+  date             DateTime?
+  section          String?         // e.g. "Cognitive Section", "Round 2 Coding"
+  evidenceType     String?         // MEMORY_DEBRIEF, PAPER_SCAN, OFFICIAL_MEMO
+  notes            String?
+
+  question         Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  sourceDocument   SourceDocument? @relation(fields: [sourceDocumentId], references: [id], onDelete: SetNull)
+
+  @@index([questionId])
+  @@index([sourceDocumentId])
+}
+
+// -----------------------------------------------------------------------------
+// SUBMISSIONS & PROGRESS
+// -----------------------------------------------------------------------------
+
+model Submission {
+  id          String   @id @default(cuid())
+  userId      String
+  questionId  String
+  language    String
+  sourceCode  String
+  // Status: ACCEPTED, WRONG_ANSWER, TIME_LIMIT, RUNTIME_ERROR, COMPILE_ERROR
+  status      String   @default("ACCEPTED")
+  runtime     Int?     // in ms
+  memory      Int?     // in KB
+  submittedAt DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([questionId])
+  @@index([status])
+}
+
+model UserProgress {
+  id              String    @id @default(cuid())
+  userId          String
+  questionId      String
+  isSolved        Boolean   @default(false)
+  attemptsCount   Int       @default(0)
+  lastAttemptedAt DateTime  @default(now())
+  solvedAt        DateTime?
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question        Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+  @@index([userId])
+  @@index([questionId])
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  questionId String
+  folderName String   @default("General")
+  note       String?
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+  @@index([userId])
+  @@index([questionId])
+}
+
+model RevisionItem {
+  id           String    @id @default(cuid())
+  userId       String
+  questionId   String
+  // Bucket: BOX_1, BOX_2, BOX_3, BOX_4, MASTERED
+  bucket       String    @default("BOX_1")
+  nextReviewAt DateTime  @default(now())
+  repetitions  Int       @default(0)
+  easeFactor   Float     @default(2.5) // SuperMemo SM-2 adaptation
+  lastReviewed DateTime?
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question     Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+  @@index([userId])
+  @@index([nextReviewAt])
+}
+
+// -----------------------------------------------------------------------------
+// MOCK TESTS & ATTEMPTS
+// -----------------------------------------------------------------------------
+
+model MockTest {
+  id           String             @id @default(cuid())
+  title        String
+  slug         String             @unique
+  description  String
+  company      String             // e.g. "accenture"
+  companyId    String?
+  mockType     String             @default("SOURCE_BASED") // SOURCE_BASED, PATTERN_BASED
+  durationMins Int                @default(90)
+  totalMarks   Int                @default(100)
+  passingMarks Int                @default(60)
+  isLive       Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+
+  companyRef   Company?           @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  questions    MockTestQuestion[]
+  attempts     TestAttempt[]
+
+  @@index([slug])
+  @@index([company])
+  @@index([companyId])
+  @@index([mockType])
+}
+
+model MockTestQuestion {
+  id         String   @id @default(cuid())
+  mockTestId String
+  questionId String
+  marks      Int      @default(10)
+  orderIdx   Int      @default(0)
+
+  mockTest   MockTest @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([mockTestId])
+  @@index([questionId])
+}
+
+model TestAttempt {
+  id             String                @id @default(cuid())
+  userId         String
+  mockTestId     String
+  startedAt      DateTime              @default(now())
+  submittedAt    DateTime?
+  duration       Int                   @default(0) // seconds taken
+  score          Int                   @default(0)
+  totalQuestions Int                   @default(0)
+  correctAnswers Int                   @default(0)
+  accuracy       Float                 @default(0)
+
+  user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mockTest       MockTest              @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  questions      TestAttemptQuestion[]
+
+  @@index([userId])
+  @@index([mockTestId])
+}
+
+model TestAttemptQuestion {
+  id            String      @id @default(cuid())
+  testAttemptId String
+  questionId    String
+  userCode      String?
+  language      String?
+  status        String      @default("NOT_VISITED") // NOT_VISITED, VISITED, ANSWERED, MARKED_FOR_REVIEW
+  isCorrect     Boolean     @default(false)
+  marksAwarded  Int         @default(0)
+  timeSpentSec  Int         @default(0)
+
+  testAttempt   TestAttempt @relation(fields: [testAttemptId], references: [id], onDelete: Cascade)
+  question      Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([testAttemptId])
+  @@index([questionId])
+}
