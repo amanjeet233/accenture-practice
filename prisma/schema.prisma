@@ -427,36 +427,48 @@ model MockTestQuestion {
 model TestAttempt {
   id             String                @id @default(cuid())
   userId         String
-  mockTestId     String
+  testId         String?               // Unique test identifier or slug
+  mockTestId     String?               // Optional relation to MockTest
   startedAt      DateTime              @default(now())
   submittedAt    DateTime?
   duration       Int                   @default(0) // seconds taken
-  score          Int                   @default(0)
   totalQuestions Int                   @default(0)
+  attempted      Int                   @default(0)
+  correct        Int                   @default(0)
+  incorrect      Int                   @default(0)
+  unattempted    Int                   @default(0)
+  score          Int                   @default(0)
   correctAnswers Int                   @default(0)
   accuracy       Float                 @default(0)
 
   user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mockTest       MockTest              @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  mockTest       MockTest?             @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
   questions      TestAttemptQuestion[]
 
   @@index([userId])
   @@index([mockTestId])
+  @@index([testId])
+  @@index([submittedAt])
 }
 
 model TestAttemptQuestion {
-  id            String      @id @default(cuid())
-  testAttemptId String
-  questionId    String
-  userCode      String?
-  language      String?
-  status        String      @default("NOT_VISITED") // NOT_VISITED, VISITED, ANSWERED, MARKED_FOR_REVIEW
-  isCorrect     Boolean     @default(false)
-  marksAwarded  Int         @default(0)
-  timeSpentSec  Int         @default(0)
+  id               String      @id @default(cuid())
+  testAttemptId    String
+  questionId       String
+  selectedOption   String?     // e.g. "A", "B", "C", "D"
+  correctOption    String?     // e.g. "A", "B", "C", "D"
+  isCorrect        Boolean     @default(false)
+  timeSpentSeconds Int         @default(0)
+  timeSpentSec     Int         @default(0)
+  markedForReview  Boolean     @default(false)
+  answeredAt       DateTime?   @default(now())
+  userCode         String?
+  language         String?
+  status           String      @default("NOT_VISITED") // NOT_VISITED, VISITED, ANSWERED, MARKED_FOR_REVIEW
+  marksAwarded     Int         @default(0)
 
-  testAttempt   TestAttempt @relation(fields: [testAttemptId], references: [id], onDelete: Cascade)
-  question      Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  testAttempt      TestAttempt @relation(fields: [testAttemptId], references: [id], onDelete: Cascade)
+  question         Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@index([testAttemptId])
   @@index([questionId])
