@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
+import { ReactQueryProvider } from "@/lib/react-query-provider";
+import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,9 +33,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark h-full ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F0F6FC] font-sans selection:bg-[#58A6FF]/20 selection:text-[#58A6FF]">
-        <AuthProvider>
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
+        <ReactQueryProvider>
+          <ServiceWorkerRegistration />
+          <AuthProvider>
+            <AppShell>{children}</AppShell>
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

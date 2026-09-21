@@ -8,6 +8,7 @@ import {
   CanonicalTopicId,
 } from "@/lib/canonicalTopics";
 import { formatMcqQuestion } from "@/lib/mcqService";
+import { createStreamResponse } from "@/lib/streaming-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -129,7 +130,7 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
     const formatted = questionsRaw.map((q, idx) => formatMcqQuestion(q, offset + idx + 1));
 
-    return NextResponse.json(
+    return createStreamResponse(
       {
         topic: canonical.id,
         topicName: canonical.name,
@@ -140,12 +141,7 @@ export async function GET(request: NextRequest) {
         totalPages,
         questions: formatted,
       },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
-        },
-      }
+      200
     );
   } catch (error: any) {
     console.error("Error fetching Accenture topic MCQs:", error);

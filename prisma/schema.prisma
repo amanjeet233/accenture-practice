@@ -143,6 +143,9 @@ model Question {
   @@index([category])
   @@index([importance])
   @@index([frequency])
+  @@index([category, difficulty])
+  @@index([questionType, category])
+  @@index([frequency, difficulty])
 }
 
 model QuestionExample {
@@ -463,6 +466,8 @@ model TestAttempt {
   @@index([mockTestId])
   @@index([testId])
   @@index([submittedAt])
+  @@index([userId, submittedAt])
+  @@index([mockTestId, submittedAt])
 }
 
 model TestAttemptQuestion {
