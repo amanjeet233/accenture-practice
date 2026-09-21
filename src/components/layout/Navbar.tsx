@@ -11,11 +11,18 @@ import {
   Settings,
   Menu,
   X,
+  ChevronDown,
+  LogOut,
+  History,
+  BarChart3,
 } from "lucide-react";
+import { useAuth } from "@/components/auth/AuthContext";
 
 export function Navbar() {
   const pathname = usePathname();
+  const { user, loading, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const NAV_LINKS = [
     { label: "Problems", href: "/questions" },
@@ -65,8 +72,8 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Right Header Controls: Search, Bookmarks, Profile, Settings */}
-        <div className="flex items-center gap-1.5 text-xs">
+        {/* Right Header Controls: Search, Bookmarks, User State */}
+        <div className="flex items-center gap-2 text-xs">
           <Link
             href="/questions"
             className="p-1.5 rounded text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#21262D] transition-colors"
@@ -87,29 +94,87 @@ export function Navbar() {
             <Bookmark className="w-3.5 h-3.5" />
           </Link>
 
-          <Link
-            href="/profile"
-            className={`p-1.5 rounded transition-colors ${
-              pathname === "/profile"
-                ? "text-[#F0F6FC] bg-[#21262D]"
-                : "text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#21262D]"
-            }`}
-            title="Profile"
-          >
-            <User className="w-3.5 h-3.5" />
-          </Link>
+          {loading ? (
+            <div className="h-6 w-16 bg-[#21262D] rounded animate-pulse" />
+          ) : user ? (
+            <div className="relative">
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#21262D] hover:bg-[#30363D] border border-[#30363D] text-[#F0F6FC] font-mono text-[11px] transition-colors"
+              >
+                <div className="w-4 h-4 rounded-full bg-[#58A6FF]/20 text-[#58A6FF] flex items-center justify-center font-bold text-[10px]">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="max-w-[100px] truncate">{user.name}</span>
+                <ChevronDown className="w-3 h-3 text-[#8B949E]" />
+              </button>
 
-          <Link
-            href="/settings"
-            className={`p-1.5 rounded transition-colors ${
-              pathname === "/settings"
-                ? "text-[#F0F6FC] bg-[#21262D]"
-                : "text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#21262D]"
-            }`}
-            title="Settings"
-          >
-            <Settings className="w-3.5 h-3.5" />
-          </Link>
+              {userMenuOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setUserMenuOpen(false)}
+                  />
+                  <div className="absolute right-0 mt-1 w-44 rounded-md border border-[#30363D] bg-[#161B22] py-1 shadow-lg z-50 font-mono text-xs">
+                    <div className="px-3 py-1.5 border-b border-[#30363D] text-[11px]">
+                      <div className="text-[#F0F6FC] font-semibold truncate">{user.name}</div>
+                      <div className="text-[#8B949E] text-[10px] truncate">{user.email}</div>
+                    </div>
+                    <Link
+                      href="/profile"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[#C9D1D9] hover:bg-[#21262D] hover:text-[#F0F6FC]"
+                    >
+                      <User className="w-3.5 h-3.5 text-[#8B949E]" />
+                      <span>Profile</span>
+                    </Link>
+                    <Link
+                      href="/progress"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[#C9D1D9] hover:bg-[#21262D] hover:text-[#F0F6FC]"
+                    >
+                      <BarChart3 className="w-3.5 h-3.5 text-[#8B949E]" />
+                      <span>Progress</span>
+                    </Link>
+                    <Link
+                      href="/history"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[#C9D1D9] hover:bg-[#21262D] hover:text-[#F0F6FC]"
+                    >
+                      <History className="w-3.5 h-3.5 text-[#8B949E]" />
+                      <span>History</span>
+                    </Link>
+                    <div className="border-t border-[#30363D] my-1" />
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        logout();
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-1.5 text-[#F85149] hover:bg-[#21262D]"
+                    >
+                      <LogOut className="w-3.5 h-3.5 text-[#F85149]" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 font-mono text-xs">
+              <Link
+                href="/login"
+                className="px-2.5 py-1 rounded text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#21262D] transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                className="px-2.5 py-1 rounded bg-[#238636] hover:bg-[#2ea043] text-[#FFFFFF] font-medium transition-colors"
+              >
+                Register
+              </Link>
+            </div>
+          )}
 
           {/* Mobile menu toggle */}
           <button

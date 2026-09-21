@@ -17,6 +17,8 @@ import {
   BookOpen,
   Sparkles,
 } from "lucide-react";
+import { getSessionUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { analyzeQuestionEvidence } from "@/lib/importance";
 
 export const dynamic = "force-dynamic";
@@ -28,8 +30,13 @@ export const metadata = {
 };
 
 export default async function PreparationDashboardPage() {
+  const user = await getSessionUser();
+  if (!user) {
+    redirect("/login");
+  }
+
   const [analytics, practiceQuestions] = await Promise.all([
-    getDashboardAnalytics(),
+    getDashboardAnalytics(user.id),
     prisma.question.findMany({
       take: 10,
       select: {
@@ -71,7 +78,7 @@ export default async function PreparationDashboardPage() {
             <span className="text-[11px] font-mono text-[#8B949E]">Accenture Technical Hiring</span>
           </div>
           <h1 className="text-xl font-bold tracking-tight text-[#F0F6FC]">
-            Preparation Overview
+            Welcome, {user.name}
           </h1>
         </div>
 

@@ -2,6 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 import { getSafeMockTestQuestions } from "@/lib/mockTestService";
 import { CbtExamInterface } from "@/components/mcq/CbtExamInterface";
+import { getSessionUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +23,11 @@ export default async function AccentureTimedMockTestPage({
     title?: string;
   }>;
 }) {
+  const user = await getSessionUser();
+  if (!user) {
+    redirect("/login?redirect=/accenture/test");
+  }
+
   const { count, duration, category, title } = await searchParams;
 
   const questionCount = count ? Math.min(60, Math.max(5, parseInt(count, 10))) : 30;

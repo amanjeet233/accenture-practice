@@ -49,13 +49,14 @@ export interface SubmissionHistoryItem {
   submittedAt: Date;
 }
 
-// Lightweight in-memory cache for dashboard analytics
-let analyticsCache: { data: any; expiresAt: number } | null = null;
+// In-memory cache for dashboard analytics keyed per user
+let analyticsCache: Record<string, { data: any; expiresAt: number }> = {};
 
 export async function getDashboardAnalytics(userId?: string) {
+  const cacheKey = userId || "default";
   const nowTime = Date.now();
-  if (analyticsCache && analyticsCache.expiresAt > nowTime) {
-    return analyticsCache.data;
+  if (analyticsCache[cacheKey] && analyticsCache[cacheKey].expiresAt > nowTime) {
+    return analyticsCache[cacheKey].data;
   }
 
   // If no userId provided, select the primary user
@@ -498,7 +499,7 @@ export async function getDashboardAnalytics(userId?: string) {
     history: submissionHistory,
   };
 
-  analyticsCache = {
+  analyticsCache[cacheKey] = {
     data: result,
     expiresAt: Date.now() + 30000,
   };

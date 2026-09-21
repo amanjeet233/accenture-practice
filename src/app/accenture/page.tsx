@@ -16,6 +16,8 @@ import {
   TrendingUp,
 } from "lucide-react";
 
+import { getSessionUser } from "@/lib/auth";
+
 export const dynamic = "force-dynamic";
 
 export const metadata = {
@@ -25,11 +27,15 @@ export const metadata = {
 };
 
 export default async function AccentureHubPage() {
+  const user = await getSessionUser();
+  const userId = user?.id;
+
   const [stats, moduleCounts, recentAttempts] = await Promise.all([
-    getAccentureHeaderStats(),
-    getAccentureModuleCounts(),
+    getAccentureHeaderStats(userId),
+    getAccentureModuleCounts(userId),
     prisma.testAttempt.findMany({
       where: {
+        ...(userId ? { userId } : { userId: "none" }),
         mockTest: {
           OR: [
             { company: { contains: "Accenture" } },

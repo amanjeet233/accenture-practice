@@ -25,12 +25,14 @@ model User {
   id            String         @id @default(cuid())
   email         String         @unique
   name          String
+  passwordHash  String?
   roleId        String?
   avatarUrl     String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
   role          Role?          @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  sessions      Session[]
   submissions   Submission[]
   bookmarks     Bookmark[]
   progress      UserProgress[]
@@ -39,6 +41,18 @@ model User {
 
   @@index([email])
   @@index([roleId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 // -----------------------------------------------------------------------------

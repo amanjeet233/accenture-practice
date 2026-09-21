@@ -1,11 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { apiSuccess, apiError } from "@/lib/dto";
+import { getSessionUser } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const sessionUser = await getSessionUser(request);
+    const userFilter = sessionUser ? { userId: sessionUser.id } : { userId: "none" };
+
     const [submissions, questions, progress, testAttempts] = await Promise.all([
       prisma.submission.findMany({
+        where: userFilter,
         select: { status: true, runtime: true, language: true, submittedAt: true },
         orderBy: { submittedAt: "desc" },
       }),
@@ -13,9 +18,10 @@ export async function GET() {
         select: { difficulty: true, questionType: true },
       }),
       prisma.userProgress.findMany({
-        where: { isSolved: true },
+        where: { ...userFilter, isSolved: true },
       }),
       prisma.testAttempt.findMany({
+        where: userFilter,
         select: { score: true, accuracy: true, duration: true },
       }),
     ]);

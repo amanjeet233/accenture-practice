@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { apiSuccess, apiError } from "@/lib/dto";
+import { getSessionUser } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const user = await prisma.user.findFirst();
+    const user = await getSessionUser(request);
     if (!user) {
       return apiSuccess({
         totalQuestions: 0,

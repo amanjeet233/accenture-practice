@@ -2,10 +2,11 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createBookmarkSchema } from "@/lib/validations/bookmark";
 import { apiSuccess, apiError } from "@/lib/dto";
+import { getSessionUser } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const user = await prisma.user.findFirst();
+    const user = await getSessionUser(request);
     if (!user) {
       return apiSuccess([]);
     }
@@ -48,6 +49,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const user = await getSessionUser(request);
+    if (!user) {
+      return apiError("Authentication required to bookmark questions. Please log in.", 401);
+    }
+
     const body = await request.json();
     const parseResult = createBookmarkSchema.safeParse(body);
 
@@ -56,13 +62,6 @@ export async function POST(request: NextRequest) {
     }
 
     const { questionId, folderName, note } = parseResult.data;
-
-    let user = await prisma.user.findFirst();
-    if (!user) {
-      user = await prisma.user.create({
-        data: { email: "student@accenture-prep.local", name: "Candidate Engineer" },
-      });
-    }
 
     const question = await prisma.question.findFirst({
       where: { OR: [{ id: questionId }, { slug: questionId }] },

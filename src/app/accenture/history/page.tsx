@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { getAccentureTestAnalytics } from "@/lib/testAnalyticsService";
 import { History, ArrowLeft, Timer, BarChart3 } from "lucide-react";
+import { getSessionUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AccentureHistoryPage() {
-  const analyticsData = await getAccentureTestAnalytics();
+  const user = await getSessionUser();
+  if (!user) {
+    redirect("/login?redirect=/accenture/history");
+  }
+
+  const analyticsData = await getAccentureTestAnalytics(user.id);
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 font-sans text-xs">

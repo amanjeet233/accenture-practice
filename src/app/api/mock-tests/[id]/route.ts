@@ -4,6 +4,7 @@ import { executeSandboxedCode } from "@/lib/executor";
 import { executeSandboxedSql } from "@/lib/sqlEngine";
 import { evaluateFrontendCode } from "@/lib/frontendEvaluator";
 import { apiSuccess, apiError } from "@/lib/dto";
+import { getSessionUser } from "@/lib/auth";
 
 export async function GET(
   request: NextRequest,
@@ -125,11 +126,9 @@ export async function POST(
       return apiError("Mock test not found", 404);
     }
 
-    let user = await prisma.user.findFirst();
+    const user = await getSessionUser(request);
     if (!user) {
-      user = await prisma.user.create({
-        data: { email: "candidate@accenture-prep.local", name: "Candidate Engineer" },
-      });
+      return apiError("Authentication required to submit mock test. Please log in.", 401);
     }
 
     let totalScore = 0;

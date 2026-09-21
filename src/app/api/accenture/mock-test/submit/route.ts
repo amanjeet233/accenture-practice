@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { evaluateMockTestSubmission } from "@/lib/mockTestService";
+import { getSessionUser } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await getSessionUser(req);
+    if (!user) {
+      return NextResponse.json(
+        { error: "Authentication required to submit test. Please log in." },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
-    const { questionIds, userAnswers, timeUsedSeconds, testId, startedAt, markedQuestionIds, userId } = body;
+    const { questionIds, userAnswers, timeUsedSeconds, testId, startedAt, markedQuestionIds } = body;
 
     if (!Array.isArray(questionIds) || questionIds.length === 0) {
       return NextResponse.json(
@@ -21,7 +30,7 @@ export async function POST(req: NextRequest) {
         testId,
         startedAt,
         markedQuestionIds,
-        userId,
+        userId: user.id, // Strictly authoritative from session
       }
     );
 

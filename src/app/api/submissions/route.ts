@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { createSubmissionSchema, submissionFilterSchema } from "@/lib/validations/submission";
 import { executeSandboxedCode, ExecutionVerdict } from "@/lib/executor";
 import { apiSuccess, apiError, toSubmissionDTO } from "@/lib/dto";
+import { getSessionUser } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +17,9 @@ export async function GET(request: NextRequest) {
 
     const { questionId, status, page, size } = parseResult.data;
 
+    const sessionUser = await getSessionUser(request);
     const where: any = {};
+    if (sessionUser) where.userId = sessionUser.id;
     if (questionId) where.questionId = questionId;
     if (status) where.status = status;
 
@@ -69,13 +72,12 @@ export async function POST(request: NextRequest) {
       return apiError("Question not found", 404);
     }
 
-    // Default user
-    let user = await prisma.user.findFirst();
-    if (!user) {
-      user = await prisma.user.create({
-        data: { email: "student@accenture-prep.local", name: "Candidate Engineer" },
-      });
+    // Authenticate user for real submissions
+    const sessionUser = await getSessionUser(request);
+    if (!isTestRun && !sessionUser) {
+      return apiError("Authentication required to submit solution. Please log in.", 401);
     }
+    const user = sessionUser || { id: "guest", name: "Guest", email: "guest@codertrack.local" };
 
     // Prepare all test cases
     let allTestCases: Array<{ input: string; expectedOutput: string; isHidden?: boolean }> = [];

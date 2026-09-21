@@ -172,14 +172,9 @@ let moduleCountsCache: { data: Record<string, number>; expiresAt: number } | nul
 let headerStatsCache: { data: any; expiresAt: number } | null = null;
 
 /**
- * Fetch real database counts for all modules in parallel (with 60s in-memory cache)
+ * Fetch real database counts for all modules in parallel
  */
-export async function getAccentureModuleCounts(): Promise<Record<string, number>> {
-  const now = Date.now();
-  if (moduleCountsCache && moduleCountsCache.expiresAt > now) {
-    return moduleCountsCache.data;
-  }
-
+export async function getAccentureModuleCounts(userId?: string): Promise<Record<string, number>> {
   const counts: Record<string, number> = {};
 
   const questionPromises = ACCENTURE_MODULES.map(async (mod) => {
@@ -195,7 +190,10 @@ export async function getAccentureModuleCounts(): Promise<Record<string, number>
       counts[mod.slug] = cnt;
     } else if (mod.type === "PROGRESS") {
       const cnt = await prisma.userProgress.count({
-        where: { isSolved: true },
+        where: {
+          isSolved: true,
+          ...(userId ? { userId } : { userId: "none" }),
+        },
       });
       counts[mod.slug] = cnt;
     } else {
@@ -209,23 +207,14 @@ export async function getAccentureModuleCounts(): Promise<Record<string, number>
   });
 
   await Promise.all(questionPromises);
-
-  moduleCountsCache = {
-    data: counts,
-    expiresAt: Date.now() + 60000,
-  };
-
   return counts;
 }
 
 /**
- * Fetch real database stats for Accenture header (with 60s in-memory cache)
+ * Fetch real database stats for Accenture header (strictly user-scoped for attempts & accuracy)
  */
-export async function getAccentureHeaderStats() {
-  const now = Date.now();
-  if (headerStatsCache && headerStatsCache.expiresAt > now) {
-    return headerStatsCache.data;
-  }
+export async function getAccentureHeaderStats(userId?: string) {
+  const attemptFilter = userId ? { userId } : { userId: "none" };
 
   const [totalQuestions, totalMockTests, totalAttempts] = await Promise.all([
     prisma.question.count({ where: ACCENTURE_COMPANY_FILTER }),
@@ -237,30 +226,24 @@ export async function getAccentureHeaderStats() {
         ],
       },
     }),
-    prisma.testAttempt.count(),
+    prisma.testAttempt.count({ where: attemptFilter }),
   ]);
 
   let accuracy = 0;
   if (totalAttempts > 0) {
     const agg = await prisma.testAttempt.aggregate({
+      where: attemptFilter,
       _avg: { accuracy: true },
     });
     accuracy = Math.round(agg._avg.accuracy || 0);
   }
 
-  const result = {
+  return {
     totalQuestions,
     totalMockTests,
     totalAttempts,
     accuracy,
   };
-
-  headerStatsCache = {
-    data: result,
-    expiresAt: Date.now() + 60000,
-  };
-
-  return result;
 }
 
 let moduleQuestionsCache: Record<string, { data: any[]; expiresAt: number }> = {};

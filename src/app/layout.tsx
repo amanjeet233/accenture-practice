@@ -16,6 +16,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+import { AuthProvider } from "@/components/auth/AuthContext";
+
 export const metadata: Metadata = {
   title: "CodeTrack — Professional Developer Preparation Platform",
   description:
@@ -30,13 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark h-full ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F0F6FC] font-sans selection:bg-[#58A6FF]/20 selection:text-[#58A6FF]">
-        <Navbar />
-        <div className="flex flex-1 min-h-[calc(100vh-3.25rem)]">
-          <Sidebar />
-          <main className="flex-1 overflow-x-hidden min-w-0 bg-[#0D1117]">
-            {children}
-          </main>
-        </div>
+        <AuthProvider>
+          <Navbar />
+          <div className="flex flex-1 min-h-[calc(100vh-3.25rem)]">
+            <Sidebar />
+            <main className="flex-1 overflow-x-hidden min-w-0 bg-[#0D1117]">
+              {children}
+            </main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );
