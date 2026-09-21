@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { ACCENTURE_COMPANY_FILTER } from "@/lib/accentureModules";
 import { formatMcqQuestion } from "@/lib/mcqService";
+import { resolveCanonicalTopic, getTopicPrismaFilter } from "@/lib/canonicalTopics";
 
 export interface SafeMockQuestion {
   id: string;
@@ -57,24 +58,46 @@ export async function getSafeMockTestQuestions(
   limit: number = 30,
   categoryFilter?: string
 ): Promise<SafeMockQuestion[]> {
+  const canonical = resolveCanonicalTopic(categoryFilter);
+
   const whereClause: any = {
     AND: [ACCENTURE_COMPANY_FILTER, { questionType: "MCQ" }],
   };
 
-  if (categoryFilter && categoryFilter !== "all") {
+  if (canonical) {
+    whereClause.AND.push(getTopicPrismaFilter(canonical));
+  } else if (categoryFilter && categoryFilter !== "all") {
     whereClause.AND.push({
-      category: { contains: categoryFilter, mode: "insensitive" },
+      category: { equals: categoryFilter, mode: "insensitive" },
     });
   }
 
-  // Fetch candidate pool
+  // Fetch candidate pool strictly from this topic
   const rawQuestions = await prisma.question.findMany({
     where: whereClause,
     orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
     take: 120, // Take pool to sample from
   });
 
-  // Ensure diversity across topics if possible
+  // If topic-specific, take up to limit from raw questions directly
+  if (canonical || (categoryFilter && categoryFilter !== "all")) {
+    return rawQuestions.slice(0, limit).map((q, idx) => {
+      const formatted = formatMcqQuestion(q, idx + 1);
+      return {
+        id: formatted.id,
+        slug: formatted.slug,
+        questionNumber: idx + 1,
+        title: formatted.title,
+        stem: formatted.stem,
+        category: formatted.category,
+        difficulty: formatted.difficulty,
+        sourceType: formatted.sourceType,
+        options: formatted.options,
+      };
+    });
+  }
+
+  // Otherwise, ensure diversity across topics for general test simulation
   const categoriesMap: Record<string, any[]> = {};
   for (const q of rawQuestions) {
     const cat = q.category || "General";

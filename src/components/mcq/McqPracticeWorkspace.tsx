@@ -29,9 +29,16 @@ import {
   Award,
 } from "lucide-react";
 
+interface TopicOption {
+  slug: string;
+  name: string;
+  id: string;
+}
+
 interface McqPracticeWorkspaceProps {
   initialQuestions: McqQuestionItem[];
   allCategories: string[];
+  topicOptions?: TopicOption[];
   selectedCategory?: string;
   returnUrl?: string;
 }
@@ -45,6 +52,7 @@ interface AnswerState {
 export function McqPracticeWorkspace({
   initialQuestions,
   allCategories,
+  topicOptions = [],
   selectedCategory = "all",
   returnUrl = "/accenture/mcq",
 }: McqPracticeWorkspaceProps) {
@@ -53,14 +61,8 @@ export function McqPracticeWorkspace({
   // Category filtering state
   const [currentCategory, setCurrentCategory] = useState<string>(selectedCategory);
 
-  const filteredQuestions = useMemo(() => {
-    if (currentCategory === "all") return initialQuestions;
-    return initialQuestions.filter(
-      (q) => q.category.toLowerCase() === currentCategory.toLowerCase()
-    );
-  }, [initialQuestions, currentCategory]);
-
-  const questions = filteredQuestions.length > 0 ? filteredQuestions : initialQuestions;
+  // Questions are authoritative from server - never fall back to global dataset
+  const questions = initialQuestions;
 
   // Active question index
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -70,6 +72,15 @@ export function McqPracticeWorkspace({
 
   // Marked for review set of question IDs
   const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(new Set());
+
+  // Reset answer states and index when topic / initialQuestions changes
+  useEffect(() => {
+    setCurrentIndex(0);
+    setAnswers({});
+    setMarkedQuestions(new Set());
+    setSecondsElapsed(0);
+    setCurrentCategory(selectedCategory);
+  }, [initialQuestions, selectedCategory]);
 
   // Navigator drawer state
   const [isNavigatorOpen, setIsNavigatorOpen] = useState<boolean>(false);
@@ -205,6 +216,37 @@ export function McqPracticeWorkspace({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handlePrevious, handleNext, toggleMarkForReview, handleSelectOption]);
 
+  // Handle empty question set
+  if (questions.length === 0) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none items-center justify-center p-6">
+        <div className="max-w-md text-center space-y-4 font-mono">
+          <div className="w-12 h-12 rounded-full bg-[#21262D] border border-[#30363D] flex items-center justify-center mx-auto text-[#8B949E]">
+            <HelpCircle className="w-6 h-6" />
+          </div>
+          <h2 className="text-base font-bold text-[#F0F6FC]">No questions found</h2>
+          <p className="text-xs text-[#8B949E]">
+            There are currently no MCQs available in the database for this topic.
+          </p>
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <Link
+              href={returnUrl}
+              className="px-3 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#58A6FF] border border-[#30363D] text-xs"
+            >
+              ← Back to Module
+            </Link>
+            <Link
+              href="/accenture/mcq/practice"
+              className="px-3 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold"
+            >
+              Browse All MCQs
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Statistics
   const answeredList = Object.values(answers);
   const correctCount = answeredList.filter((a) => a.isCorrect).length;
@@ -252,19 +294,30 @@ export function McqPracticeWorkspace({
             <select
               value={currentCategory}
               onChange={(e) => {
-                setCurrentCategory(e.target.value);
-                setCurrentIndex(0);
+                const val = e.target.value;
+                setCurrentCategory(val);
+                if (val === "all") {
+                  router.push("/accenture/mcq/practice");
+                } else {
+                  router.push(`/accenture/mcq/practice?topic=${encodeURIComponent(val)}`);
+                }
               }}
               className="bg-transparent text-[#C9D1D9] focus:outline-none cursor-pointer text-xs"
             >
               <option value="all" className="bg-[#161B22] text-[#F0F6FC]">
-                All Topics ({initialQuestions.length})
+                All Topics
               </option>
-              {allCategories.map((cat) => (
-                <option key={cat} value={cat} className="bg-[#161B22] text-[#F0F6FC]">
-                  {cat}
-                </option>
-              ))}
+              {topicOptions && topicOptions.length > 0
+                ? topicOptions.map((opt) => (
+                    <option key={opt.slug} value={opt.slug} className="bg-[#161B22] text-[#F0F6FC]">
+                      {opt.name}
+                    </option>
+                  ))
+                : allCategories.map((cat) => (
+                    <option key={cat} value={cat} className="bg-[#161B22] text-[#F0F6FC]">
+                      {cat}
+                    </option>
+                  ))}
             </select>
           </div>
 

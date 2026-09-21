@@ -1,7 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
-import { getAccentureMcqPracticeList, getAccentureDistinctCategories } from "@/lib/mcqService";
+import { notFound } from "next/navigation";
+import { getAccentureMcqPracticeList } from "@/lib/mcqService";
 import { McqPracticeWorkspace } from "@/components/mcq/McqPracticeWorkspace";
+import {
+  CANONICAL_TOPIC_LIST,
+  resolveCanonicalTopic,
+} from "@/lib/canonicalTopics";
 
 export const dynamic = "force-dynamic";
 
@@ -14,22 +19,44 @@ export const metadata: Metadata = {
 export default async function AccentureMcqPracticePage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; module?: string }>;
+  searchParams: Promise<{ category?: string; module?: string; topic?: string }>;
 }) {
-  const { category, module } = await searchParams;
+  const { category, module, topic } = await searchParams;
+  const topicParam = topic || module || category;
 
-  const [questions, allCategories] = await Promise.all([
-    getAccentureMcqPracticeList(category),
-    getAccentureDistinctCategories(),
-  ]);
+  let canonicalTopicId: string | undefined = undefined;
+  let selectedTopicSlug = "all";
+  let returnUrl = "/accenture/mcq";
 
-  const returnUrl = module ? `/accenture/${module}` : "/accenture/mcq";
+  if (topicParam && topicParam !== "all") {
+    const canonical = resolveCanonicalTopic(topicParam);
+    if (!canonical) {
+      // Invalid topic parameter: do NOT fall back to all questions
+      notFound();
+    }
+    canonicalTopicId = canonical.id;
+    selectedTopicSlug = canonical.slug;
+    returnUrl = `/accenture/${canonical.slug}`;
+  }
+
+  // Fetch strictly filtered questions for this canonical topic
+  const questions = await getAccentureMcqPracticeList(canonicalTopicId);
+
+  // Available topics for the selector dropdown
+  const topicOptions = CANONICAL_TOPIC_LIST.filter(
+    (t) => t.questionType === "MCQ" || t.questionType === "ANY"
+  ).map((t) => ({
+    slug: t.slug,
+    name: t.name,
+    id: t.id,
+  }));
 
   return (
     <McqPracticeWorkspace
       initialQuestions={questions}
-      allCategories={allCategories}
-      selectedCategory={category || "all"}
+      allCategories={topicOptions.map((t) => t.slug)}
+      topicOptions={topicOptions}
+      selectedCategory={selectedTopicSlug}
       returnUrl={returnUrl}
     />
   );

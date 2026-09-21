@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { ACCENTURE_COMPANY_FILTER } from "@/lib/accentureModules";
+import { resolveCanonicalTopic, getTopicPrismaFilter } from "@/lib/canonicalTopics";
 
 export interface McqOption {
   key: "A" | "B" | "C" | "D";
@@ -363,25 +364,38 @@ export async function getAccentureDistinctCategories(): Promise<string[]> {
 // Fetch MCQs formatted and ready for Practice Mode (cached for 60 seconds)
 export async function getAccentureMcqPracticeList(
   filterCategory?: string,
-  limit: number = 100
+  limit: number = 250
 ): Promise<McqQuestionItem[]> {
-  const cacheKey = `${filterCategory || "all"}_${limit}`;
+  const canonical = resolveCanonicalTopic(filterCategory);
+  const cacheKey = `${canonical ? `topic_${canonical.id}` : filterCategory || "all"}_${limit}`;
   const now = Date.now();
   if (practiceListCache[cacheKey] && practiceListCache[cacheKey].expiresAt > now) {
     return practiceListCache[cacheKey].data;
   }
 
-  const whereClause: any = {
-    AND: [
-      ACCENTURE_COMPANY_FILTER,
-      { questionType: "MCQ" },
-    ],
-  };
-
-  if (filterCategory && filterCategory !== "all") {
-    whereClause.AND.push({
-      category: { contains: filterCategory, mode: "insensitive" },
-    });
+  let whereClause: any;
+  if (canonical) {
+    whereClause = {
+      AND: [
+        ACCENTURE_COMPANY_FILTER,
+        getTopicPrismaFilter(canonical),
+      ],
+    };
+  } else if (filterCategory && filterCategory !== "all") {
+    whereClause = {
+      AND: [
+        ACCENTURE_COMPANY_FILTER,
+        { questionType: "MCQ" },
+        { category: { equals: filterCategory, mode: "insensitive" } },
+      ],
+    };
+  } else {
+    whereClause = {
+      AND: [
+        ACCENTURE_COMPANY_FILTER,
+        { questionType: "MCQ" },
+      ],
+    };
   }
 
   const questions = await prisma.question.findMany({

@@ -151,7 +151,7 @@ export default async function AccentureHubPage() {
             Assessment Modules
           </h2>
           <span className="text-[11px] font-mono text-[#8B949E]">
-            14 Preparation Domains
+            {ACCENTURE_MODULES.filter((m) => m.type === "QUESTIONS").length} Preparation Domains
           </span>
         </div>
         <p className="text-xs text-[#8B949E]">
