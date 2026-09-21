@@ -1,0 +1,12 @@
+[
+  {
+    "questionId": "acc-src-075",
+    "question": "A feature of MS Office that saves the document automatically after a certain interval is called:",
+    "sourceAnswer": "FrontPage",
+    "verifiedAnswer": "AutoRecover",
+    "status": "SOURCE_ANSWER_CONFLICT",
+    "reason": "Source document lists FrontPage as answer, but FrontPage was Microsoft's discontinued HTML authoring tool. AutoRecover / AutoSave is the actual feature in Microsoft Office that automatically saves documents at timed intervals.",
+    "sourceFile": "Accenture_Technical_Round_Resource.pdf",
+    "sourcePage": 1
+  }
+]

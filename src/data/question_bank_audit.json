@@ -1,0 +1,23 @@
+{
+  "totalCanonicalQuestions": 207,
+  "uniqueQuestions": 207,
+  "duplicatesConsolidated": 70,
+  "questionsWithValidFourOptions": 207,
+  "questionsWithVerifiedAnswers": 207,
+  "sourceAnswerConflicts": 1,
+  "needsReview": 0,
+  "codingQuestionsPreservedSeparate": 58,
+  "mcqQuestionsInCanonicalBank": 207,
+  "sections": {
+    "MS Office": 43,
+    "Networking": 40,
+    "Pseudocode": 42,
+    "Cloud": 16,
+    "Cybersecurity": 16,
+    "Computer Fundamentals": 10,
+    "DBMS": 10,
+    "Java": 10,
+    "DevOps": 10,
+    "Communication": 10
+  }
+}

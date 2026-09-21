@@ -1,0 +1,702 @@
+[
+  {
+    "duplicateQuestionId": "acc-src-001-ans-slide",
+    "canonicalQuestionId": "acc-src-001",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      2,
+      3
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-002-ans-slide",
+    "canonicalQuestionId": "acc-src-002",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      4,
+      5
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-003-ans-slide",
+    "canonicalQuestionId": "acc-src-003",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      6,
+      7
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-004-ans-slide",
+    "canonicalQuestionId": "acc-src-004",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      8,
+      9
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-005-ans-slide",
+    "canonicalQuestionId": "acc-src-005",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      10,
+      11
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-006-ans-slide",
+    "canonicalQuestionId": "acc-src-006",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      12,
+      13
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-007-ans-slide",
+    "canonicalQuestionId": "acc-src-007",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      14,
+      15
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-008-ans-slide",
+    "canonicalQuestionId": "acc-src-008",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      16,
+      17
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-009-ans-slide",
+    "canonicalQuestionId": "acc-src-009",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      18,
+      19
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-010-ans-slide",
+    "canonicalQuestionId": "acc-src-010",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      20,
+      21
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-011-ans-slide",
+    "canonicalQuestionId": "acc-src-011",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      22,
+      23
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-012-ans-slide",
+    "canonicalQuestionId": "acc-src-012",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      26,
+      27
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-013-ans-slide",
+    "canonicalQuestionId": "acc-src-013",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      28,
+      29
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-014-ans-slide",
+    "canonicalQuestionId": "acc-src-014",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      32,
+      33
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-015-ans-slide",
+    "canonicalQuestionId": "acc-src-015",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      34,
+      35
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-016-ans-slide",
+    "canonicalQuestionId": "acc-src-016",
+    "reason": "Source document shows question stem on slide N and green-highlighted answer on slide N+1. Merged into one canonical MCQ record with verified answer.",
+    "sourceFile": "Accenture MS office.pptx",
+    "sourcePages": [
+      36,
+      37
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-017-ans-slide",
+    "canonicalQuestionId": "acc-src-017",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      2,
+      3
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-018-ans-slide",
+    "canonicalQuestionId": "acc-src-018",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      4,
+      5
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-019-ans-slide",
+    "canonicalQuestionId": "acc-src-019",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      6,
+      7
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-020-ans-slide",
+    "canonicalQuestionId": "acc-src-020",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      8,
+      9
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-021-ans-slide",
+    "canonicalQuestionId": "acc-src-021",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      10,
+      11
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-022-ans-slide",
+    "canonicalQuestionId": "acc-src-022",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      12,
+      13
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-023-ans-slide",
+    "canonicalQuestionId": "acc-src-023",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      14,
+      15
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-024-ans-slide",
+    "canonicalQuestionId": "acc-src-024",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      16,
+      17
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-025-ans-slide",
+    "canonicalQuestionId": "acc-src-025",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      18,
+      19
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-026-ans-slide",
+    "canonicalQuestionId": "acc-src-026",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      20,
+      21
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-027-ans-slide",
+    "canonicalQuestionId": "acc-src-027",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      22,
+      23
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-028-ans-slide",
+    "canonicalQuestionId": "acc-src-028",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      24,
+      25
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-029-ans-slide",
+    "canonicalQuestionId": "acc-src-029",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      26,
+      27
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-030-ans-slide",
+    "canonicalQuestionId": "acc-src-030",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      28,
+      29
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-031-ans-slide",
+    "canonicalQuestionId": "acc-src-031",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      30,
+      31
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-032-ans-slide",
+    "canonicalQuestionId": "acc-src-032",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      32,
+      33
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-033-ans-slide",
+    "canonicalQuestionId": "acc-src-033",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      34,
+      35
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-034-ans-slide",
+    "canonicalQuestionId": "acc-src-034",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      36,
+      37
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-035-ans-slide",
+    "canonicalQuestionId": "acc-src-035",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      38,
+      39
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-036-ans-slide",
+    "canonicalQuestionId": "acc-src-036",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      44,
+      45
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-037-ans-slide",
+    "canonicalQuestionId": "acc-src-037",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      46,
+      47
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-038-ans-slide",
+    "canonicalQuestionId": "acc-src-038",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      48,
+      49
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-039-ans-slide",
+    "canonicalQuestionId": "acc-src-039",
+    "reason": "Source document presents question on slide N and identical question with highlighted answer option on slide N+1. Merged and deduplicated.",
+    "sourceFile": "Accenture Networking.pptx",
+    "sourcePages": [
+      50,
+      51
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-040-sol-page",
+    "canonicalQuestionId": "acc-src-040",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      2,
+      3
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-041-sol-page",
+    "canonicalQuestionId": "acc-src-041",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      4,
+      5
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-042-sol-page",
+    "canonicalQuestionId": "acc-src-042",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      6,
+      7
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-043-sol-page",
+    "canonicalQuestionId": "acc-src-043",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      8,
+      9
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-044-sol-page",
+    "canonicalQuestionId": "acc-src-044",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      10,
+      11
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-045-sol-page",
+    "canonicalQuestionId": "acc-src-045",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      12,
+      13
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-046-sol-page",
+    "canonicalQuestionId": "acc-src-046",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      13,
+      14
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-047-sol-page",
+    "canonicalQuestionId": "acc-src-047",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      15,
+      16
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-048-sol-page",
+    "canonicalQuestionId": "acc-src-048",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      17,
+      18
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-049-sol-page",
+    "canonicalQuestionId": "acc-src-049",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      19,
+      20
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-050-sol-page",
+    "canonicalQuestionId": "acc-src-050",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      21,
+      22
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-051-sol-page",
+    "canonicalQuestionId": "acc-src-051",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      23,
+      24
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-052-sol-page",
+    "canonicalQuestionId": "acc-src-052",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      25,
+      26
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-053-sol-page",
+    "canonicalQuestionId": "acc-src-053",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      27,
+      28
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-054-sol-page",
+    "canonicalQuestionId": "acc-src-054",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      29,
+      30
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-055-sol-page",
+    "canonicalQuestionId": "acc-src-055",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      31,
+      32
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-056-sol-page",
+    "canonicalQuestionId": "acc-src-056",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      33,
+      34
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-057-sol-page",
+    "canonicalQuestionId": "acc-src-057",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      35,
+      36
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-058-sol-page",
+    "canonicalQuestionId": "acc-src-058",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      37,
+      38
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-059-sol-page",
+    "canonicalQuestionId": "acc-src-059",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      39,
+      40
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-060-sol-page",
+    "canonicalQuestionId": "acc-src-060",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      41,
+      42
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-061-sol-page",
+    "canonicalQuestionId": "acc-src-061",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      43,
+      44
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-062-sol-page",
+    "canonicalQuestionId": "acc-src-062",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      45,
+      46
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-063-sol-page",
+    "canonicalQuestionId": "acc-src-063",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      47,
+      48
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-064-sol-page",
+    "canonicalQuestionId": "acc-src-064",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      49,
+      50
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-065-sol-page",
+    "canonicalQuestionId": "acc-src-065",
+    "reason": "Consecutive paired pages in source PDF (problem statement on page N, calculation & answer key on page N+1). Deduplicated into single canonical MCQ.",
+    "sourceFile": "Accenture Pseudo code.pdf",
+    "sourcePages": [
+      51,
+      52
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-066-vector-page",
+    "canonicalQuestionId": "acc-src-066",
+    "reason": "Source PDF renders question on page N followed by vector green circle overlay on page N+1. Consolidated into single question record.",
+    "sourceFile": "Accenture MOCK OA -1.pdf",
+    "sourcePages": [
+      2,
+      3
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-067-vector-page",
+    "canonicalQuestionId": "acc-src-067",
+    "reason": "Source PDF renders question on page N followed by vector green circle overlay on page N+1. Consolidated into single question record.",
+    "sourceFile": "Accenture MOCK OA -1.pdf",
+    "sourcePages": [
+      4,
+      5
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-068-vector-page",
+    "canonicalQuestionId": "acc-src-068",
+    "reason": "Source PDF renders question on page N followed by vector green circle overlay on page N+1. Consolidated into single question record.",
+    "sourceFile": "Accenture MOCK OA -1.pdf",
+    "sourcePages": [
+      6,
+      7
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-069-vector-page",
+    "canonicalQuestionId": "acc-src-069",
+    "reason": "Source PDF renders question on page N followed by vector green circle overlay on page N+1. Consolidated into single question record.",
+    "sourceFile": "Accenture MOCK OA -1.pdf",
+    "sourcePages": [
+      8,
+      9
+    ]
+  },
+  {
+    "duplicateQuestionId": "acc-src-070-vector-page",
+    "canonicalQuestionId": "acc-src-070",
+    "reason": "Source PDF renders question on page N followed by vector green circle overlay on page N+1. Consolidated into single question record.",
+    "sourceFile": "Accenture MOCK OA -1.pdf",
+    "sourcePages": [
+      10,
+      11
+    ]
+  }
+]

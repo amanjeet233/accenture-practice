@@ -44,3 +44,7 @@ next-env.d.ts
 *.db
 *.db-journal
 /scratch/
+*.pdf
+*.pptx
+__pycache__/
+*.pyc

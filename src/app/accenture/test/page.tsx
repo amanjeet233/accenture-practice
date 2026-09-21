@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { getSafeMockTestQuestions } from "@/lib/mockTestService";
-import { AccentureMockTestInterface } from "@/components/mcq/AccentureMockTestInterface";
+import { CbtExamInterface } from "@/components/mcq/CbtExamInterface";
 
 export const dynamic = "force-dynamic";
 
@@ -31,11 +31,12 @@ export default async function AccentureTimedMockTestPage({
   const safeQuestions = await getSafeMockTestQuestions(questionCount, category);
 
   return (
-    <AccentureMockTestInterface
+    <CbtExamInterface
       questions={safeQuestions}
       testTitle={testTitle}
       durationMins={durationMins}
-      returnUrl="/accenture/mock-tests"
+      testId={`accenture-cbt-${category || "full"}`}
+      returnUrl="/accenture"
     />
   );
 }

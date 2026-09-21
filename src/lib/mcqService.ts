@@ -180,6 +180,42 @@ function generateDistractors(category: string, correctAnswer: string): [string, 
 
 // Convert a database Question row to McqQuestionItem
 export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionItem {
+  // 1. Check if canonical starterCode payload is present (100% verified canonical record)
+  if (q.starterCode) {
+    try {
+      const payload = JSON.parse(q.starterCode);
+      if (payload.options && payload.options.length === 4) {
+        const finalOpts = {
+          A: payload.options.find((o: any) => o.id === "A")?.text || "",
+          B: payload.options.find((o: any) => o.id === "B")?.text || "",
+          C: payload.options.find((o: any) => o.id === "C")?.text || "",
+          D: payload.options.find((o: any) => o.id === "D")?.text || "",
+        };
+        const correctKey = (payload.correctOptionId || q.solution || "A") as "A" | "B" | "C" | "D";
+        const correctAnswerText = payload.correctAnswerText || finalOpts[correctKey];
+        const stem = q.description ? q.description.split("### Options")[0].trim() : q.title;
+
+        return {
+          id: q.id,
+          slug: q.slug,
+          questionNumber,
+          title: q.title,
+          stem: stem || q.title,
+          category: q.category || "Accenture Assessment",
+          difficulty: (q.difficulty as "EASY" | "MEDIUM" | "HARD") || "MEDIUM",
+          sourceType: q.sourceType || "SOURCE_DOCUMENT",
+          options: finalOpts,
+          correctKey,
+          correctAnswerText,
+          explanation: q.explanation || `The verified answer is ${correctAnswerText}.`,
+          importanceReason: q.importanceReason,
+        };
+      }
+    } catch {
+      // Fall through to legacy parsing
+    }
+  }
+
   const { options: parsedOpts, stem } = parseOptionsAndStem(q.title, q.description || "");
   let correctKey: "A" | "B" | "C" | "D" = "A";
   let explanation =
