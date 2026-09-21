@@ -26,7 +26,7 @@ export function Navbar() {
 
   const NAV_LINKS = [
     { label: "Problems", href: "/questions" },
-    { label: "Accenture", href: "/accenture" },
+    { label: "Accenture", href: "/home/accenture" },
     { label: "SQL", href: "/sql" },
     { label: "Mock Tests", href: "/mock-tests" },
     { label: "Progress", href: "/progress" },

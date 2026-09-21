@@ -26,6 +26,8 @@ export interface McqQuestionItem {
   correctAnswerText: string;
   explanation: string;
   importanceReason?: string | null;
+  verificationStatus?: string;
+  auditNote?: string;
 }
 
 // Parse options A-D and clean prompt leakage
@@ -210,6 +212,8 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
           correctAnswerText,
           explanation: q.explanation || `The verified answer is ${correctAnswerText}.`,
           importanceReason: q.importanceReason,
+          verificationStatus: payload.verificationStatus || q.verificationStatus || "UNVERIFIED",
+          auditNote: payload.auditNote || undefined,
         };
       }
     } catch {
@@ -333,11 +337,24 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
     correctAnswerText,
     explanation,
     importanceReason: q.importanceReason,
+    verificationStatus: q.verificationStatus || (q.solution ? "VERIFIED" : "NEEDS_VERIFICATION"),
+    auditNote: q.solution ? undefined : "Answer key not explicitly verified in source",
   };
 }
 
-// In-memory cache for practice questions
-const practiceListCache: Record<string, { data: McqQuestionItem[]; expiresAt: number }> = {};
+export interface PaginatedMcqPracticeResult {
+  questions: McqQuestionItem[];
+  totalCount: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+// Cache only the bounded page requested by the user, never the full question bank.
+const practiceListCache: Record<
+  string,
+  { data: PaginatedMcqPracticeResult; expiresAt: number }
+> = {};
 
 let distinctCategoriesCache: { data: string[]; expiresAt: number } | null = null;
 
@@ -364,10 +381,13 @@ export async function getAccentureDistinctCategories(): Promise<string[]> {
 // Fetch MCQs formatted and ready for Practice Mode (cached for 60 seconds)
 export async function getAccentureMcqPracticeList(
   filterCategory?: string,
-  limit: number = 250
-): Promise<McqQuestionItem[]> {
+  page: number = 1,
+  limit: number = 20
+): Promise<PaginatedMcqPracticeResult> {
   const canonical = resolveCanonicalTopic(filterCategory);
-  const cacheKey = `${canonical ? `topic_${canonical.id}` : filterCategory || "all"}_${limit}`;
+  const safePage = Math.max(1, page);
+  const safeLimit = Math.min(50, Math.max(1, limit));
+  const cacheKey = `${canonical ? `topic_${canonical.id}` : filterCategory || "all"}_p${safePage}_l${safeLimit}`;
   const now = Date.now();
   if (practiceListCache[cacheKey] && practiceListCache[cacheKey].expiresAt > now) {
     return practiceListCache[cacheKey].data;
@@ -379,6 +399,7 @@ export async function getAccentureMcqPracticeList(
       AND: [
         ACCENTURE_COMPANY_FILTER,
         getTopicPrismaFilter(canonical),
+        { questionType: "MCQ" },
       ],
     };
   } else if (filterCategory && filterCategory !== "all") {
@@ -398,34 +419,48 @@ export async function getAccentureMcqPracticeList(
     };
   }
 
-  const questions = await prisma.question.findMany({
-    where: whereClause,
-    take: limit,
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      description: true,
-      category: true,
-      difficulty: true,
-      sourceType: true,
-      solution: true,
-      explanation: true,
-      importanceReason: true,
-      starterCode: true,
-    },
-    orderBy: [
-      { frequency: "desc" },
-      { createdAt: "asc" },
-    ],
-  });
+  const [questions, totalCount] = await Promise.all([
+    prisma.question.findMany({
+      where: whereClause,
+      skip: (safePage - 1) * safeLimit,
+      take: safeLimit,
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        description: true,
+        category: true,
+        difficulty: true,
+        sourceType: true,
+        solution: true,
+        explanation: true,
+        importanceReason: true,
+        starterCode: true,
+        frequency: true,
+        createdAt: true,
+      },
+      orderBy: [
+        { frequency: "desc" },
+        { createdAt: "asc" },
+      ],
+    }),
+    prisma.question.count({ where: whereClause }),
+  ]);
 
-  const formatted = questions.map((q, idx) => formatMcqQuestion(q, idx + 1));
+  const result = {
+    questions: questions.map((q, idx) =>
+      formatMcqQuestion(q, (safePage - 1) * safeLimit + idx + 1)
+    ),
+    totalCount,
+    page: safePage,
+    limit: safeLimit,
+    totalPages: Math.ceil(totalCount / safeLimit),
+  };
 
   practiceListCache[cacheKey] = {
-    data: formatted,
+    data: result,
     expiresAt: Date.now() + 60000,
   };
 
-  return formatted;
+  return result;
 }

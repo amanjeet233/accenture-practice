@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { getSafeMockTestQuestions } from "@/lib/mockTestService";
-import { CbtExamInterface } from "@/components/mcq/CbtExamInterface";
+import { AccentureMockTestInterface } from "@/components/mcq/AccentureMockTestInterface";
 import { getSessionUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -35,8 +35,10 @@ export default async function AccentureTimedMockTestPage({
   const topicFilter = topic || category;
   const canonical = resolveCanonicalTopic(topicFilter);
 
-  const questionCount = count ? Math.min(60, Math.max(5, parseInt(count, 10))) : 30;
-  const durationMins = duration ? Math.min(120, Math.max(5, parseInt(duration, 10))) : 30;
+  // A direct "All Mock Tests" launch should not silently fall back to the
+  // old 30-question demo. Dedicated links can still request 100/200/300.
+  const questionCount = count ? Math.min(300, Math.max(5, parseInt(count, 10))) : 100;
+  const durationMins = duration ? Math.min(360, Math.max(5, parseInt(duration, 10))) : 90;
   const testTitle =
     title ||
     (canonical
@@ -50,12 +52,14 @@ export default async function AccentureTimedMockTestPage({
   );
 
   return (
-    <CbtExamInterface
+    <AccentureMockTestInterface
       questions={safeQuestions}
       testTitle={testTitle}
       durationMins={durationMins}
       testId={`accenture-cbt-${canonical ? canonical.slug : category || "full"}`}
-      returnUrl={canonical ? `/accenture/${canonical.slug}` : "/accenture"}
+      // Every test exits to the Accenture workspace, rather than the global
+      // dashboard or a legacy module route.
+      returnUrl="/home/accenture"
     />
   );
 }

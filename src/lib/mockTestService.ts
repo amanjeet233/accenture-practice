@@ -76,7 +76,7 @@ export async function getSafeMockTestQuestions(
   const rawQuestions = await prisma.question.findMany({
     where: whereClause,
     orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
-    take: 120, // Take pool to sample from
+    take: Math.min(300, Math.max(120, limit)), // Keep enough rows for large mixed-topic tests
   });
 
   // If topic-specific, take up to limit from raw questions directly

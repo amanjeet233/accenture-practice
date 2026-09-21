@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -13,6 +13,8 @@ import {
   Clock,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
+  ChevronDown,
   Bookmark,
   BookmarkCheck,
   RotateCcw,
@@ -38,6 +40,7 @@ interface AccentureMockTestInterfaceProps {
   questions: SafeMockQuestion[];
   testTitle?: string;
   durationMins?: number;
+  testId?: string;
   returnUrl?: string;
 }
 
@@ -45,7 +48,8 @@ export function AccentureMockTestInterface({
   questions,
   testTitle = "Accenture Assessment Timed Mock Test",
   durationMins = 30,
-  returnUrl = "/accenture/mock-tests",
+  testId = "accenture-full-mock-test",
+  returnUrl = "/home/accenture",
 }: AccentureMockTestInterfaceProps) {
   const router = useRouter();
 
@@ -79,6 +83,7 @@ export function AccentureMockTestInterface({
 
   // Review mode filter
   const [reviewFilter, setReviewFilter] = useState<"all" | "correct" | "incorrect" | "unattempted">("all");
+  const activeTimelineQuestionRef = useRef<HTMLButtonElement>(null);
 
   const currentQ = questions[currentIndex] || questions[0];
   const isMarked = currentQ ? markedQuestions.has(currentQ.id) : false;
@@ -86,6 +91,11 @@ export function AccentureMockTestInterface({
 
   // Active question in review mode
   const currentReviewQ = evaluationResult?.reviewQuestions?.[currentIndex];
+
+  // Keep the active small timeline marker in view as Next / Previous changes question.
+  useEffect(() => {
+    activeTimelineQuestionRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [currentIndex]);
 
   // --------------------------------------------------------------------------
   // Countdown Timer & Auto-Submit
@@ -219,7 +229,7 @@ export function AccentureMockTestInterface({
           userAnswers,
           timeUsedSeconds,
           markedQuestionIds: Array.from(markedQuestions),
-          testId: "accenture-full-mock-test",
+          testId,
           startedAt: new Date(Date.now() - timeUsedSeconds * 1000).toISOString(),
         }),
       });
@@ -629,77 +639,43 @@ export function AccentureMockTestInterface({
   const isTimeUrgent = timeRemaining <= 60; // Under 1 min
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
+    <div className="fixed inset-0 z-50 min-w-0 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
       {/* ========================================================================= */}
       {/* ACTIVE TEST TOP BAR */}
       {/* Example requirement: Q 7 / 30 \n 18:42 */}
       {/* ========================================================================= */}
-      <header className="h-16 border-b border-[#30363D] bg-[#161B22] px-4 sm:px-6 flex items-center justify-between shrink-0 z-20">
+      <header className="h-14 border-b border-[#30363D] bg-[#161B22]/95 backdrop-blur px-3 sm:px-5 flex items-center justify-between gap-3 shrink-0 z-20">
         {/* Left: Test Title & Question Counter */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="space-y-0.5">
-            <div className="flex items-center gap-2">
-              <span className="font-mono font-bold text-xs tracking-wider text-[#F0F6FC]">
-                ACCENTURE MOCK TEST
-              </span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#D29922]/15 text-[#E3B341] border border-[#D29922]/30 font-mono font-semibold">
-                TIMED EXAM
-              </span>
-            </div>
-            <div className="text-[11px] font-mono text-[#8B949E] hidden sm:block">
-              {testTitle}
-            </div>
-          </div>
+        <div className="min-w-0 flex items-center gap-2 sm:gap-3">
+          <Link
+            href={returnUrl}
+            className="flex items-center gap-1 rounded border border-[#30363D] bg-[#21262D] px-2 py-1 text-[11px] font-mono text-[#8B949E] transition-colors hover:bg-[#30363D] hover:text-[#F0F6FC]"
+            title="Exit mock test"
+          >
+            <ArrowLeft className="h-3 w-3" />
+            <span className="hidden sm:inline">Exit</span>
+          </Link>
+          <div className="hidden h-4 w-px bg-[#30363D] sm:block" />
+          <span className="truncate font-mono font-bold text-[11px] tracking-wider text-[#F0F6FC] hidden sm:inline">ACCENTURE MOCK TEST</span>
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#D29922]/15 text-[#E3B341] border border-[#D29922]/30 font-mono font-semibold">TIMED</span>
         </div>
 
-        {/* Center: Question Counter (Q 7 / 30) & Countdown Timer (18:42) */}
-        <div className="flex items-center gap-4 sm:gap-6 font-mono">
-          {/* Question Index formatted as required: Q X / Total */}
-          <div className="text-center">
-            <div className="text-[10px] text-[#8B949E] uppercase tracking-wider">
-              Question
-            </div>
-            <div className="text-sm sm:text-base font-bold text-[#F0F6FC]">
-              Q {currentIndex + 1} / {questions.length}
-            </div>
-          </div>
-
-          <div className="h-6 w-[1px] bg-[#30363D]" />
-
-          {/* Countdown Timer (e.g. 18:42) */}
-          <div className="text-center">
-            <div className="text-[10px] text-[#8B949E] uppercase tracking-wider">
-              Time Remaining
-            </div>
-            <div
-              className={`text-sm sm:text-base font-bold flex items-center gap-1.5 justify-center ${
-                isTimeUrgent
-                  ? "text-[#F85149] animate-pulse"
-                  : isTimeCritical
-                  ? "text-[#E3B341]"
-                  : "text-[#58A6FF]"
-              }`}
-            >
-              <Clock className="w-3.5 h-3.5" />
-              <span>{formatCountdown(timeRemaining)}</span>
-            </div>
-          </div>
+        <div className="min-w-0 flex items-center justify-center gap-2 font-mono">
+          <div className="whitespace-nowrap text-[11px] text-[#8B949E] bg-[#0D1117] px-2 py-1 rounded border border-[#30363D]">Q <span className="text-[#F0F6FC] font-semibold">{currentIndex + 1}</span><span className="text-[#6E7681]">/{questions.length}</span></div>
+          <div className={`flex items-center gap-1 px-2 py-1 rounded bg-[#0D1117] border border-[#30363D] text-[11px] font-mono ${isTimeUrgent ? "text-[#F85149] animate-pulse" : isTimeCritical ? "text-[#E3B341]" : "text-[#58A6FF]"}`}><Clock className="w-3 h-3" /><span>{formatCountdown(timeRemaining)}</span></div>
         </div>
 
-        {/* Right: Question Navigator Trigger & Submit Test */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="shrink-0 flex items-center gap-2">
           <button
             onClick={() => setIsNavigatorOpen(true)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] font-mono text-xs transition-colors cursor-pointer"
-            title="Open Question Navigator Grid (Key: N)"
+            className="lg:hidden flex items-center gap-1 px-2 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] border border-[#30363D] text-[11px] font-mono"
           >
-            <LayoutGrid className="w-3.5 h-3.5 text-[#58A6FF]" />
-            <span className="hidden sm:inline">Navigator</span>
+            <LayoutGrid className="w-3 h-3" /><span>Nav</span>
           </button>
 
           <button
             onClick={() => setShowSubmitConfirm(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-white font-mono text-xs font-semibold shadow-sm transition-colors cursor-pointer"
+            className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-white font-mono text-[11px] font-semibold shadow-sm transition-colors"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Submit Test</span>
@@ -710,21 +686,21 @@ export function AccentureMockTestInterface({
       {/* ========================================================================= */}
       {/* ACTIVE TEST MAIN WORKSPACE */}
       {/* ========================================================================= */}
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
-        <div className="w-full max-w-3xl space-y-6 my-auto">
+      <div className="flex-1 min-h-0 grid overflow-hidden lg:grid-cols-[minmax(320px,1.05fr)_minmax(360px,1fr)_56px] xl:grid-cols-[minmax(380px,1.1fr)_minmax(420px,1fr)_56px]">
+        <section className="hidden min-w-0 lg:flex flex-col border-r border-[#30363D] overflow-y-auto">
+          <div className="p-5 xl:p-7 space-y-5">
           {/* Question Metadata Header */}
-          <div className="flex items-center justify-between border-b border-[#30363D]/80 pb-4">
+            <div className="space-y-3">
             <div className="flex items-center gap-2.5 flex-wrap">
               <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
                 Question {currentIndex + 1} of {questions.length}
               </span>
-              <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D]">
+              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">
                 {currentQ.category}
               </span>
               <DifficultyBadge difficulty={currentQ.difficulty as any} />
             </div>
 
-            {/* Mark for Review Button */}
             <button
               onClick={toggleMarkForReview}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded border font-mono text-xs transition-colors cursor-pointer ${
@@ -748,16 +724,27 @@ export function AccentureMockTestInterface({
             </button>
           </div>
 
-          {/* Question Stem */}
-          <div className="space-y-2">
-            <h2 className="text-base sm:text-lg font-medium text-[#F0F6FC] leading-relaxed">
+          <div className="space-y-3">
+            <h2 className="max-w-3xl text-lg xl:text-xl font-medium text-[#F0F6FC] leading-[1.5]">
               {currentQ.stem}
             </h2>
           </div>
+          </div>
+        </section>
 
-          {/* Four Interactive Options (A, B, C, D) */}
-          {/* NOTE: Correct answers are NEVER revealed here during active test! */}
-          <div className="space-y-3 pt-2">
+        <section className="min-w-0 flex min-h-0 flex-col overflow-y-auto">
+          <div className="sticky top-0 z-10 flex justify-end border-b border-[#30363D] bg-[#161B22]/95 px-4 py-1.5 backdrop-blur">
+            <button onClick={handlePrevious} disabled={currentIndex === 0} aria-label="Previous question" className="inline-flex h-7 w-7 items-center justify-center rounded border border-[#30363D] bg-[#21262D] text-[#8B949E] transition-colors hover:bg-[#30363D] hover:text-[#F0F6FC] disabled:cursor-not-allowed disabled:opacity-40">
+              <ChevronUp className="h-3.5 w-3.5" />
+            </button>
+          </div>
+          <div className="p-4 sm:p-5 xl:p-7 space-y-4 flex-1">
+          <div className="lg:hidden space-y-3">
+            <div className="flex items-center gap-2 flex-wrap"><span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">Question {currentIndex + 1}</span><span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">{currentQ.category}</span></div>
+            <h2 className="text-sm sm:text-base font-medium text-[#F0F6FC] leading-relaxed">{currentQ.stem}</h2>
+          </div>
+          <div className="flex items-center justify-between border-b border-[#30363D] pb-2"><h3 className="font-mono text-[11px] font-semibold text-[#8B949E] uppercase tracking-wider">Answer options</h3><span className="text-[10px] font-mono text-[#6E7681]">Choose one response</span></div>
+          <div className="space-y-2.5">
             {(["A", "B", "C", "D"] as const).map((key) => {
               const optionText = currentQ.options[key];
               const isSelected = selectedOption === key;
@@ -766,7 +753,7 @@ export function AccentureMockTestInterface({
                 <button
                   key={key}
                   onClick={() => handleSelectOption(key)}
-                  className={`w-full text-left p-3.5 sm:p-4 rounded-md border transition-all duration-150 flex items-start gap-3.5 cursor-pointer ${
+                  className={`w-full min-w-0 text-left p-3.5 sm:p-4 rounded-md border transition-colors duration-150 flex items-start gap-3 cursor-pointer ${
                     isSelected
                       ? "border-[#58A6FF] bg-[#58A6FF]/15 text-[#F0F6FC] font-medium shadow-[0_0_12px_rgba(88,166,255,0.15)]"
                       : "border-[#30363D] bg-[#161B22] text-[#C9D1D9] hover:border-[#58A6FF]/60 hover:bg-[#21262D]/60"
@@ -792,7 +779,6 @@ export function AccentureMockTestInterface({
             })}
           </div>
 
-          {/* Support Clear Response */}
           {selectedOption && (
             <div className="flex justify-end pt-1">
               <button
@@ -804,36 +790,21 @@ export function AccentureMockTestInterface({
               </button>
             </div>
           )}
-        </div>
-      </main>
-
-      {/* ========================================================================= */}
-      {/* ACTIVE TEST BOTTOM NAVIGATION BAR */}
-      {/* ========================================================================= */}
-      <footer className="h-16 border-t border-[#30363D] bg-[#161B22] px-4 sm:px-6 flex items-center justify-between shrink-0 z-20">
-        {/* Previous Button */}
+          </div>
+          <div className="h-12 border-t border-[#30363D] bg-[#161B22] px-4 sm:px-5 flex items-center justify-between shrink-0">
         <button
           onClick={handlePrevious}
           disabled={currentIndex === 0}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] disabled:opacity-40 text-[#F0F6FC] border border-[#30363D] font-mono text-xs font-medium transition-colors cursor-pointer disabled:cursor-not-allowed"
+          className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] disabled:opacity-40 text-[#F0F6FC] border border-[#30363D] font-mono text-[11px] font-medium"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Previous</span>
         </button>
 
-        {/* Center: Status indicators & shortcuts */}
-        <div className="flex items-center gap-4 text-xs font-mono text-[#8B949E]">
-          <span className="hidden sm:inline text-[#6E7681]">
-            Attempted: <strong className="text-[#58A6FF]">{attemptedCount}</strong> / {questions.length}
-          </span>
-          <span className="hidden sm:inline text-[#6E7681]">•</span>
-          <span className="hidden sm:inline text-[#6E7681]">
-            Marked: <strong className="text-[#E3B341]">{markedCount}</strong>
-          </span>
-        </div>
-
-        {/* Right: Next / Submit */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <button onClick={handleNext} disabled={currentIndex === questions.length - 1} aria-label="Next question" className="inline-flex h-8 w-8 items-center justify-center rounded border border-[#30363D] bg-[#21262D] text-[#8B949E] transition-colors hover:bg-[#30363D] hover:text-[#F0F6FC] disabled:cursor-not-allowed disabled:opacity-40">
+            <ChevronDown className="h-3.5 w-3.5" />
+          </button>
           {currentIndex === questions.length - 1 ? (
             <button
               onClick={() => setShowSubmitConfirm(true)}
@@ -852,7 +823,39 @@ export function AccentureMockTestInterface({
             </button>
           )}
         </div>
-      </footer>
+          </div>
+        </section>
+
+        <aside aria-label="Question timeline" className="hidden min-h-0 overflow-y-auto border-l border-[#30363D] bg-[#0D1117] px-2 py-3 lg:block">
+          <div className="relative mx-auto w-8 before:absolute before:left-1/2 before:top-3 before:bottom-3 before:w-px before:-translate-x-1/2 before:bg-[#30363D]">
+            {questions.map((question, index) => {
+              const isCurrent = index === currentIndex;
+              const isAnswered = Boolean(userAnswers[question.id]);
+              const isMarked = markedQuestions.has(question.id);
+              const stateClass = isAnswered
+                ? "bg-[#238636] text-white border-[#3FB950]"
+                : isMarked
+                ? "bg-[#D29922] text-[#0D1117] border-[#E3B341]"
+                : "bg-[#21262D] text-[#8B949E] border-[#30363D]";
+
+              return (
+                <div key={question.id} className="relative z-10 flex justify-center pb-2">
+                  <button
+                    ref={isCurrent ? activeTimelineQuestionRef : null}
+                    onClick={() => setCurrentIndex(index)}
+                    aria-label={`Question ${index + 1}`}
+                    aria-current={isCurrent ? "step" : undefined}
+                    className={`h-7 w-7 rounded-full border font-mono text-[10px] font-bold transition-colors ${stateClass} ${isCurrent ? "ring-2 ring-[#58A6FF] ring-offset-2 ring-offset-[#0D1117]" : "hover:border-[#58A6FF]"}`}
+                  >
+                    {index + 1}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </aside>
+
+      </div>
 
       {/* ========================================================================= */}
       {/* QUESTION NAVIGATOR DRAWER */}

@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { McqQuestionItem } from "@/lib/mcqService";
 import { DifficultyBadge } from "@/components/ui/Badge";
 import {
   ArrowLeft,
-  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Bookmark,
@@ -15,17 +14,13 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  LayoutGrid,
   Maximize2,
   Minimize2,
-  RotateCcw,
   Sparkles,
   HelpCircle,
-  Info,
   X,
   Check,
   Filter,
-  Share2,
   Award,
 } from "lucide-react";
 
@@ -37,6 +32,9 @@ interface TopicOption {
 
 interface McqPracticeWorkspaceProps {
   initialQuestions: McqQuestionItem[];
+  totalQuestions: number;
+  currentPage: number;
+  totalPages: number;
   allCategories: string[];
   topicOptions?: TopicOption[];
   selectedCategory?: string;
@@ -51,10 +49,13 @@ interface AnswerState {
 
 export function McqPracticeWorkspace({
   initialQuestions,
+  totalQuestions,
+  currentPage,
+  totalPages,
   allCategories,
   topicOptions = [],
   selectedCategory = "all",
-  returnUrl = "/accenture/mcq",
+  returnUrl = "/home/accenture",
 }: McqPracticeWorkspaceProps) {
   const router = useRouter();
 
@@ -82,10 +83,6 @@ export function McqPracticeWorkspace({
     setCurrentCategory(selectedCategory);
   }, [initialQuestions, selectedCategory]);
 
-  // Navigator drawer state
-  const [isNavigatorOpen, setIsNavigatorOpen] = useState<boolean>(false);
-  const [navigatorFilter, setNavigatorFilter] = useState<"all" | "answered" | "unanswered" | "marked">("all");
-
   // Timer state
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(true);
@@ -96,10 +93,17 @@ export function McqPracticeWorkspace({
   // Completion modal state
   const [showSummaryModal, setShowSummaryModal] = useState<boolean>(false);
 
+  // Mobile navigator visibility
+  const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
+
   const currentQ = questions[currentIndex] || questions[0];
   const currentAnswer = currentQ ? answers[currentQ.id] : undefined;
   const isAnswered = !!currentAnswer;
   const isMarked = currentQ ? markedQuestions.has(currentQ.id) : false;
+
+  // Ref for scrolling navigator to current question
+  const navigatorRef = useRef<HTMLDivElement>(null);
+  const currentBtnRef = useRef<HTMLButtonElement>(null);
 
   // Timer effect
   useEffect(() => {
@@ -116,12 +120,17 @@ export function McqPracticeWorkspace({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+  // Auto-scroll navigator to current question
+  useEffect(() => {
+    if (currentBtnRef.current) {
+      currentBtnRef.current.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, [currentIndex]);
+
   // Option selection handler
   const handleSelectOption = useCallback(
     (key: "A" | "B" | "C" | "D") => {
       if (!currentQ) return;
-      // Allow only once or allow re-clicking? Prompt: "When user clicks an answer: Immediately show: ✓ Correct Answer or ✕ Incorrect Answer. Then show: Correct answer, Explanation. Practice mode may reveal the answer immediately after selection. Do not reveal the answer before selection."
-      // If already answered, keep choice
       if (answers[currentQ.id]) return;
 
       const isCorrect = key === currentQ.correctKey;
@@ -147,10 +156,14 @@ export function McqPracticeWorkspace({
   const handleNext = useCallback(() => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+    } else if (currentPage < totalPages) {
+      const topicQuery = selectedCategory === "all" ? "" : `?topic=${encodeURIComponent(selectedCategory)}`;
+      const separator = topicQuery ? "&" : "?";
+      router.push(`/accenture/mcq/practice${topicQuery}${separator}page=${currentPage + 1}`);
     } else {
       setShowSummaryModal(true);
     }
-  }, [currentIndex, questions.length]);
+  }, [currentIndex, questions.length, currentPage, totalPages, selectedCategory, router]);
 
   const toggleMarkForReview = useCallback(() => {
     if (!currentQ) return;
@@ -181,10 +194,10 @@ export function McqPracticeWorkspace({
   // Keyboard shortcut listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if input or textarea focused
       if (
         document.activeElement?.tagName === "INPUT" ||
-        document.activeElement?.tagName === "TEXTAREA"
+        document.activeElement?.tagName === "TEXTAREA" ||
+        document.activeElement?.tagName === "SELECT"
       ) {
         return;
       }
@@ -198,9 +211,6 @@ export function McqPracticeWorkspace({
       } else if (e.key.toLowerCase() === "m") {
         e.preventDefault();
         toggleMarkForReview();
-      } else if (e.key.toLowerCase() === "n") {
-        e.preventDefault();
-        setIsNavigatorOpen((prev) => !prev);
       } else if (["1", "a", "A"].includes(e.key)) {
         handleSelectOption("A");
       } else if (["2", "b", "B"].includes(e.key)) {
@@ -255,41 +265,65 @@ export function McqPracticeWorkspace({
   const accuracyPct =
     answeredList.length > 0 ? Math.round((correctCount / answeredList.length) * 100) : 0;
 
+  // Get navigator pill style for a question
+  const getNavPillStyle = (q: McqQuestionItem, idx: number) => {
+    const ans = answers[q.id];
+    const isCurrent = idx === currentIndex;
+    const marked = markedQuestions.has(q.id);
+
+    let bg = "bg-[#21262D] text-[#6E7681] border-[#30363D]";
+    let icon = null;
+
+    if (ans) {
+      if (ans.isCorrect) {
+        bg = "bg-[#238636]/20 text-[#3FB950] border-[#3FB950]/50";
+        icon = <Check className="w-2.5 h-2.5" />;
+      } else {
+        bg = "bg-[#DA3633]/20 text-[#F85149] border-[#F85149]/50";
+        icon = <X className="w-2.5 h-2.5" />;
+      }
+    }
+
+    if (marked && !ans) {
+      bg = "bg-[#D29922]/15 text-[#E3B341] border-[#D29922]/50";
+    }
+
+    const ring = isCurrent ? "ring-2 ring-[#58A6FF] ring-offset-1 ring-offset-[#0D1117]" : "";
+
+    return { bg, icon, ring, marked };
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
+    <div className="fixed inset-0 z-50 min-w-0 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
       {/* ========================================================================= */}
-      {/* 1. TOP HEADER BAR (Minimalist, Large Workspace, No Distractions) */}
+      {/* TOP HEADER BAR */}
       {/* ========================================================================= */}
-      <header className="h-14 border-b border-[#30363D] bg-[#161B22]/95 backdrop-blur px-4 sm:px-6 flex items-center justify-between shrink-0 z-20">
-        {/* Left: Exit Link & Brand Title */}
-        <div className="flex items-center gap-3 sm:gap-4">
+      <header className="h-14 border-b border-[#30363D] bg-[#161B22]/95 backdrop-blur px-3 sm:px-5 flex items-center justify-between gap-3 shrink-0 z-20">
+        {/* Left: Exit + Brand */}
+        <div className="min-w-0 flex items-center gap-2 sm:gap-3">
           <Link
             href={returnUrl}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] font-mono text-xs transition-colors"
+            className="flex items-center gap-1 px-2 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] font-mono text-[11px] transition-colors"
             title="Exit Practice Mode"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-3 h-3" />
             <span className="hidden sm:inline">Exit</span>
           </Link>
 
           <div className="h-4 w-[1px] bg-[#30363D] hidden sm:block" />
 
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono font-bold text-xs tracking-wider text-[#F0F6FC]">
-                ACCENTURE PRACTICE
-              </span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30 font-mono font-semibold">
-                MCQ
-              </span>
-            </div>
-          </div>
+          <span className="truncate font-mono font-bold text-[11px] tracking-wider text-[#F0F6FC] hidden sm:inline">
+            ACCENTURE PRACTICE
+          </span>
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30 font-mono font-semibold">
+            MCQ
+          </span>
         </div>
 
-        {/* Center: Category Filter & Progress Indicator */}
-        <div className="flex items-center gap-3">
-          {/* Category Selector Dropdown */}
-          <div className="hidden md:flex items-center gap-1.5 bg-[#0D1117] border border-[#30363D] rounded px-2 py-1 text-xs font-mono">
+        {/* Center: Topic + Progress */}
+        <div className="min-w-0 flex items-center justify-center gap-2">
+          {/* Category Selector */}
+          <div className="hidden md:flex items-center gap-1 bg-[#0D1117] border border-[#30363D] rounded px-2 py-0.5 text-[11px] font-mono">
             <Filter className="w-3 h-3 text-[#8B949E]" />
             <select
               value={currentCategory}
@@ -302,7 +336,7 @@ export function McqPracticeWorkspace({
                   router.push(`/accenture/mcq/practice?topic=${encodeURIComponent(val)}`);
                 }
               }}
-              className="bg-transparent text-[#C9D1D9] focus:outline-none cursor-pointer text-xs"
+              className="bg-transparent text-[#C9D1D9] focus:outline-none cursor-pointer text-[11px]"
             >
               <option value="all" className="bg-[#161B22] text-[#F0F6FC]">
                 All Topics
@@ -321,83 +355,73 @@ export function McqPracticeWorkspace({
             </select>
           </div>
 
-          {/* Question Index Counter */}
-          <div className="font-mono text-xs text-[#8B949E] bg-[#0D1117] px-2.5 py-1 rounded border border-[#30363D]">
-            <span className="text-[#F0F6FC] font-semibold">{currentIndex + 1}</span>
-            <span className="text-[#6E7681]"> / {questions.length}</span>
+          {/* Question Counter */}
+          <div className="whitespace-nowrap font-mono text-[11px] text-[#8B949E] bg-[#0D1117] px-2 py-1 rounded border border-[#30363D]">
+            Q <span className="text-[#F0F6FC] font-semibold">{currentQ.questionNumber}</span>
+            <span className="text-[#6E7681]">/{totalQuestions}</span>
+            <span className="ml-1 text-[#6E7681]">(page {currentPage}/{totalPages})</span>
           </div>
         </div>
 
-        {/* Right: Live Timer, Quick Score, Navigator Trigger, Fullscreen */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Live Timer */}
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#0D1117] border border-[#30363D] text-xs font-mono text-[#8B949E]">
-            <Clock className="w-3.5 h-3.5 text-[#58A6FF]" />
+        {/* Right: Timer, Score, Fullscreen */}
+        <div className="shrink-0 flex items-center gap-2">
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-[#0D1117] border border-[#30363D] text-[11px] font-mono text-[#8B949E]">
+            <Clock className="w-3 h-3 text-[#58A6FF]" />
             <span>{formatTime(secondsElapsed)}</span>
           </div>
 
-          {/* Quick Accuracy Score */}
           {answeredList.length > 0 && (
-            <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded bg-[#0D1117] border border-[#30363D] text-xs font-mono">
+            <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-[#0D1117] border border-[#30363D] text-[11px] font-mono">
               <span className="text-[#3FB950] font-semibold">{correctCount}✓</span>
               <span className="text-[#F85149] font-semibold">{incorrectCount}✕</span>
-              <span className="text-[#8B949E] text-[10px]">({accuracyPct}%)</span>
             </div>
           )}
 
-          {/* Question Navigator Drawer Button */}
+          {/* Mobile navigator toggle */}
           <button
-            onClick={() => setIsNavigatorOpen((prev) => !prev)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded border text-xs font-mono font-medium transition-colors ${
-              isNavigatorOpen
-                ? "bg-[#58A6FF]/20 text-[#58A6FF] border-[#58A6FF]"
-                : "bg-[#21262D] text-[#F0F6FC] hover:bg-[#30363D] border-[#30363D]"
-            }`}
-            title="Toggle Question Navigator Grid (Key: N)"
+            onClick={() => setShowMobileNav(!showMobileNav)}
+            className="lg:hidden flex items-center gap-1 px-2 py-0.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] border border-[#30363D] text-[11px] font-mono transition-colors"
           >
-            <LayoutGrid className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Navigator</span>
+            <span>Nav</span>
           </button>
 
-          {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] transition-colors"
-            title="Toggle Fullscreen Workspace"
+            className="p-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] transition-colors"
+            title="Toggle Fullscreen"
           >
-            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            {isFullscreen ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
           </button>
         </div>
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. MAIN WORKSPACE (Large, Centered, Distraction-Free Layout) */}
+      {/* 3-PANEL MAIN BODY */}
       {/* ========================================================================= */}
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
-        <div className="w-full max-w-3xl space-y-6 my-auto">
-          {/* Top Question Metadata Bar */}
-          <div className="flex items-center justify-between gap-3 border-b border-[#30363D]/80 pb-4">
-            <div className="flex items-center gap-2.5 flex-wrap">
-              {/* Question Number Badge */}
-              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
-                Question {currentIndex + 1}
-              </span>
+      <div className="flex-1 min-h-0 grid overflow-hidden lg:grid-cols-[minmax(320px,1.05fr)_minmax(360px,1fr)_220px] xl:grid-cols-[minmax(380px,1.1fr)_minmax(420px,1fr)_220px]">
+        {/* ─── LEFT PANEL: QUESTION ─── */}
+        <div className="hidden min-w-0 lg:flex flex-col border-r border-[#30363D] overflow-y-auto">
+          <div className="p-5 xl:p-7 space-y-5 flex-1">
+            {/* Question Number + Meta */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
+                  Question {currentQ.questionNumber}
+                </span>
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">
+                  {currentQ.category}
+                </span>
+              </div>
 
-              {/* Category */}
-              <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D]">
-                {currentQ.category}
-              </span>
-
-              {/* Difficulty */}
-              <DifficultyBadge difficulty={currentQ.difficulty as any} />
-
-              {/* Source Classification */}
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#161B22] text-[#6E7681] border border-[#30363D]">
-                {currentQ.sourceType}
-              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <DifficultyBadge difficulty={currentQ.difficulty as any} />
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#161B22] text-[#6E7681] border border-[#30363D]">
+                  {currentQ.sourceType}
+                </span>
+              </div>
             </div>
 
-            {/* Mark for Review Button */}
+            {/* Mark for Review */}
             <button
               onClick={toggleMarkForReview}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded border font-mono text-xs transition-colors ${
@@ -410,7 +434,7 @@ export function McqPracticeWorkspace({
               {isMarked ? (
                 <>
                   <BookmarkCheck className="w-3.5 h-3.5 text-[#E3B341]" />
-                  <span className="font-semibold text-[#E3B341]">Marked</span>
+                  <span className="font-semibold text-[#E3B341]">Marked for Review</span>
                 </>
               ) : (
                 <>
@@ -419,341 +443,362 @@ export function McqPracticeWorkspace({
                 </>
               )}
             </button>
-          </div>
 
-          {/* Question Stem / Statement */}
-          <div className="space-y-3">
-            <h2 className="text-base sm:text-lg font-medium text-[#F0F6FC] leading-relaxed tracking-normal font-sans">
-              {currentQ.stem}
-            </h2>
-            {currentQ.importanceReason && (
-              <p className="text-xs text-[#8B949E] font-mono border-l-2 border-[#58A6FF]/40 pl-3">
-                {currentQ.importanceReason}
-              </p>
+            {/* Question Stem */}
+            <div className="space-y-3">
+              <h2 className="max-w-3xl text-lg xl:text-xl font-medium text-[#F0F6FC] leading-[1.5] tracking-normal font-sans">
+                {currentQ.stem}
+              </h2>
+              {currentQ.importanceReason && (
+                <p className="text-xs text-[#8B949E] font-mono border-l-2 border-[#58A6FF]/40 pl-3">
+                  {currentQ.importanceReason}
+                </p>
+              )}
+            </div>
+
+            {/* Explanation (shown after answering, in left panel to keep options clean) */}
+            {isAnswered && (
+              <div className="space-y-3 pt-3 border-t border-[#30363D]/80">
+                {currentAnswer!.isCorrect ? (
+                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="font-bold">✓ Correct Answer</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
+                    <XCircle className="w-4 h-4" />
+                    <span className="font-bold">✕ Incorrect — Expected: Option {currentQ.correctKey}</span>
+                  </div>
+                )}
+
+                {/* Explanation Card */}
+                <div className="rounded-md border border-[#30363D] bg-[#161B22] p-4 space-y-2.5">
+                  <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2">
+                    <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Explanation</span>
+                    </div>
+                    <div className="text-[10px] font-mono text-[#8B949E]">
+                      Correct:{" "}
+                      <strong className="text-[#3FB950]">
+                        Option {currentQ.correctKey}
+                      </strong>
+                    </div>
+                  </div>
+
+                  <div className="p-2 rounded bg-[#0D1117] border border-[#30363D] text-xs font-mono text-[#C9D1D9]">
+                    <span className="text-[#8B949E] mr-1.5">{currentQ.correctKey}:</span>
+                    <span className="text-[#F0F6FC] font-medium">
+                      {currentQ.options[currentQ.correctKey]}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans">
+                    {currentQ.explanation}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ─── CENTER PANEL: OPTIONS + CONTROLS ─── */}
+        <div className="min-w-0 flex min-h-0 flex-col overflow-y-auto">
+          <div className="p-4 sm:p-5 xl:p-7 space-y-4 flex-1">
+            {/* Mobile-only: Question stem (shown above options on mobile/tablet where left panel is hidden) */}
+            <div className="lg:hidden space-y-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
+                  Question {currentQ.questionNumber}
+                </span>
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">
+                  {currentQ.category}
+                </span>
+                <DifficultyBadge difficulty={currentQ.difficulty as any} />
+              </div>
+
+              <h2 className="text-sm sm:text-base font-medium text-[#F0F6FC] leading-relaxed">
+                {currentQ.stem}
+              </h2>
+
+              {/* Mobile Mark for Review */}
+              <button
+                onClick={toggleMarkForReview}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded border font-mono text-[11px] transition-colors ${
+                  isMarked
+                    ? "bg-[#D29922]/20 text-[#E3B341] border-[#D29922]"
+                    : "bg-[#161B22] text-[#8B949E] border-[#30363D]"
+                }`}
+              >
+                {isMarked ? <BookmarkCheck className="w-3 h-3" /> : <Bookmark className="w-3 h-3" />}
+                <span>{isMarked ? "Marked" : "Mark"}</span>
+              </button>
+            </div>
+
+            {/* ANSWER heading */}
+            <div className="flex items-center justify-between border-b border-[#30363D] pb-2">
+              <h3 className="font-mono text-[11px] font-semibold text-[#8B949E] uppercase tracking-wider">
+                Answer options
+              </h3>
+              <span className="text-[10px] font-mono text-[#6E7681]">Choose one response</span>
+            </div>
+
+            {/* Four Clickable Options */}
+            <div className="space-y-2.5">
+              {(["A", "B", "C", "D"] as const).map((key) => {
+                const optionText = currentQ.options[key];
+                const isSelected = currentAnswer?.selectedKey === key;
+                const isOptionCorrect = currentQ.correctKey === key;
+
+                let cardStyle = "border-[#30363D] bg-[#161B22] text-[#F0F6FC] hover:border-[#58A6FF]/60 hover:bg-[#21262D]/60";
+                let badgeStyle = "bg-[#21262D] text-[#8B949E] border-[#30363D]";
+                let statusIcon = null;
+
+                if (isAnswered) {
+                  if (isSelected && isOptionCorrect) {
+                    cardStyle = "border-[#3FB950] bg-[#238636]/15 text-[#3FB950] font-medium shadow-[0_0_12px_rgba(63,185,80,0.12)]";
+                    badgeStyle = "bg-[#3FB950] text-[#0D1117] border-[#3FB950] font-bold";
+                    statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
+                  } else if (isSelected && !isOptionCorrect) {
+                    cardStyle = "border-[#F85149] bg-[#DA3633]/15 text-[#F85149] font-medium shadow-[0_0_12px_rgba(248,81,73,0.12)]";
+                    badgeStyle = "bg-[#F85149] text-[#FFFFFF] border-[#F85149] font-bold";
+                    statusIcon = <X className="w-4 h-4 text-[#F85149] shrink-0" />;
+                  } else if (isOptionCorrect) {
+                    cardStyle = "border-[#3FB950] bg-[#238636]/10 text-[#3FB950] font-medium border-dashed";
+                    badgeStyle = "bg-[#3FB950]/20 text-[#3FB950] border-[#3FB950] font-bold";
+                    statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
+                  } else {
+                    cardStyle = "border-[#30363D]/50 bg-[#161B22]/40 text-[#6E7681]";
+                    badgeStyle = "bg-[#21262D]/50 text-[#6E7681] border-[#30363D]/40";
+                  }
+                }
+
+                return (
+                  <button
+                    key={key}
+                    disabled={isAnswered}
+                    onClick={() => handleSelectOption(key)}
+                    aria-label={`Option ${key}: ${optionText}`}
+                    aria-pressed={isSelected}
+                    className={`w-full min-w-0 text-left p-3.5 sm:p-4 rounded-md border transition-colors duration-150 flex items-start gap-3 group cursor-pointer disabled:cursor-default ${cardStyle}`}
+                  >
+                    <span
+                      className={`w-6 h-6 rounded flex items-center justify-center font-mono text-xs shrink-0 border transition-colors ${badgeStyle}`}
+                    >
+                      {key}
+                    </span>
+                    <span className="flex-1 text-xs sm:text-sm leading-relaxed pt-0.5">
+                      {optionText}
+                    </span>
+                    {statusIcon}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Mobile-only: Feedback + Explanation (below options) */}
+            {isAnswered && (
+              <div className="lg:hidden space-y-3 pt-3 border-t border-[#30363D]/80">
+                {currentAnswer!.isCorrect ? (
+                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="font-bold">✓ Correct</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
+                    <XCircle className="w-4 h-4" />
+                    <span className="font-bold">✕ Expected: {currentQ.correctKey}</span>
+                  </div>
+                )}
+
+                <div className="rounded-md border border-[#30363D] bg-[#161B22] p-3 space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Explanation</span>
+                  </div>
+                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans">
+                    {currentQ.explanation}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
 
-          {/* Four Clickable Options (A, B, C, D) */}
-          <div className="space-y-3 pt-2">
-            {(["A", "B", "C", "D"] as const).map((key) => {
-              const optionText = currentQ.options[key];
-              const isSelected = currentAnswer?.selectedKey === key;
-              const isOptionCorrect = currentQ.correctKey === key;
+          {/* ─── COMPACT FOOTER NAV (inside center panel) ─── */}
+          <div className="h-12 border-t border-[#30363D] bg-[#161B22] px-4 sm:px-5 flex items-center justify-between shrink-0">
+            <button
+              onClick={handlePrevious}
+              disabled={currentIndex === 0}
+              className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] disabled:opacity-40 disabled:hover:bg-[#21262D] text-[#F0F6FC] border border-[#30363D] font-mono text-[11px] font-medium transition-colors disabled:cursor-not-allowed"
+              title="Previous (←)"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+              <span>Previous</span>
+            </button>
 
-              // Styling logic:
-              // BEFORE user selection: neutral cards with clean hover effects
-              // AFTER user selection:
-              // - If this option was selected and is correct -> Vibrant Green
-              // - If this option was selected and is incorrect -> Vibrant Red
-              // - If this option is the actual correct answer (and user picked something else) -> Highlighted Green
-              let cardStyle = "border-[#30363D] bg-[#161B22] text-[#F0F6FC] hover:border-[#58A6FF]/60 hover:bg-[#21262D]/60";
-              let badgeStyle = "bg-[#21262D] text-[#8B949E] border-[#30363D]";
-              let statusIcon = null;
+            <div className="flex-1" />
 
-              if (isAnswered) {
-                if (isSelected && isOptionCorrect) {
-                  // User picked correctly
-                  cardStyle = "border-[#3FB950] bg-[#238636]/15 text-[#3FB950] font-medium shadow-[0_0_15px_rgba(63,185,80,0.15)]";
-                  badgeStyle = "bg-[#3FB950] text-[#0D1117] border-[#3FB950] font-bold";
-                  statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
-                } else if (isSelected && !isOptionCorrect) {
-                  // User picked incorrectly
-                  cardStyle = "border-[#F85149] bg-[#DA3633]/15 text-[#F85149] font-medium shadow-[0_0_15px_rgba(248,81,73,0.15)]";
-                  badgeStyle = "bg-[#F85149] text-[#FFFFFF] border-[#F85149] font-bold";
-                  statusIcon = <X className="w-4 h-4 text-[#F85149] shrink-0" />;
-                } else if (isOptionCorrect) {
-                  // Reveal correct answer when user was incorrect
-                  cardStyle = "border-[#3FB950] bg-[#238636]/10 text-[#3FB950] font-medium border-dashed";
-                  badgeStyle = "bg-[#3FB950]/20 text-[#3FB950] border-[#3FB950] font-bold";
-                  statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
-                } else {
-                  // Other neutral options after answer
-                  cardStyle = "border-[#30363D]/50 bg-[#161B22]/40 text-[#6E7681]";
-                  badgeStyle = "bg-[#21262D]/50 text-[#6E7681] border-[#30363D]/40";
-                }
-              }
+            <button
+              onClick={handleNext}
+              className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-[#FFFFFF] font-mono text-[11px] font-semibold shadow-sm transition-colors"
+              title="Next (→)"
+            >
+              <span>
+                {currentIndex === questions.length - 1
+                  ? currentPage < totalPages
+                    ? "Next Page"
+                    : "Finish"
+                  : "Next"}
+              </span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
 
-              return (
-                <button
-                  key={key}
-                  disabled={isAnswered}
-                  onClick={() => handleSelectOption(key)}
-                  className={`w-full text-left p-3.5 sm:p-4 rounded-md border transition-all duration-150 flex items-start gap-3.5 group cursor-pointer disabled:cursor-default ${cardStyle}`}
-                >
-                  {/* Option Letter Badge */}
-                  <span
-                    className={`w-6 h-6 rounded flex items-center justify-center font-mono text-xs shrink-0 border transition-colors ${badgeStyle}`}
-                  >
-                    {key}
-                  </span>
-
-                  {/* Option Text */}
-                  <span className="flex-1 text-xs sm:text-sm leading-relaxed pt-0.5">
-                    {optionText}
-                  </span>
-
-                  {/* Status Indicator Icon if answered */}
-                  {statusIcon}
-                </button>
-              );
-            })}
+        {/* ─── RIGHT PANEL: QUESTION NAVIGATOR (desktop always visible) ─── */}
+        <aside className="hidden min-w-0 lg:flex flex-col border-l border-[#30363D] bg-[#0D1117]/50">
+          {/* Navigator Header */}
+          <div className="px-3 py-2.5 border-b border-[#30363D] shrink-0">
+            <h3 className="font-mono font-bold text-[11px] text-[#F0F6FC] uppercase tracking-wider">
+              Questions
+            </h3>
+            <div className="text-[10px] font-mono text-[#6E7681] mt-0.5">
+              {answeredList.length}/{questions.length} answered
+            </div>
           </div>
 
-          {/* ======================================================================= */}
-          {/* IMMEDIATE FEEDBACK & EXPLANATION (Revealed Only After User Selection) */}
-          {/* ======================================================================= */}
-          {isAnswered && (
-            <div className="space-y-4 pt-4 border-t border-[#30363D]/80 animate-in fade-in duration-200">
-              {/* Correct / Incorrect Banner */}
-              {currentAnswer.isCorrect ? (
-                <div className="flex items-center justify-between p-3.5 rounded-md bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#3FB950]" />
-                    <span className="font-bold text-sm">✓ Correct Answer</span>
-                  </div>
-                  <span className="text-[11px] text-[#3FB950]/80">Well done!</span>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between p-3.5 rounded-md bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
-                  <div className="flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-[#F85149]" />
-                    <span className="font-bold text-sm">✕ Incorrect Answer</span>
-                  </div>
-                  <span className="text-[11px] text-[#F85149]/80">
-                    Expected: Option {currentQ.correctKey}
-                  </span>
-                </div>
-              )}
+          {/* Navigator Grid (scrollable) */}
+          <div ref={navigatorRef} className="flex-1 overflow-y-auto p-2.5 scrollbar-thin">
+            <div className="grid grid-cols-4 gap-1.5 justify-items-center">
+              {questions.map((q, idx) => {
+                const { bg, icon, ring, marked } = getNavPillStyle(q, idx);
+                const isCurrent = idx === currentIndex;
 
-              {/* Explanation Card */}
-              <div className="rounded-md border border-[#30363D] bg-[#161B22] p-4 sm:p-5 space-y-3 font-sans">
-                <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2.5">
-                  <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#58A6FF]">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Explanation & Solution</span>
-                  </div>
-                  <div className="text-[11px] font-mono text-[#8B949E]">
-                    Correct:{" "}
-                    <strong className="text-[#3FB950]">
-                      Option {currentQ.correctKey}
-                    </strong>
-                  </div>
-                </div>
-
-                {/* Correct Answer Quote */}
-                <div className="p-2.5 rounded bg-[#0D1117] border border-[#30363D] text-xs font-mono text-[#C9D1D9]">
-                  <span className="text-[#8B949E] mr-2">Option {currentQ.correctKey}:</span>
-                  <span className="text-[#F0F6FC] font-medium">
-                    {currentQ.options[currentQ.correctKey]}
-                  </span>
-                </div>
-
-                {/* Conceptual Explanation Markdown text */}
-                <div className="text-xs text-[#8B949E] leading-relaxed space-y-2 pt-1 font-sans">
-                  <p>{currentQ.explanation}</p>
-                </div>
-              </div>
+                return (
+                  <button
+                    key={q.id}
+                    ref={isCurrent ? currentBtnRef : null}
+                    onClick={() => setCurrentIndex(idx)}
+                    aria-label={`Question ${q.questionNumber}${answers[q.id] ? (answers[q.id].isCorrect ? ", answered correctly" : ", answered incorrectly") : marked ? ", marked for review" : ", unanswered"}`}
+                    aria-current={isCurrent ? "step" : undefined}
+                    className={`relative h-7 w-7 rounded-md border font-mono text-[10px] font-semibold flex items-center justify-center transition-all ${bg} ${ring} hover:opacity-90`}
+                    title={`Question ${idx + 1}`}
+                  >
+                    <span>{q.questionNumber}</span>
+                    {icon && (
+                      <span className="absolute -top-0.5 -right-0.5">{icon}</span>
+                    )}
+                    {marked && !answers[q.id] && (
+                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#E3B341]" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
-          )}
-        </div>
-      </main>
+          </div>
+
+          {/* Navigator Legend */}
+          <div className="px-3 py-2 border-t border-[#30363D] space-y-1.5 text-[9px] font-mono text-[#6E7681] shrink-0">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded bg-[#238636]/30 border border-[#3FB950]/50" />
+              <span>Correct</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded bg-[#DA3633]/30 border border-[#F85149]/50" />
+              <span>Incorrect</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded bg-[#D29922]/20 border border-[#D29922]/50" />
+              <span>Review</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded bg-[#21262D] border border-[#30363D]" />
+              <span>Unanswered</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded ring-1 ring-[#58A6FF] bg-[#0D1117]" />
+              <span>Current</span>
+            </div>
+          </div>
+        </aside>
+      </div>
 
       {/* ========================================================================= */}
-      {/* 3. BOTTOM CONTROL BAR (Previous, Next, Mark for Review, Keyboard Hints) */}
+      {/* MOBILE NAVIGATOR (bottom sheet) */}
       {/* ========================================================================= */}
-      <footer className="h-16 border-t border-[#30363D] bg-[#161B22] px-4 sm:px-6 flex items-center justify-between shrink-0 z-20">
-        {/* Left: Previous Button */}
-        <button
-          onClick={handlePrevious}
-          disabled={currentIndex === 0}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] disabled:opacity-40 disabled:hover:bg-[#21262D] text-[#F0F6FC] border border-[#30363D] font-mono text-xs font-medium transition-colors cursor-pointer disabled:cursor-not-allowed"
-          title="Previous Question (Left Arrow)"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Previous</span>
-        </button>
-
-        {/* Center: Keyboard Shortcuts Legend */}
-        <div className="hidden md:flex items-center gap-3 text-[11px] font-mono text-[#6E7681]">
-          <span>
-            <kbd className="px-1.5 py-0.5 bg-[#0D1117] border border-[#30363D] rounded text-[#8B949E]">
-              1-4
-            </kbd>{" "}
-            Select
-          </span>
-          <span>
-            <kbd className="px-1.5 py-0.5 bg-[#0D1117] border border-[#30363D] rounded text-[#8B949E]">
-              ←
-            </kbd>{" "}
-            Prev
-          </span>
-          <span>
-            <kbd className="px-1.5 py-0.5 bg-[#0D1117] border border-[#30363D] rounded text-[#8B949E]">
-              →
-            </kbd>{" "}
-            Next
-          </span>
-          <span>
-            <kbd className="px-1.5 py-0.5 bg-[#0D1117] border border-[#30363D] rounded text-[#8B949E]">
-              M
-            </kbd>{" "}
-            Review
-          </span>
-        </div>
-
-        {/* Right: Mark for Review & Next Button */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            onClick={toggleMarkForReview}
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded border font-mono text-xs transition-colors ${
-              isMarked
-                ? "bg-[#D29922]/20 text-[#E3B341] border-[#D29922]"
-                : "bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC] border-[#30363D]"
-            }`}
+      {showMobileNav && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col justify-end">
+          <div
+            className="bg-[#161B22] border-t border-[#30363D] rounded-t-xl max-h-[60vh] flex flex-col shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            <Bookmark className="w-3.5 h-3.5" />
-            <span>{isMarked ? "Marked" : "Mark"}</span>
-          </button>
-
-          <button
-            onClick={handleNext}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-[#FFFFFF] font-mono text-xs font-semibold shadow-sm transition-colors cursor-pointer"
-            title="Next Question (Right Arrow)"
-          >
-            <span>
-              {currentIndex === questions.length - 1 ? "Finish Session" : "Next"}
-            </span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      </footer>
-
-      {/* ========================================================================= */}
-      {/* 4. QUESTION NAVIGATOR (Slide-over Drawer / Grid Modal) */}
-      {/* ========================================================================= */}
-      {isNavigatorOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end animate-in fade-in duration-150">
-          <div className="w-full max-w-md bg-[#161B22] border-l border-[#30363D] flex flex-col h-full shadow-2xl">
-            {/* Drawer Header */}
-            <div className="p-4 border-b border-[#30363D] flex items-center justify-between shrink-0">
+            {/* Mobile Nav Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#30363D] shrink-0">
               <div className="flex items-center gap-2">
-                <LayoutGrid className="w-4 h-4 text-[#58A6FF]" />
-                <h3 className="font-mono font-bold text-sm text-[#F0F6FC]">
-                  Question Navigator
-                </h3>
+                <h3 className="font-mono font-bold text-xs text-[#F0F6FC]">Question Navigator</h3>
+                <span className="text-[10px] font-mono text-[#6E7681]">
+                  {answeredList.length}/{questions.length}
+                </span>
               </div>
               <button
-                onClick={() => setIsNavigatorOpen(false)}
-                className="p-1 rounded hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC] transition-colors"
+                onClick={() => setShowMobileNav(false)}
+                className="p-1 rounded hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Statistics Summary */}
-            <div className="p-4 border-b border-[#30363D] grid grid-cols-4 gap-2 text-center font-mono">
-              <div className="p-2 rounded bg-[#0D1117] border border-[#30363D]">
-                <div className="text-[10px] text-[#8B949E]">Total</div>
-                <div className="text-sm font-bold text-[#F0F6FC]">{questions.length}</div>
+            {/* Mobile Nav Stats */}
+            <div className="px-4 py-2 grid grid-cols-4 gap-2 text-center font-mono border-b border-[#30363D] shrink-0">
+              <div className="p-1.5 rounded bg-[#0D1117] border border-[#30363D]">
+                <div className="text-[9px] text-[#8B949E]">Total</div>
+                <div className="text-xs font-bold text-[#F0F6FC]">{questions.length}</div>
               </div>
-              <div className="p-2 rounded bg-[#0D1117] border border-[#3FB950]/30">
-                <div className="text-[10px] text-[#3FB950]">Correct</div>
-                <div className="text-sm font-bold text-[#3FB950]">{correctCount}</div>
+              <div className="p-1.5 rounded bg-[#0D1117] border border-[#3FB950]/30">
+                <div className="text-[9px] text-[#3FB950]">Correct</div>
+                <div className="text-xs font-bold text-[#3FB950]">{correctCount}</div>
               </div>
-              <div className="p-2 rounded bg-[#0D1117] border border-[#F85149]/30">
-                <div className="text-[10px] text-[#F85149]">Wrong</div>
-                <div className="text-sm font-bold text-[#F85149]">{incorrectCount}</div>
+              <div className="p-1.5 rounded bg-[#0D1117] border border-[#F85149]/30">
+                <div className="text-[9px] text-[#F85149]">Wrong</div>
+                <div className="text-xs font-bold text-[#F85149]">{incorrectCount}</div>
               </div>
-              <div className="p-2 rounded bg-[#0D1117] border border-[#D29922]/30">
-                <div className="text-[10px] text-[#E3B341]">Marked</div>
-                <div className="text-sm font-bold text-[#E3B341]">{markedCount}</div>
+              <div className="p-1.5 rounded bg-[#0D1117] border border-[#D29922]/30">
+                <div className="text-[9px] text-[#E3B341]">Marked</div>
+                <div className="text-xs font-bold text-[#E3B341]">{markedCount}</div>
               </div>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="px-4 py-2 border-b border-[#30363D] flex items-center gap-1 text-[11px] font-mono overflow-x-auto">
-              {(["all", "answered", "unanswered", "marked"] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setNavigatorFilter(tab)}
-                  className={`px-2 py-1 rounded transition-colors capitalize ${
-                    navigatorFilter === tab
-                      ? "bg-[#21262D] text-[#58A6FF] font-semibold border border-[#30363D]"
-                      : "text-[#8B949E] hover:text-[#F0F6FC]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            {/* Question Pills Grid */}
-            <div className="flex-1 overflow-y-auto p-4">
-              <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
+            {/* Mobile Nav Grid */}
+            <div className="flex-1 overflow-y-auto p-3">
+              <div className="grid grid-cols-6 sm:grid-cols-8 gap-2">
                 {questions.map((q, idx) => {
-                  const ans = answers[q.id];
-                  const isCurrent = idx === currentIndex;
-                  const marked = markedQuestions.has(q.id);
-
-                  // Filter logic
-                  if (navigatorFilter === "answered" && !ans) return null;
-                  if (navigatorFilter === "unanswered" && ans) return null;
-                  if (navigatorFilter === "marked" && !marked) return null;
-
-                  let pillStyle = "bg-[#21262D] text-[#8B949E] border-[#30363D] hover:border-[#58A6FF]";
-
-                  if (ans) {
-                    if (ans.isCorrect) {
-                      pillStyle = "bg-[#238636] text-[#FFFFFF] border-[#2ea043]";
-                    } else {
-                      pillStyle = "bg-[#DA3633] text-[#FFFFFF] border-[#f85149]";
-                    }
-                  }
-
-                  if (isCurrent) {
-                    pillStyle += " ring-2 ring-[#58A6FF] ring-offset-2 ring-offset-[#161B22]";
-                  }
+                  const { bg, icon, ring, marked } = getNavPillStyle(q, idx);
 
                   return (
                     <button
                       key={q.id}
                       onClick={() => {
                         setCurrentIndex(idx);
-                        setIsNavigatorOpen(false);
+                        setShowMobileNav(false);
                       }}
-                      className={`relative h-10 rounded border font-mono text-xs font-semibold flex items-center justify-center transition-all ${pillStyle}`}
+                      className={`relative h-10 rounded border font-mono text-xs font-semibold flex items-center justify-center transition-all ${bg} ${ring} hover:opacity-90`}
                     >
                       <span>{idx + 1}</span>
-                      {marked && (
-                        <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#E3B341]" />
+                      {icon && <span className="absolute -top-0.5 -right-0.5">{icon}</span>}
+                      {marked && !answers[q.id] && (
+                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#E3B341]" />
                       )}
                     </button>
                   );
                 })}
               </div>
             </div>
-
-            {/* Legend Footer */}
-            <div className="p-3 border-t border-[#30363D] bg-[#0D1117] flex items-center justify-around text-[10px] font-mono text-[#8B949E]">
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded bg-[#238636]" /> Correct
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded bg-[#DA3633]" /> Wrong
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded bg-[#E3B341]" /> Marked
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded bg-[#21262D] border border-[#30363D]" /> Unvisited
-              </span>
-            </div>
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* 5. SESSION SUMMARY MODAL (Triggered on Finish or Exit) */}
+      {/* SESSION SUMMARY MODAL */}
       {/* ========================================================================= */}
       {showSummaryModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
@@ -770,7 +815,6 @@ export function McqPracticeWorkspace({
               </div>
             </div>
 
-            {/* Summary Metrics */}
             <div className="grid grid-cols-2 gap-3 font-mono text-xs">
               <div className="p-3 rounded bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[#8B949E] text-[10px]">Total Answered</div>
@@ -798,7 +842,6 @@ export function McqPracticeWorkspace({
               </div>
             </div>
 
-            {/* Modal Actions */}
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={() => setShowSummaryModal(false)}

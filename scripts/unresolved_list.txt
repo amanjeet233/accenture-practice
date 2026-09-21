@@ -1,0 +1,555 @@
+
+[1] ID: cmua6e63m00207go0jxmcurk6 | Slug: mockoa1-sec1-mcq-015-what-is-the-primary-purpose-of-a-router-in-a-
+Stem: What is the primary purpose of a router in a network?
+Options: A="To connect different networks together", B="To connect multiple devices within the same network", C="To encrypt data for secure transmission", D="To host websites"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[2] ID: cmua6ezzy004d7go07r1kq3uo | Slug: mockoa1-sec1-mcq-032-what-is-the-purpose-of-encryption-in-cybersec
+Stem: What is the purpose of encryption in cybersecurity?
+Options: A="To compress files for faster transmission", B="To hide data from unauthorized users", C="To detect intrusions in a network", D="To back up data securely"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[3] ID: cmua6fag600577go0tursdgpo | Slug: mockoa1-sec1-mcq-038-what-does-saas-stand-for-in-cloud-computing
+Stem: What does "SaaS" stand for in cloud computing?
+Options: A="Storage as a Service", B="Software as a Service", C="Security as a Service", D="System as a Service"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[4] ID: cmua6fdx0005h7go0svovy5be | Slug: mockoa1-sec1-mcq-040-which-cloud-service-model-provides-virtualize
+Stem: Which cloud service model provides virtualized computing resources over the internet?
+Options: A="SaaS", B="PaaS", C="IaaS", D="DaaS Which cloud service model provides virtualized computing resources over the internet?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[5] ID: cmua6fhic005r7go0vylp0e6e | Slug: mockoa1-sec1-mcq-042-which-of-the-following-is-not-a-characteristi
+Stem: Which of the following is NOT a characteristic of cloud computing?
+Options: A="On-demand self-service", B="Broad network access", C="Rapid elasticity", D="Fixed pricing"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[6] ID: cmua6fl3k00617go0bxagzyff | Slug: mockoa1-sec1-mcq-044-what-is-the-purpose-of-a-virtual-private-clou
+Stem: What is the purpose of a Virtual Private Cloud (VPC)?
+Options: A="To create an isolated section of the cloud for security", B="To reduce cloud storage costs", C="To increase the speed of cloud services", D="To back up data automatically"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[7] ID: cmua6fooi006b7go0yq60m1a1 | Slug: mockoa1-sec1-mcq-046-which-cloud-deployment-model-is-used-by-a-sin
+Stem: Which cloud deployment model is used by a single organization?
+Options: A="Public Cloud", B="Private Cloud", C="Hybrid Cloud", D="Community Cloud"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[8] ID: cmua6fzo700757go0aca603as | Slug: mockoa1-sec1-mcq-052-appears-twice-in-the-word-programming-what-wi
+Stem: appears twice in the word "Programming". What will be the output of the following pseudocode? Integer a = 3, b = 5, c = 7 if (a < b) if (b < c) a = c - a else b = c + a Print a, b, c
+Options: A="4, 5, 7", B="7, 5, 7", C="3, 5, 7", D="4, 7, 7"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[9] ID: cmua6g6r4007p7go08b28urkp | Slug: mockoa1-sec2-mcq-003-in-word-what-happens-when-you-press-ctrl-shif
+Stem: In Word, what happens when you press 'Ctrl + Shift + F' while text is selected?
+Options: A="Opens the Font dialog box", B="Increases font size", C="Changes font to default", D="Clears formatting In Word,"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[10] ID: cmua6ghcl008j7go0c1dq4296 | Slug: mockoa1-sec2-mcq-009-what-is-the-default-paper-size-in-ms-word
+Stem: What is the default paper size in MS Word?
+Options: A="A4", B="Letter", C="Legal", D="Executive"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[11] ID: cmua6gkqz008t7go0e9t8kr0e | Slug: mockoa1-sec2-mcq-011-which-of-the-following-excel-functions-can-be
+Stem: Which of the following Excel functions can be used to combine the text from multiple cells into one cell?
+Options: A="CONCATENATE", B="TEXTJOIN", C="CONCAT", D="JOIN Which of the following Excel functions can be used to combine the text from multiple cells into one cell?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[12] ID: cmua6go9s00937go0rnv4uig4 | Slug: mockoa1-sec2-mcq-013-want-to-get-hired-in-tech-jobs-but-not-sure-w
+Stem: WANT TO GET HIRED IN TECH JOBS? BUT NOT SURE WHAT TO STUDY Data Structures? Web Technologies? Machine Learning? Data Science? DevOps? Java? Python? GET COURSES WORTH 7499 AT JUST 749 COURSE COMPLETE REFUND HOW? 90% 90Days 90% What is the primary function of a VLAN (Virtual Local Area Network)?
+Options: A="To reduce broadcast traffic", B="To connect different networks together", C="To secure the network from external threats", D="To allow multiple networks on a single switch"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[13] ID: cmua6gpzl00987go0tipz8wnu | Slug: mockoa1-sec2-mcq-014-on-a-single-switch-what-is-the-primary-functi
+Stem: on a single switch What is the primary function of a VLAN (Virtual Local Area Network)?
+Options: A="To reduce broadcast traffic", B="To connect different networks together", C="To secure the network from external threats", D="To allow multiple networks on a single switch"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[14] ID: cmua6grrq009d7go00fse1vjx | Slug: mockoa1-sec2-mcq-015-on-a-single-switch-which-protocol-is-used-to-
+Stem: on a single switch Which protocol is used to securely transmit data over a VPN?
+Options: A="PPTP", B="IPSec", C="L2TP", D="GRE Which protocol is used to securely transmit data over a VPN?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[15] ID: cmua6gtio009i7go0xm854lpl | Slug: mockoa1-sec2-mcq-016-which-protocol-is-used-to-securely-transmit-d
+Stem: Which protocol is used to securely transmit data over a VPN?
+Options: A="PPTP", B="IPSec", C="L2TP", D="GRE What is the purpose of the ARP (Address Resolution Protocol)?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[16] ID: cmua6gvan009n7go02jdh15rd | Slug: mockoa1-sec2-mcq-017-what-is-the-purpose-of-the-arp-address-resolu
+Stem: What is the purpose of the ARP (Address Resolution Protocol)?
+Options: A="To map IP addresses to MAC addresses", B="To map MAC addresses to IP addresses", C="To route packets across a network", D="To translate domain names to IP addresses"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[17] ID: cmua6gx36009s7go0lsciz17u | Slug: mockoa1-sec2-mcq-018-to-ip-addresses-what-is-the-purpose-of-the-ar
+Stem: to IP addresses What is the purpose of the ARP (Address Resolution Protocol)?
+Options: A="To map IP addresses to MAC addresses", B="To map MAC addresses to IP addresses", C="To route packets across a network", D="To translate domain names to IP addresses 1:1 MOCK SESSION www.primecoding.in Master Your Next Interview with Us! 100+ successful sessions with many placed Practice Today, Conquer Tomorrow! In the context of networking,"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[18] ID: cmua6h5zp00ah7go0gv340e7v | Slug: mockoa1-sec2-mcq-023-what-command-is-used-to-view-the-routing-tabl
+Stem: What command is used to view the routing table in a network device?
+Options: A="netstat", B="ipconfig", C="route", D="tracert"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[19] ID: cmua6h9h000ar7go0k4h7c73n | Slug: mockoa1-sec2-mcq-025-which-type-of-attack-involves-intercepting-an
+Stem: Which type of attack involves intercepting and altering communication between two parties without their knowledge?
+Options: A="Man-in-the-Middle (MITM)", B="Phishing", C="Denial of Service (DoS)", D="SQL Injection"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[20] ID: cmua6hd4300b17go0eis11w8m | Slug: mockoa1-sec2-mcq-027-which-of-the-following-is-a-technique-used-to
+Stem: Which of the following is a technique used to identify vulnerabilities in a system by simulating an attack?
+Options: A="Penetration Testing", B="Social Engineering", C="Brute Force Attack", D="Phishing"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[21] ID: cmua6hkgk00bl7go09kh2bgf9 | Slug: mockoa1-sec2-mcq-031-what-is-the-primary-purpose-of-a-honeypot-in-
+Stem: What is the primary purpose of a honeypot in cybersecurity?
+Options: A="To detect unauthorized access", B="To act as a decoy to lure attackers", C="To protect sensitive data", D="To encrypt data before transmission"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[22] ID: cmua6hm8d00bq7go09dw30cz7 | Slug: mockoa1-sec2-mcq-032-transmission-what-is-the-primary-purpose-of-a
+Stem: transmission What is the primary purpose of a honeypot in cybersecurity?
+Options: A="To detect unauthorized access", B="To act as a decoy to lure attackers", C="To protect sensitive data", D="To encrypt data before transmission"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[23] ID: cmua6ho4z00bv7go0t6zzph9e | Slug: mockoa1-sec2-mcq-033-transmission-which-security-protocol-is-used-
+Stem: transmission Which security protocol is used to ensure secure communication over a wireless network?
+Options: A="WPA3", B="WEP", C="HTTP", D="FTP Which security protocol is used to ensure secure communication over a wireless network?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[24] ID: cmua6hpx600c07go0po1fpdwx | Slug: mockoa1-sec2-mcq-034-which-security-protocol-is-used-to-ensure-sec
+Stem: Which security protocol is used to ensure secure communication over a wireless network?
+Options: A="WPA3", B="WEP", C="HTTP", D="FTP What is the purpose of a digital certificate in a public key infrastructure (PKI)?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[25] ID: cmua6hrrd00c57go0kbv0adlf | Slug: mockoa1-sec2-mcq-035-what-is-the-purpose-of-a-digital-certificate-
+Stem: What is the purpose of a digital certificate in a public key infrastructure (PKI)?
+Options: A="To verify the identity of the certificate holder", B="To encrypt data during transmission", C="To store encryption keys", D="To sign digital documents"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[26] ID: cmua6hvb300cf7go0ie5eh1f6 | Slug: mockoa1-sec2-mcq-037-which-of-the-following-is-a-key-benefit-of-se
+Stem: Which of the following is a key benefit of serverless computing?
+Options: A="Automatic scaling", B="Dedicated server management", C="Fixed server costs", D="In-house data storage"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[27] ID: cmua6hyq900cp7go03ff9q9yz | Slug: mockoa1-sec2-mcq-039-in-cloud-computing-what-is-auto--scaling
+Stem: In cloud computing, what is "auto- scaling"?
+Options: A="The automatic adjustment of computing resources based on demand", B="The manual scaling of resources to match user requirements", C="A feature that reduces cloud storage costs", D="A method to secure cloud data In cloud computing,"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[28] ID: cmua6i2aw00cz7go08guhwwdt | Slug: mockoa1-sec2-mcq-041-which-of-the-following-is-a-characteristic-of
+Stem: Which of the following is a characteristic of Platform as a Service (PaaS)?
+Options: A="Provides a platform to develop, run, and manage applications", B="Offers raw computing resources like virtual machines", C="Provides networking capabilities like VPN", D="Supplies end-user software applications"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[29] ID: cmua6i5zd00d97go0qmldo6dn | Slug: mockoa1-sec2-mcq-043-which-cloud-deployment-model-is-most-suitable
+Stem: Which cloud deployment model is most suitable for companies that require dedicated infrastructure with enhanced security?
+Options: A="Private Cloud", B="Public Cloud", C="Hybrid Cloud", D="Community Cloud"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[30] ID: cmua6i9bx00dj7go0g1yyzlnh | Slug: mockoa1-sec2-mcq-045-which-of-the-following-cloud-service-models-a
+Stem: Which of the following cloud service models allows users to develop, run, and manage applications without the complexity of building and maintaining the infrastructure?
+Options: A="PaaS", B="SaaS", C="IaaS", D="DaaS Which of the following cloud service models allows users to develop, run, and manage applications without the complexity of building and maintaining the infrastructure?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[31] ID: cmua6icqc00dt7go0n5o3rpou | Slug: mockoa1-sec2-mcq-047-which-of-the-following-cloud-services-is-most
+Stem: Which of the following cloud services is most commonly used for scalable storage?
+Options: A="Amazon S3", B="Google Compute Engine", C="Microsoft Azure VM", D="IBM Watson"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[32] ID: cmua6iqs500ex7go0nsua537j | Slug: mockoa1-sec2-mcq-055-was-renamed-to
+Stem: WAS RENAMED TO:
+Options: A="Manager", B="Picture Manager", C="Picture Editor", D="Paint Editor STARTING WITH MICROSOFT OFFICE 2003, PHOTO EDITOR WAS RENAMED TO:"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[33] ID: cmua6j5h100g17go06w2qhr8x | Slug: mockoa1-sec2-mcq-063-of-the-first-version-of-microsoft-office
+Stem: OF THE FIRST VERSION OF MICROSOFT OFFICE?
+Options: A="Paint", B="Outlook", C="PowerPoint", D="MS Word"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[34] ID: cmua6kyqz000ajvczed6g3dk0 | Slug: mockoa1-sec2-mcq-102-question
+Stem: 
+Options: A="AUTO-REPLY", B="VACATION MODE", C="OUT OF OFFICE ASSISTANT", D="AWAY MESSAGE"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[35] ID: cmua6kyr4000djvczkdr4f2i0 | Slug: mockoa1-sec2-mcq-101-question
+Stem: 
+Options: A="AUTO-REPLY", B="VACATION MODE", C="OUT OF OFFICE ASSISTANT", D="AWAY MESSAGE"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[36] ID: cmua6kz720028jvczz5d1gljp | Slug: mockoa1-sec2-mcq-122-question
+Stem: 
+Options: A="CTRL+X", B="CTRL+C", C="CTRL+V", D="CTRL+P IN POWERPOINT,"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[37] ID: cmua6kz720027jvczuog6kptp | Slug: mockoa1-sec2-mcq-119-representation-of-data
+Stem: REPRESENTATION OF DATA?
+Options: A="CHARTS", B="TABLES", C="FILTERS", D="CONDITIONAL FORMATTING"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[38] ID: cmua6kz74002fjvczs1am92z5 | Slug: mockoa1-sec2-mcq-121-question
+Stem: 
+Options: A="CTRL+X", B="CTRL+C", C="CTRL+V", D="CTRL+P"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[39] ID: cmua6kzjm004bjvczj4vdu9py | Slug: mockoa1-sec3-cyber-q003-which-form-of-cyberattack-involves-tricking-i
+Stem: Which form of cyberattack involves tricking individuals into providing sensitive information by pretending to be a trustworthy entity?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[40] ID: cmua6kzjm004djvczsr8rx0qf | Slug: mockoa1-sec3-cyber-q001-which-type-of-cyberattack-involves-overwhelmi
+Stem: Which type of cyberattack involves overwhelming a network or service with excessive traffic, making it inaccessible to users?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[41] ID: cmua6kzjm0046jvczitycpnep | Slug: mockoa1-sec2-mcq-130-formatting-choices
+Stem: FORMATTING CHOICES?
+Options: A="CELL STYLES", B="CONDITIONAL FORMATTING", C="THEMES", D="TEMPLATES"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[42] ID: cmua6kzjm004ejvczuct23ibz | Slug: mockoa1-sec3-cyber-q002-which-cybersecurity-threat-encrypts-a-victims
+Stem: Which cybersecurity threat encrypts a victim's data and demands payment for the decryption key?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[43] ID: cmua6l0bh00aljvcz14k9fmsb | Slug: mockoa1-sec3-nsc-mcq-042-a-cloud-computing-services-b-hardware-sales-c
+Stem: A) Cloud computing services • B) Hardware sales • C) Internet browsing • D) Social networking What is Microsoft Azure primarily known for?
+Options: A="Providing search engine services", B="Offering e-commerce solutions", C="Providing a range of cloud services including analytics, storage, and networking", D="Developing mobile applications"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[44] ID: cmua6l0bh00amjvczld3pkljg | Slug: mockoa1-sec3-nsc-mcq-041-a-cloud-computing-services-b-hardware-sales-c
+Stem: A) Cloud computing services • B) Hardware sales • C) Internet browsing • D) Social networking What is the primary service offered by Google Cloud?
+Options: A="Cloud computing services", B="Hardware sales", C="Internet browsing", D="Social networking"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[45] ID: cmua6l0bg00ahjvczcqbeuoij | Slug: mockoa1-sec3-nsc-mcq-039-a-limited-storage-capacity-b-high-maintenance
+Stem: A) Limited storage capacity • B) High maintenance cost • C) Scalability and flexibility in resource management • D) Fixed resource allocation Name a popular cloud service provider.
+Options: A="Oracle", B="AWS (Amazon Web Services)", C="SAP", D="IBM What is the primary service offered by Google Cloud?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[46] ID: cmua6l0bg00afjvczmvg779b7 | Slug: mockoa1-sec3-nsc-mcq-040-a-oracle-b-aws-amazon-web-services-c-sap-d-ib
+Stem: A) Oracle • B) AWS (Amazon Web Services) • C) SAP • D) IBM What is the primary service offered by Google Cloud?
+Options: A="Cloud computing services", B="Hardware sales", C="Internet browsing", D="Social networking"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[47] ID: cmua6l0bh00apjvczy6hmfj2h | Slug: mockoa1-sec3-nsc-mcq-051-a-to-increase-internet-speed-b-to-create-a-se
+Stem: A) To increase internet speed • B) To create a secure connection over a less secure network • C) To block unwanted emails • D) To manage network traffic Mock 1:1 Interview Session • Ace Your Interviews • Expert Feedback • Real-World Simulation • Boost Your Confidence W W W . P R I M E C O D I N G . I N Which protocol is used to ensure secure remote login?
+Options: A="FTP", B="HTTP", C="SSH (Secure Shell)", D="SMTP Which protocol is used to ensure secure remote login?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[48] ID: cmua6l0jy00cpjvczkyod16gx | Slug: mockoa1-sec3-nsc-mcq-052-a-ftp-b-http-c-ssh-secure-shell-d-smtp-which-
+Stem: A) FTP • B) HTTP • C) SSH (Secure Shell) • D) SMTP Which protocol is used to ensure secure remote login?
+Options: A="FTP", B="HTTP", C="SSH (Secure Shell)", D="SMTP What does IDS stand for in network security?"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[49] ID: cmua6l0jx00cmjvczcvnmas1f | Slug: mockoa1-sec3-nsc-mcq-056-d-limited-storage-capacity-what-is-the-main-b
+Stem: D) Limited storage capacity What is the main benefit of cloud elasticity?
+Options: A="Fixed resource allocation", B="High maintenance cost", C="The ability to scale computing resources up or down as needed", D="Limited storage capacity"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[50] ID: cmua6l0jx00ckjvczzb4pf3e3 | Slug: mockoa1-sec3-nsc-mcq-054-question
+Stem: 
+Options: A="Information Detection System", B="Internet Data System", C="Intrusion Detection System", D="Internal Data System"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[51] ID: cmua6l0jx00cijvcz0n2t4hzp | Slug: mockoa1-sec3-nsc-mcq-053-question
+Stem: 
+Options: A="Information Detection System", B="Internet Data System", C="Intrusion Detection System", D="Internal Data System"
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[52] ID: cmua6l0jy00ctjvcza6ed2lq9 | Slug: mockoa1-sec3-nsc-mcq-057-d-limited-storage-capacity-what-does-hybrid-c
+Stem: D) Limited storage capacity What does hybrid cloud refer to?
+Options: A="A private cloud only", B="A public cloud only", C="A combination of private and public cloud environments", D="A type of cloud storage"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[53] ID: cmua6l0jy00cvjvcz87p2qakv | Slug: mockoa1-sec3-nsc-mcq-063-a-google-cloud-b-microsoft-azure-c-ibm-cloud-
+Stem: A) Google Cloud • B) Microsoft Azure • C) IBM Cloud • D) AWS (Amazon Web Services) What command allows you to determine whether an IP access list is enabled on a particular interface?
+Options: A="show ip access-list", B="show ip interface", C="show ip route", D="show ip protocol"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[54] ID: cmua6l0jy00cqjvczlsw971lt | Slug: mockoa1-sec3-nsc-mcq-062-a-google-cloud-b-microsoft-azure-c-ibm-cloud-
+Stem: A) Google Cloud • B) Microsoft Azure • C) IBM Cloud • D) AWS (Amazon Web Services) Which cloud service provider is known for its simple storage service (S3)?
+Options: A="Google Cloud", B="Microsoft Azure", C="IBM Cloud", D="AWS (Amazon Web Services)"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[55] ID: cmua6l0jx00cjjvczqcrhznae | Slug: mockoa1-sec3-nsc-mcq-055-a-information-detection-system-b-internet-dat
+Stem: A) Information Detection System • B) Internet Data System • C) Intrusion Detection System • D) Internal Data System What is the main benefit of cloud elasticity?
+Options: A="Fixed resource allocation", B="High maintenance cost", C="The ability to scale computing resources up or down as needed", D="Limited storage capacity"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[56] ID: cmua6l0jy00crjvczabwd3ixl | Slug: mockoa1-sec3-nsc-mcq-061-which-cloud-service-provider-is-known-for-its
+Stem: Which cloud service provider is known for its simple storage service (S3)?
+Options: A="Google Cloud", B="Microsoft Azure", C="IBM Cloud", D="AWS (Amazon Web Services)"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[57] ID: cmua6l0jx00cljvczm1666zlb | Slug: mockoa1-sec3-nsc-mcq-058-a-a-private-cloud-only-b-a-public-cloud-only-
+Stem: A) A private cloud only • B) A public cloud only • C) A combination of private and public cloud environments • D) A type of cloud storage What does hybrid cloud refer to?
+Options: A="A private cloud only", B="A public cloud only", C="A combination of private and public cloud environments", D="A type of cloud storage"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[58] ID: cmua6l0jy00cojvczkgplmllc | Slug: mockoa1-sec3-nsc-mcq-064-a-show-ip-access-list-b-show-ip-interface-c-s
+Stem: A) show ip access-list • B) show ip interface • C) show ip route • D) show ip protocol What command allows you to determine whether an IP access list is enabled on a particular interface?
+Options: A="show ip access-list", B="show ip interface", C="show ip route", D="show ip protocol"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[59] ID: cmua6l0t700emjvczy9ejvtzo | Slug: mockoa1-sec3-nsc-mcq-069-a-firewall-b-ids-c-antivirus-scanning-devices
+Stem: A) Firewall • B) IDS • C) Antivirus scanning devices • D) VPN Which cloud service provider should be chosen for extensive support of Linux, Windows Server, and SQL Server?
+Options: A="Google Cloud", B="AWS", C="Azure", D="IBM Cloud"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[60] ID: cmua6l0t700eljvcz1s33yurp | Slug: mockoa1-sec3-nsc-mcq-070-a-google-cloud-b-aws-c-azure-d-ibm-cloud-whic
+Stem: A) Google Cloud • B) AWS • C) Azure • D) IBM Cloud Which cloud service provider should be chosen for extensive support of Linux, Windows Server, and SQL Server?
+Options: A="Google Cloud", B="AWS", C="Azure", D="IBM Cloud"
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[61] ID: cmua6l2va00uzjvcz2b03j6xp | Slug: mockoa1-sec5b-tech-q012-in-excel-the-notation-b8-b10-indicates
+Stem: In Excel, the notation “B8  B10ˮ indicates:
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[62] ID: cmua6l2va00urjvczlo4761ki | Slug: mockoa1-sec5b-tech-q003-a-feature-of-ms-office-that-saves-the-documen
+Stem: A feature of MS Office that saves the document automatically after a certain interval is called:
+Options: A="", B="", C="", D=""
+Status: SOURCE_CONFLICT | Reason: Source document had text-shift/dropped stem during conversion
+
+[63] ID: cmua6l2va00v3jvczwtd02osm | Slug: mockoa1-sec5b-tech-q015-which-command-will-take-you-two-steps-backwar
+Stem: Which command will take you two steps backward from any particular directory?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[64] ID: cmua6l33e00wxjvcz5qfc389y | Slug: mockoa1-sec5b-tech-q019-in-excel-what-function-is-used-to-calculate-t
+Stem: In Excel, what function is used to calculate the average of a range of cells?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[65] ID: cmua6l33g00x7jvcz7w7fd2je | Slug: mockoa1-sec5b-tech-q020-what-is-the-default-file-extension-for-a-word
+Stem:  What is the default file extension for a Word document in Office 2007 and later?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[66] ID: cmua6l4lb012vjvczeigqwg9z | Slug: mockoa1-sec6-cloud-sit-005-a-business-needs-to-provide-global-access-to-
+Stem: A business needs to provide global access to its content with minimal latency.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[67] ID: cmua6l4lb0132jvczsiyvol10 | Slug: mockoa1-sec6-cloud-sit-008-an-organization-needs-to-provide-temporary-re
+Stem: An organization needs to provide temporary resources for a project with a limited duration.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[68] ID: cmua6l4lf0137jvczdzowszfn | Slug: mockoa1-sec6-cloud-sit-003-an-e-commerce-platform-experiences-high-traff
+Stem: An e-commerce platform experiences high traffic during sales events.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[69] ID: cmua6l4lb012zjvczmtb7ooez | Slug: mockoa1-sec6-cloud-sit-002-a-healthcare-organization-needs-to-securely-s
+Stem: A healthcare organization needs to securely store and process sensitive patient data.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[70] ID: cmua6l4le0136jvczfwpq8a01 | Slug: mockoa1-sec6-cloud-sit-007-a-company-is-moving-legacy-applications-to-th
+Stem: A company is moving legacy applications to the cloud but wants to maintain control over the infrastructure.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[71] ID: cmua6l4ld0135jvcz8efrzah1 | Slug: mockoa1-sec6-cloud-sit-004-a-company-wants-to-deploy-a-new-web-applicati
+Stem: A company wants to deploy a new web application quickly without managing the underlying infrastructure.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[72] ID: cmua6l4lb012wjvczyxpthldy | Slug: mockoa1-sec6-cloud-sit-001-a-startup-is-developing-a-mobile-app-with-flu
+Stem: A startup is developing a mobile app with fluctuating demand.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[73] ID: cmua6l4lb0131jvczvz9mrtb9 | Slug: mockoa1-sec6-cloud-sit-006-a-research-institution-needs-high-performance
+Stem: A research institution needs high-performance computing for complex simulations.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[74] ID: cmua6l4lb0130jvczhx3iy7vd | Slug: mockoa1-sec6-cloud-sit-010-a-financial-services-firm-needs-to-perform-bi
+Stem: A financial services firm needs to perform big data analysis on large datasets.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[75] ID: cmua6l4lc0134jvczvpq6vztq | Slug: mockoa1-sec6-cloud-sit-009-a-development-team-requires-a-collaborative-e
+Stem: A development team requires a collaborative environment to develop and test applications.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[76] ID: cmua6l4lc0133jvczlhp8c6v6 | Slug: mockoa1-sec6-cloud-sit-011-you-need-to-host-a-scalable-web-application-a
+Stem: You need to host a scalable web application and handle variable workloads without managing the underlying infrastructure.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[77] ID: cmua6l4vh014yjvczd8c79mer | Slug: mockoa1-sec6-cloud-sit-015-scenario-your-team-needs-to-access-the-latest
+Stem: Scenario: Your team needs to access the latest version of productivity software from any device without managing software installation.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[78] ID: cmua6l4vh014zjvczsxak4jhy | Slug: mockoa1-sec6-cloud-sit-014-scenario-you-need-to-develop-and-test-applica
+Stem: Scenario: You need to develop and test applications with an environment that supports continuous integration and delivery (CI/CD).
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[79] ID: cmua6l4vh014xjvcz3mk67mov | Slug: mockoa1-sec6-cloud-sit-013-scenario-you-want-to-use-software-application
+Stem: Scenario: You want to use software applications such as email and collaboration tools without worrying about maintenance or updates.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[80] ID: cmua6l4vh014wjvczbpv0wnlx | Slug: mockoa1-sec6-cloud-sit-012-scenario-you-require-complete-control-over-th
+Stem: Scenario: You require complete control over the virtual machines and storage resources for a custom application.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[81] ID: cmua6mr7v004grp09t9igzbdk | Slug: mockoa1-sec5b-tech-q022-which-feature-in-powerpoint-allows-you-to-add
+Stem: Which feature in PowerPoint allows you to add movement to text and objects?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[82] ID: cmua6mr7v004irp094rknwrtj | Slug: mockoa1-sec5b-tech-q023-what-is-the-shortcut-key-for-undoing-an-actio
+Stem: What is the shortcut key for undoing an action in MS Office?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[83] ID: cmua6mr7v004krp09o218hxeg | Slug: mockoa1-sec5b-tech-q024-in-outlook-which-feature-allows-you-to-set-an
+Stem: In Outlook, which feature allows you to set an automatic reply when you are out of the office?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[84] ID: cmua6mr7v004jrp09eawdqnk7 | Slug: mockoa1-sec5b-tech-q021-how-can-you-quickly-copy-formatting-from-one-
+Stem: How can you quickly copy formatting from one cell to another in Excel?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[85] ID: cmua6mria006crp09dlfirmgu | Slug: mockoa1-sec5b-tech-q030-what-is-the-keyboard-shortcut-to-select-all-c
+Stem:  What is the keyboard shortcut to select all content in a document?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[86] ID: cmua6mria006arp09i8ecpa3h | Slug: mockoa1-sec5b-tech-q026-in-excel-what-function-is-used-to-sum-a-range
+Stem: In Excel, what function is used to sum a range of cells?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[87] ID: cmua6mria0069rp09szumv6fc | Slug: mockoa1-sec5b-tech-q028-which-tab-in-powerpoint-contains-the-option-t
+Stem: Which tab in PowerPoint contains the option to insert a new slide?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[88] ID: cmua6mrib006grp09ogx1t8rq | Slug: mockoa1-sec5b-tech-q027-what-is-the-feature-in-ms-word-that-corrects-
+Stem: What is the feature in MS Word that corrects common typing errors as you type?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[89] ID: cmua6mria006brp09yfum12r8 | Slug: mockoa1-sec5b-tech-q029-in-excel-what-is-the-function-of-the-fill-han
+Stem: In Excel, what is the function of the Fill Handle?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[90] ID: cmua6mrib006frp09ld2gk7rr | Slug: mockoa1-sec5b-tech-q032-what-is-the-default-file-extension-for-an-exc
+Stem: What is the default file extension for an Excel workbook in Office 2007 and later?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[91] ID: cmua6mrib006lrp09x19nkfq5 | Slug: mockoa1-sec5b-tech-q038-which-tab-in-excel-contains-the-option-to-ins
+Stem: Which tab in Excel contains the option to insert a chart?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[92] ID: cmua6mrib006hrp09cnd7d5xr | Slug: mockoa1-sec5b-tech-q031-in-outlook-which-folder-contains-emails-that-
+Stem: In Outlook, which folder contains emails that have been marked as junk mail?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[93] ID: cmua6mrib006mrp093lhnabtn | Slug: mockoa1-sec5b-tech-q034-which-feature-in-excel-allows-you-to-create-a
+Stem: Which feature in Excel allows you to create a graphical representation of data?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[94] ID: cmua6mrib006krp09cwm201fb | Slug: mockoa1-sec5b-tech-q039-in-outlook-what-is-the-feature-that-helps-man
+Stem: In Outlook, what is the feature that helps manage emails by filtering and sorting them?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[95] ID: cmua6mrib006irp090twrur0a | Slug: mockoa1-sec5b-tech-q033-in-ms-word-what-feature-allows-you-to-track-c
+Stem: In MS Word, what feature allows you to track changes made to a document?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[96] ID: cmua6mrib006drp0904lqekp0 | Slug: mockoa1-sec5b-tech-q036-in-powerpoint-what-feature-allows-you-to-add-
+Stem: In PowerPoint, what feature allows you to add sound effects to your presentation?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[97] ID: cmua6mrs6008crp098cs2b1rl | Slug: mockoa1-sec5b-tech-q040-what-is-the-default-file-extension-for-a-powe
+Stem:  What is the default file extension for a PowerPoint presentation in Office 2007 and later?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[98] ID: cmua6mrs6008mrp09cglaesgc | Slug: mockoa1-sec5b-tech-q041-in-excel-what-feature-allows-you-to-quickly-a
+Stem: In Excel, what feature allows you to quickly apply a set of formatting choices?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[99] ID: cmua6mrs6008frp09ol7gmxnt | Slug: mockoa1-sec5b-tech-q043-in-powerpoint-what-is-the-feature-that-allows
+Stem: In PowerPoint, what is the feature that allows you to create a sequence of slides that run automatically?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[100] ID: cmua6mrs6008erp0904lp1vgb | Slug: mockoa1-sec5b-tech-q045-what-is-the-shortcut-key-to-redo-an-action-in
+Stem: What is the shortcut key to redo an action in MS Office?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[101] ID: cmua6mrs6008orp09p7slvxri | Slug: mockoa1-sec5b-tech-q044-in-excel-what-function-is-used-to-find-the-hi
+Stem: In Excel, what function is used to find the highest value in a range of cells?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[102] ID: cmua6msa800aorp09ae75dx67 | Slug: mockoa1-sec5b-tech-q065-question-name-a-popular-cloud-service-provide
+Stem: Name a popular cloud service provider.
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[103] ID: cmua6msa900aqrp09kck7i91m | Slug: mockoa1-sec5b-tech-q067-question-what-is-microsoft-azure-primarily-kn
+Stem: What is Microsoft Azure primarily known for?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[104] ID: cmua6msa900arrp09j5lzf0k5 | Slug: mockoa1-sec5b-tech-q066-question-what-is-the-primary-service-offered-
+Stem: What is the primary service offered by Google Cloud?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[105] ID: cmua6msjx00cirp09o5qnb2b6 | Slug: mockoa1-sec5b-tech-q072-question-which-protocol-is-used-to-ensure-sec
+Stem: Which protocol is used to ensure secure remote login?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[106] ID: cmua6msjy00cprp0974gslu5m | Slug: mockoa1-sec5b-tech-q073-question-what-does-ids-stand-for-in-network-s
+Stem: What does IDS stand for in network security?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[107] ID: cmua6msjy00cmrp0941hujxm8 | Slug: mockoa1-sec5b-tech-q077-question-which-cloud-service-provider-is-know
+Stem: Which cloud service provider is known for its simple storage service S3?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[108] ID: cmua6msjy00cnrp09sta51rtk | Slug: mockoa1-sec5b-tech-q075-question-what-does-hybrid-cloud-refer-to
+Stem: What does hybrid cloud refer to?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[109] ID: cmua6msjy00corp09naxdmfia | Slug: mockoa1-sec5b-tech-q078-question-what-command-allows-you-to-determine
+Stem: What command allows you to determine whether an IP access list is enabled on a particular interface?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[110] ID: cmua6msjy00clrp09e9bfbpkn | Slug: mockoa1-sec5b-tech-q074-question-what-is-the-main-benefit-of-cloud-el
+Stem: What is the main benefit of cloud elasticity?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification
+
+[111] ID: cmua6msjy00cqrp09d61qjybl | Slug: mockoa1-sec5b-tech-q081-question-which-cloud-service-provider-should-
+Stem: Which cloud service provider should be chosen for extensive support of Linux, Windows Server, and SQL Server?
+Options: A="", B="", C="", D=""
+Status: NEEDS_VERIFICATION | Reason: Answer not explicitly established in source material; pending formal verification

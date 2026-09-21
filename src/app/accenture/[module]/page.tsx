@@ -19,9 +19,12 @@ import {
   TrendingUp,
   Sparkles,
   BarChart3,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { getAccentureTestAnalytics } from "@/lib/testAnalyticsService";
 import { AccentureTestAnalyticsView } from "@/components/analytics/AccentureTestAnalyticsView";
+import { getSessionUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -42,10 +45,13 @@ export async function generateMetadata({
 
 export default async function AccentureModulePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ module: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { module } = await params;
+  const { page: pageParam } = await searchParams;
   const mod = ACCENTURE_MODULES.find((m) => m.slug === module);
 
   if (!mod) {
@@ -70,11 +76,11 @@ export default async function AccentureModulePage({
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 font-sans text-xs">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-[11px] text-[#8B949E]">
-          <Link href="/dashboard" className="hover:text-[#F0F6FC] transition-colors">
-            CODERTRACK
+          <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
+            ACCENTURE HOME
           </Link>
           <span>/</span>
-          <Link href="/accenture" className="hover:text-[#F0F6FC] transition-colors">
+          <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
             ACCENTURE
           </Link>
           <span>/</span>
@@ -172,13 +178,15 @@ export default async function AccentureModulePage({
 
   // Render Progress Dashboard
   if (mod.type === "PROGRESS") {
+    const user = await getSessionUser();
+    const userId = user?.id;
     const [solvedQuestions, totalQuestions, analyticsData] = await Promise.all([
       prisma.userProgress.findMany({
-        where: { isSolved: true },
+        where: { isSolved: true, ...(userId ? { userId } : { userId: "none" }) },
         select: { questionId: true },
       }),
       prisma.question.count({ where: ACCENTURE_COMPANY_FILTER }),
-      getAccentureTestAnalytics(),
+      getAccentureTestAnalytics(userId),
     ]);
 
     const solvedCount = solvedQuestions.length;
@@ -189,11 +197,11 @@ export default async function AccentureModulePage({
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 font-sans text-xs">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-[11px] text-[#8B949E]">
-          <Link href="/dashboard" className="hover:text-[#F0F6FC] transition-colors">
-            CODERTRACK
+          <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
+            ACCENTURE HOME
           </Link>
           <span>/</span>
-          <Link href="/accenture" className="hover:text-[#F0F6FC] transition-colors">
+          <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
             ACCENTURE
           </Link>
           <span>/</span>
@@ -253,21 +261,31 @@ export default async function AccentureModulePage({
     );
   }
 
-  // Render Questions Module Table
-  const [questions, solvedSet] = await Promise.all([
-    getAccentureModuleQuestions(mod.slug, mod.queryFilter),
-    getAccentureSolvedQuestionIds(),
+  // === Render Questions Module Table (with server-side pagination) ===
+  const currentPage = Math.max(1, parseInt(pageParam || "1", 10) || 1);
+  const PAGE_SIZE = 25;
+
+  const [paginatedResult, user] = await Promise.all([
+    getAccentureModuleQuestions(mod.slug, mod.queryFilter, currentPage, PAGE_SIZE),
+    getSessionUser(),
   ]);
+
+  const { questions, totalCount, totalPages } = paginatedResult;
+  const userId = user?.id;
+
+  // Batch-query solved status ONLY for visible question IDs
+  const visibleIds = questions.map((q: any) => q.id);
+  const solvedSet = await getAccentureSolvedQuestionIds(userId, visibleIds);
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-4 font-sans text-xs">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 font-mono text-[11px] text-[#8B949E]">
-        <Link href="/dashboard" className="hover:text-[#F0F6FC] transition-colors">
-          CODERTRACK
+        <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
+          ACCENTURE HOME
         </Link>
         <span>/</span>
-        <Link href="/accenture" className="hover:text-[#F0F6FC] transition-colors">
+        <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
           ACCENTURE
         </Link>
         <span>/</span>
@@ -283,10 +301,13 @@ export default async function AccentureModulePage({
           </h1>
           <p className="text-xs text-[#8B949E] max-w-2xl">{mod.description}</p>
         </div>
+        <div className="text-xs font-mono text-[#8B949E] bg-[#161B22] border border-[#30363D] px-3 py-1.5 rounded shrink-0">
+          {totalCount} Questions
+        </div>
       </div>
 
       {/* Practice Mode Quick Action Banner */}
-      {questions.some((q) => q.questionType === "MCQ") && (
+      {questions.some((q: any) => q.questionType === "MCQ") && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-md border border-[#58A6FF]/30 bg-[#161B22] shadow-sm">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded bg-[#58A6FF]/15 border border-[#58A6FF]/30 flex items-center justify-center text-[#58A6FF] shrink-0">
@@ -324,7 +345,7 @@ export default async function AccentureModulePage({
             </p>
             <div className="pt-2">
               <Link
-                href="/accenture"
+                href="/home/accenture"
                 className="inline-flex items-center gap-1.5 text-[#58A6FF] hover:underline"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -347,7 +368,7 @@ export default async function AccentureModulePage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#30363D]/60 font-mono">
-                {questions.map((q) => {
+                {questions.map((q: any) => {
                   const isSolved = solvedSet.has(q.id);
 
                   return (
@@ -441,6 +462,63 @@ export default async function AccentureModulePage({
           </div>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between pt-1 font-mono text-[11px]">
+          <div className="text-[#8B949E]">
+            Showing {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, totalCount)} of {totalCount}
+          </div>
+          <div className="flex items-center gap-1">
+            {currentPage > 1 && (
+              <Link
+                href={`/accenture/${mod.slug}?page=${currentPage - 1}`}
+                className="px-2.5 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] transition-colors flex items-center gap-1"
+              >
+                <ChevronLeft className="w-3 h-3" />
+                Prev
+              </Link>
+            )}
+
+            {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+              let pageNum: number;
+              if (totalPages <= 7) {
+                pageNum = i + 1;
+              } else if (currentPage <= 4) {
+                pageNum = i + 1;
+              } else if (currentPage >= totalPages - 3) {
+                pageNum = totalPages - 6 + i;
+              } else {
+                pageNum = currentPage - 3 + i;
+              }
+
+              return (
+                <Link
+                  key={pageNum}
+                  href={`/accenture/${mod.slug}?page=${pageNum}`}
+                  className={`w-7 h-7 rounded flex items-center justify-center border transition-colors ${
+                    pageNum === currentPage
+                      ? "bg-[#58A6FF] text-[#0D1117] border-[#58A6FF] font-bold"
+                      : "bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC] border-[#30363D] hover:bg-[#30363D]"
+                  }`}
+                >
+                  {pageNum}
+                </Link>
+              );
+            })}
+
+            {currentPage < totalPages && (
+              <Link
+                href={`/accenture/${mod.slug}?page=${currentPage + 1}`}
+                className="px-2.5 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] transition-colors flex items-center gap-1"
+              >
+                Next
+                <ChevronRight className="w-3 h-3" />
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

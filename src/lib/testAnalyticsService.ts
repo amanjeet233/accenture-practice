@@ -109,26 +109,33 @@ export async function getAccentureTestAnalytics(userId?: string): Promise<TestAn
     whereClause.userId = userId;
   }
 
-  const attempts = await prisma.testAttempt.findMany({
-    where: whereClause,
-    include: {
-      mockTest: true,
-      questions: {
-        include: {
-          question: {
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              category: true,
-              difficulty: true,
+  const [attempts, totalAttemptCount] = await Promise.all([
+    prisma.testAttempt.findMany({
+      where: whereClause,
+      include: {
+        mockTest: true,
+        questions: {
+          include: {
+            question: {
+              select: {
+                id: true,
+                title: true,
+                slug: true,
+                category: true,
+                difficulty: true,
+              },
             },
           },
         },
       },
-    },
-    orderBy: { submittedAt: "asc" },
-  });
+      orderBy: { submittedAt: "desc" },
+      take: 100,
+    }),
+    prisma.testAttempt.count({ where: whereClause }),
+  ]);
+
+  // Keep chart and question-level work bounded while preserving the newest history.
+  attempts.reverse();
 
   // Strict check: If there is no history, return hasHistory: false
   if (attempts.length === 0) {
@@ -365,13 +372,14 @@ export async function getAccentureTestAnalytics(userId?: string): Promise<TestAn
     .sort((a, b) => a.accuracy - b.accuracy); // Ascending accuracy to show weak spots first
 
   // Summary Metrics
-  const totalAttempts = attempts.length;
+  const totalAttempts = totalAttemptCount;
+  const analyzedAttempts = attempts.length;
   const averageScore = Math.round(
     attempts.reduce((acc, a) => acc + (a.totalQuestions > 0 ? (a.score / a.totalQuestions) * 100 : 0), 0) /
-      totalAttempts
+      analyzedAttempts
   );
   const averageAccuracy = Math.round(
-    attempts.reduce((acc, a) => acc + a.accuracy, 0) / totalAttempts
+    attempts.reduce((acc, a) => acc + a.accuracy, 0) / analyzedAttempts
   );
   const bestScore = Math.max(
     ...attempts.map((a) => (a.totalQuestions > 0 ? Math.round((a.score / a.totalQuestions) * 100) : 0))

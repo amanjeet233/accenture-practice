@@ -50,7 +50,7 @@ export function CbtExamInterface({
   testTitle = "Accenture Assessment Simulation (CBT)",
   durationMins = 30,
   testId = "accenture-cbt-test",
-  returnUrl = "/accenture",
+  returnUrl = "/home/accenture",
 }: CbtExamInterfaceProps) {
   const router = useRouter();
   const sessionStorageKey = `cbt_session_${testId}`;
@@ -569,6 +569,14 @@ export function CbtExamInterface({
           </div>
 
           <div className="flex items-center gap-4">
+            <Link
+              href={returnUrl}
+              className="inline-flex items-center gap-1.5 rounded-md border border-[#D1D5DB] bg-white px-3 py-2 text-xs font-semibold text-[#4B5563] transition-colors hover:border-[#2563EB] hover:text-[#2563EB]"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Exit</span>
+            </Link>
+
             {/* Live Countdown Timer */}
             <div
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md font-mono text-sm font-bold border ${

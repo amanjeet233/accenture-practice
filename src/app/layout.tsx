@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,13 +32,7 @@ export default function RootLayout({
     <html lang="en" className={`dark h-full ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F0F6FC] font-sans selection:bg-[#58A6FF]/20 selection:text-[#58A6FF]">
         <AuthProvider>
-          <Navbar />
-          <div className="flex flex-1 min-h-[calc(100vh-3.25rem)]">
-            <Sidebar />
-            <main className="flex-1 overflow-x-hidden min-w-0 bg-[#0D1117]">
-              {children}
-            </main>
-          </div>
+          <AppShell>{children}</AppShell>
         </AuthProvider>
       </body>
     </html>

@@ -19,14 +19,16 @@ export const metadata: Metadata = {
 export default async function AccentureMcqPracticePage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; module?: string; topic?: string }>;
+  searchParams: Promise<{ category?: string; module?: string; topic?: string; page?: string }>;
 }) {
-  const { category, module, topic } = await searchParams;
+  const { category, module, topic, page: pageParam } = await searchParams;
   const topicParam = topic || module || category;
 
   let canonicalTopicId: string | undefined = undefined;
   let selectedTopicSlug = "all";
-  let returnUrl = "/accenture/mcq";
+  // Practice is launched from the Accenture workspace. Keep Exit stable for
+  // every topic instead of sending learners into a legacy route/dashboard.
+  const returnUrl = "/home/accenture";
 
   if (topicParam && topicParam !== "all") {
     const canonical = resolveCanonicalTopic(topicParam);
@@ -36,11 +38,12 @@ export default async function AccentureMcqPracticePage({
     }
     canonicalTopicId = canonical.id;
     selectedTopicSlug = canonical.slug;
-    returnUrl = `/accenture/${canonical.slug}`;
   }
 
-  // Fetch strictly filtered questions for this canonical topic
-  const questions = await getAccentureMcqPracticeList(canonicalTopicId);
+  const currentPage = Math.max(1, parseInt(pageParam || "1", 10) || 1);
+
+  // Fetch one bounded page strictly filtered to this canonical topic.
+  const paginatedQuestions = await getAccentureMcqPracticeList(canonicalTopicId, currentPage);
 
   // Available topics for the selector dropdown
   const topicOptions = CANONICAL_TOPIC_LIST.filter(
@@ -53,7 +56,10 @@ export default async function AccentureMcqPracticePage({
 
   return (
     <McqPracticeWorkspace
-      initialQuestions={questions}
+      initialQuestions={paginatedQuestions.questions}
+      totalQuestions={paginatedQuestions.totalCount}
+      currentPage={paginatedQuestions.page}
+      totalPages={paginatedQuestions.totalPages}
       allCategories={topicOptions.map((t) => t.slug)}
       topicOptions={topicOptions}
       selectedCategory={selectedTopicSlug}

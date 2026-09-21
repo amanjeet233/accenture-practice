@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
     // 2. Build strict database filter isolated to this canonical topic
     const topicFilter = getTopicPrismaFilter(canonical);
 
-    const andConditions: any[] = [topicFilter];
+    const andConditions: any[] = [topicFilter, { questionType: "MCQ" }];
 
     // Search within topic only
     if (searchQuery && searchQuery.trim().length > 0) {

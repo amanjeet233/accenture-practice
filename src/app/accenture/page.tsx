@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 import {
   ACCENTURE_MODULES,
   getAccentureModuleCounts,
@@ -27,6 +28,8 @@ export const metadata = {
 };
 
 export default async function AccentureHubPage() {
+  redirect("/home/accenture");
+
   const user = await getSessionUser();
   const userId = user?.id;
 

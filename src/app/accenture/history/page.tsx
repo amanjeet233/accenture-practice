@@ -25,11 +25,11 @@ export default async function AccentureHistoryPage() {
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 font-sans text-xs">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 font-mono text-[11px] text-[#8B949E]">
-        <Link href="/dashboard" className="hover:text-[#F0F6FC] transition-colors">
+        <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
           CODERTRACK
         </Link>
         <span>/</span>
-        <Link href="/accenture" className="hover:text-[#F0F6FC] transition-colors">
+        <Link href="/home/accenture" className="hover:text-[#F0F6FC] transition-colors">
           ACCENTURE
         </Link>
         <span>/</span>

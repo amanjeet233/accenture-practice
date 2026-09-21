@@ -1,0 +1,1360 @@
+[
+  {
+    "id": "cmua6dyxc001g7go0ja0gn53g",
+    "slug": "mockoa1-sec1-mcq-011-which-ms-word-feature-automatically-corrects-",
+    "title": "Which MS Word feature automatically corrects common typing errors as you type?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "AutoFormat",
+      "B": "AutoCorrect",
+      "C": "SmartArt",
+      "D": "Spell Check Which MS Word feature automatically corrects common typing errors as you type?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6e2j8001q7go0rlxsv46s",
+    "slug": "mockoa1-sec1-mcq-013-which-protocol-is-used-to-assign-ip-addresses",
+    "title": "Which protocol is used to assign IP addresses automatically to devices on a network?",
+    "category": "Networking",
+    "options": {
+      "A": "DNS",
+      "B": "DHCP",
+      "C": "FTP",
+      "D": "HTTP Which protocol is used to assign IP addresses automatically to devices on a network?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6e63m00207go0jxmcurk6",
+    "slug": "mockoa1-sec1-mcq-015-what-is-the-primary-purpose-of-a-router-in-a-",
+    "title": "What is the primary purpose of a router in a network?",
+    "category": "Networking",
+    "options": {
+      "A": "To connect different networks together",
+      "B": "To connect multiple devices within the same network",
+      "C": "To encrypt data for secure transmission",
+      "D": "To host websites Which layer of the OSI model is responsible for establishing, managing, and terminating connections?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6e7w200257go0fdrm1pf6",
+    "slug": "mockoa1-sec1-mcq-016-which-layer-of-the-osi-model-is-responsible-f",
+    "title": "Which layer of the OSI model is responsible for establishing, managing, and terminating co",
+    "category": "Networking",
+    "options": {
+      "A": "Network Layer",
+      "B": "Transport Layer",
+      "C": "Session Layer",
+      "D": "Data Link Layer Which layer of the OSI model is responsible for establishing, managing, and terminating connections?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ebfa002f7go07u1r5bjt",
+    "slug": "mockoa1-sec1-mcq-018-what-does-the-ping-command-do",
+    "title": "What does the ping command do?",
+    "category": "Networking",
+    "options": {
+      "A": "Measures the data transfer speed between two devices.",
+      "B": "Tests the reachability of a host on an IP network.",
+      "C": "Encrypts data before sending it over the network.",
+      "D": "Blocks network traffic to specific IP addresses. What does the ping command do?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ed6p002k7go04k0qr7rv",
+    "slug": "mockoa1-sec1-mcq-019-addresses-what-does-the-ping-command-do",
+    "title": "addresses. What does the ping command do?",
+    "category": "Networking",
+    "options": {
+      "A": "Measures the data transfer speed between two devices.",
+      "B": "Tests the reachability of a host on an IP network.",
+      "C": "Encrypts data before sending it over the network.",
+      "D": "Blocks network traffic to specific IP addresses. Which network topology has a central hub to which all other nodes are connected?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ef0u002p7go0qobwwxw4",
+    "slug": "mockoa1-sec1-mcq-020-addresses-which-network-topology-has-a-centra",
+    "title": "addresses. Which network topology has a central hub to which all other nodes are connected",
+    "category": "Networking",
+    "options": {
+      "A": "Mesh",
+      "B": "Ring",
+      "C": "Star",
+      "D": "Bus Which network topology has a central hub to which all other nodes are connected?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6egta002u7go0j5or7pxq",
+    "slug": "mockoa1-sec1-mcq-021-which-network-topology-has-a-central-hub-to-w",
+    "title": "Which network topology has a central hub to which all other nodes are connected?",
+    "category": "Networking",
+    "options": {
+      "A": "Mesh",
+      "B": "Ring",
+      "C": "Star",
+      "D": "Bus Which protocol is commonly used for secure communication over a network?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6eilc002z7go06oo1vs23",
+    "slug": "mockoa1-sec1-mcq-022-which-protocol-is-commonly-used-for-secure-co",
+    "title": "Which protocol is commonly used for secure communication over a network?",
+    "category": "Networking",
+    "options": {
+      "A": "HTTP",
+      "B": "FTP",
+      "C": "HTTPS",
+      "D": "SMTP Which protocol is commonly used for secure communication over a network?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6elz800397go08pkqlrkk",
+    "slug": "mockoa1-sec1-mcq-024-what-is-the-primary-function-of-a-firewall-in",
+    "title": "What is the primary function of a firewall in network security?",
+    "category": "Networking",
+    "options": {
+      "A": "To accelerate internet speed.",
+      "B": "To encrypt network traffic.",
+      "C": "To block unauthorized access to or from a private network.",
+      "D": "To store backup data securely. What is the primary function of a firewall in network security?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6epi9003j7go0b20lvv8b",
+    "slug": "mockoa1-sec1-mcq-026-which-of-the-following-is-considered-a-form-o",
+    "title": "Which of the following is considered a form of social engineering attack?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Phishing",
+      "B": "Denial of Service",
+      "C": "SQL Injection",
+      "D": "Malware Which of the following is considered a form of social engineering attack?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6et2d003t7go0ma5q6lox",
+    "slug": "mockoa1-sec1-mcq-028-what-does-the-term-zero-day-exploit-refer-to",
+    "title": "What does the term \"zero-day exploit\" refer to?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "A security vulnerability that is unknown to the software vendor.",
+      "B": "A virus that has been active for less than a day.",
+      "C": "A software patch that fixes security vulnerabilities.",
+      "D": "An antivirus software update released on the first day of the month. What does the term \"zero-day exploit\" refer to?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6eurz003y7go0cfdms7jd",
+    "slug": "mockoa1-sec1-mcq-029-on-the-first-day-of-the-month-what-does-the-t",
+    "title": "on the first day of the month. What does the term \"zero-day exploit\" refer to?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "A security vulnerability that is unknown to the software vendor.",
+      "B": "A virus that has been active for less than a day.",
+      "C": "A software patch that fixes security vulnerabilities.",
+      "D": "An antivirus software update released on the first day of the month. Which of the following methods is most effective in preventing unauthorized access to a user's account?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ewk500437go0zn359ewu",
+    "slug": "mockoa1-sec1-mcq-030-on-the-first-day-of-the-month-which-of-the-fo",
+    "title": "on the first day of the month. Which of the following methods is most effective in prevent",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Using a strong password",
+      "B": "Enabling two-factor authentication (2FA)",
+      "C": "Changing passwords frequently",
+      "D": "Using public Wi-Fi networks for login Which of the following methods is most effective in preventing unauthorized access to a user's account?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6eyao00487go0ctc3qhxo",
+    "slug": "mockoa1-sec1-mcq-031-which-of-the-following-methods-is-most-effect",
+    "title": "Which of the following methods is most effective in preventing unauthorized access to a us",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Using a strong password",
+      "B": "Enabling two-factor authentication (2FA)",
+      "C": "Changing passwords frequently",
+      "D": "Using public Wi-Fi networks for login What is the purpose of encryption in cybersecurity?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ezzy004d7go07r1kq3uo",
+    "slug": "mockoa1-sec1-mcq-032-what-is-the-purpose-of-encryption-in-cybersec",
+    "title": "What is the purpose of encryption in cybersecurity?",
+    "category": "Networking",
+    "options": {
+      "A": "To compress files for faster transmission",
+      "B": "To hide data from unauthorized users",
+      "C": "To detect intrusions in a network",
+      "D": "To back up data securely What is the purpose of encryption in cybersecurity?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6f3lq004n7go00fpu6884",
+    "slug": "mockoa1-sec1-mcq-034-which-type-of-malware-encrypts-a-users-files-",
+    "title": "Which type of malware encrypts a user's files and demands payment for the decryption key?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Trojan Horse",
+      "B": "Ransomware",
+      "C": "Spyware",
+      "D": "Worm Which type of malware encrypts a user's files and demands payment for the decryption key?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6f6yl004x7go0x0hifarr",
+    "slug": "mockoa1-sec1-mcq-036-which-of-the-following-is-a-benefit-of-using-",
+    "title": "Which of the following is a benefit of using cloud computing?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Reduced need for physical storage devices",
+      "B": "Higher upfront costs",
+      "C": "Limited scalability",
+      "D": "Increased manual management Which of the following is a benefit of using cloud computing?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6fag600577go0tursdgpo",
+    "slug": "mockoa1-sec1-mcq-038-what-does-saas-stand-for-in-cloud-computing",
+    "title": "What does \"SaaS\" stand for in cloud computing?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Storage as a Service",
+      "B": "Software as a Service",
+      "C": "Security as a Service",
+      "D": "System as a Service What does \"SaaS\" stand for in cloud computing?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6fdx0005h7go0svovy5be",
+    "slug": "mockoa1-sec1-mcq-040-which-cloud-service-model-provides-virtualize",
+    "title": "Which cloud service model provides virtualized computing resources over the internet?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "SaaS",
+      "B": "PaaS",
+      "C": "IaaS",
+      "D": "DaaS Which cloud service model provides virtualized computing resources over the internet?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6fhic005r7go0vylp0e6e",
+    "slug": "mockoa1-sec1-mcq-042-which-of-the-following-is-not-a-characteristi",
+    "title": "Which of the following is NOT a characteristic of cloud computing?",
+    "category": "Networking",
+    "options": {
+      "A": "On-demand self-service",
+      "B": "Broad network access",
+      "C": "Rapid elasticity",
+      "D": "Fixed pricing Which of the following is NOT a characteristic of cloud computing?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6fl3k00617go0bxagzyff",
+    "slug": "mockoa1-sec1-mcq-044-what-is-the-purpose-of-a-virtual-private-clou",
+    "title": "What is the purpose of a Virtual Private Cloud (VPC)?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "To create an isolated section of the cloud for security",
+      "B": "To reduce cloud storage costs",
+      "C": "To increase the speed of cloud services",
+      "D": "To back up data automatically What is the purpose of a Virtual Private Cloud (VPC)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6fooi006b7go0yq60m1a1",
+    "slug": "mockoa1-sec1-mcq-046-which-cloud-deployment-model-is-used-by-a-sin",
+    "title": "Which cloud deployment model is used by a single organization?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Public Cloud",
+      "B": "Private Cloud",
+      "C": "Hybrid Cloud",
+      "D": "Community Cloud Which cloud deployment model is used by a single organization?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6g6r4007p7go08b28urkp",
+    "slug": "mockoa1-sec2-mcq-003-in-word-what-happens-when-you-press-ctrl-shif",
+    "title": "In Word, what happens when you press 'Ctrl + Shift + F' while text is selected?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Opens the Font dialog box",
+      "B": "Increases font size",
+      "C": "Changes font to default",
+      "D": "Clears formatting In Word, what happens when you press 'Ctrl + Shift + F' while text is selected?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ghcl008j7go0c1dq4296",
+    "slug": "mockoa1-sec2-mcq-009-what-is-the-default-paper-size-in-ms-word",
+    "title": "What is the default paper size in MS Word?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "A4",
+      "B": "Letter",
+      "C": "Legal",
+      "D": "Executive What is the default paper size in MS Word?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gkqz008t7go0e9t8kr0e",
+    "slug": "mockoa1-sec2-mcq-011-which-of-the-following-excel-functions-can-be",
+    "title": "Which of the following Excel functions can be used to combine the text from multiple cells",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "CONCATENATE",
+      "B": "TEXTJOIN",
+      "C": "CONCAT",
+      "D": "JOIN Which of the following Excel functions can be used to combine the text from multiple cells into one cell?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6go9s00937go0rnv4uig4",
+    "slug": "mockoa1-sec2-mcq-013-want-to-get-hired-in-tech-jobs-but-not-sure-w",
+    "title": "WANT TO GET HIRED IN TECH JOBS? BUT NOT SURE WHAT TO STUDY Data Structures? Web Technologi",
+    "category": "Networking",
+    "options": {
+      "A": "To reduce broadcast traffic",
+      "B": "To connect different networks together",
+      "C": "To secure the network from external threats",
+      "D": "To allow multiple networks on a single switch What is the primary function of a VLAN (Virtual Local Area Network)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gpzl00987go0tipz8wnu",
+    "slug": "mockoa1-sec2-mcq-014-on-a-single-switch-what-is-the-primary-functi",
+    "title": "on a single switch What is the primary function of a VLAN (Virtual Local Area Network)?",
+    "category": "Networking",
+    "options": {
+      "A": "To reduce broadcast traffic",
+      "B": "To connect different networks together",
+      "C": "To secure the network from external threats",
+      "D": "To allow multiple networks on a single switch Which protocol is used to securely transmit data over a VPN?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6grrq009d7go00fse1vjx",
+    "slug": "mockoa1-sec2-mcq-015-on-a-single-switch-which-protocol-is-used-to-",
+    "title": "on a single switch Which protocol is used to securely transmit data over a VPN?",
+    "category": "Networking",
+    "options": {
+      "A": "PPTP",
+      "B": "IPSec",
+      "C": "L2TP",
+      "D": "GRE Which protocol is used to securely transmit data over a VPN?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gtio009i7go0xm854lpl",
+    "slug": "mockoa1-sec2-mcq-016-which-protocol-is-used-to-securely-transmit-d",
+    "title": "Which protocol is used to securely transmit data over a VPN?",
+    "category": "Networking",
+    "options": {
+      "A": "PPTP",
+      "B": "IPSec",
+      "C": "L2TP",
+      "D": "GRE What is the purpose of the ARP (Address Resolution Protocol)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gvan009n7go02jdh15rd",
+    "slug": "mockoa1-sec2-mcq-017-what-is-the-purpose-of-the-arp-address-resolu",
+    "title": "What is the purpose of the ARP (Address Resolution Protocol)?",
+    "category": "Networking",
+    "options": {
+      "A": "To map IP addresses to MAC addresses",
+      "B": "To map MAC addresses to IP addresses",
+      "C": "To route packets across a network",
+      "D": "To translate domain names to IP addresses What is the purpose of the ARP (Address Resolution Protocol)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gx36009s7go0lsciz17u",
+    "slug": "mockoa1-sec2-mcq-018-to-ip-addresses-what-is-the-purpose-of-the-ar",
+    "title": "to IP addresses What is the purpose of the ARP (Address Resolution Protocol)?",
+    "category": "Networking",
+    "options": {
+      "A": "To map IP addresses to MAC addresses",
+      "B": "To map MAC addresses to IP addresses",
+      "C": "To route packets across a network",
+      "D": "To translate domain names to IP addresses 1:1 MOCK SESSION www.primecoding.in Master Your Next Interview with Us! 100+ successful sessions with many placed Practice Today, Conquer Tomorrow! In the context of networking, what is the role of a gateway?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6gys8009x7go0ssc9xu18",
+    "slug": "mockoa1-sec2-mcq-019-in-the-context-of-networking-what-is-the-role",
+    "title": "In the context of networking, what is the role of a gateway?",
+    "category": "Networking",
+    "options": {
+      "A": "To connect two different networks",
+      "B": "To provide IP addresses to devices",
+      "C": "To forward data packets within the same network",
+      "D": "To encrypt data during transmission In the context of networking, what is the role of a gateway?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6h0kx00a27go0e45zsenn",
+    "slug": "mockoa1-sec2-mcq-020-transmission-in-the-context-of-networking-wha",
+    "title": "transmission In the context of networking, what is the role of a gateway?",
+    "category": "Networking",
+    "options": {
+      "A": "To connect two different networks",
+      "B": "To provide IP addresses to devices",
+      "C": "To forward data packets within the same network",
+      "D": "To encrypt data during transmission Which layer of the OSI model is responsible for error detection and correction?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6h28700a77go06ohmc61a",
+    "slug": "mockoa1-sec2-mcq-021-transmission-which-layer-of-the-osi-model-is-",
+    "title": "transmission Which layer of the OSI model is responsible for error detection and correctio",
+    "category": "Networking",
+    "options": {
+      "A": "Data Link Layer",
+      "B": "Network Layer",
+      "C": "Transport Layer",
+      "D": "Application Layer Which layer of the OSI model is responsible for error detection and correction?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6h45i00ac7go0y0ywtc4c",
+    "slug": "mockoa1-sec2-mcq-022-which-layer-of-the-osi-model-is-responsible-f",
+    "title": "Which layer of the OSI model is responsible for error detection and correction?",
+    "category": "Networking",
+    "options": {
+      "A": "Data Link Layer",
+      "B": "Network Layer",
+      "C": "Transport Layer",
+      "D": "Application Layer What command is used to view the routing table in a network device?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6h5zp00ah7go0gv340e7v",
+    "slug": "mockoa1-sec2-mcq-023-what-command-is-used-to-view-the-routing-tabl",
+    "title": "What command is used to view the routing table in a network device?",
+    "category": "Networking",
+    "options": {
+      "A": "netstat",
+      "B": "ipconfig",
+      "C": "route",
+      "D": "tracert What command is used to view the routing table in a network device?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6h9h000ar7go0k4h7c73n",
+    "slug": "mockoa1-sec2-mcq-025-which-type-of-attack-involves-intercepting-an",
+    "title": "Which type of attack involves intercepting and altering communication between two parties",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Man-in-the-Middle (MITM)",
+      "B": "Phishing",
+      "C": "Denial of Service (DoS)",
+      "D": "SQL Injection Which type of attack involves intercepting and altering communication between two parties without their knowledge?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hd4300b17go0eis11w8m",
+    "slug": "mockoa1-sec2-mcq-027-which-of-the-following-is-a-technique-used-to",
+    "title": "Which of the following is a technique used to identify vulnerabilities in a system by simu",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Penetration Testing",
+      "B": "Social Engineering",
+      "C": "Brute Force Attack",
+      "D": "Phishing Which of the following is a technique used to identify vulnerabilities in a system by simulating an attack?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hkgk00bl7go09kh2bgf9",
+    "slug": "mockoa1-sec2-mcq-031-what-is-the-primary-purpose-of-a-honeypot-in-",
+    "title": "What is the primary purpose of a honeypot in cybersecurity?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "To detect unauthorized access",
+      "B": "To act as a decoy to lure attackers",
+      "C": "To protect sensitive data",
+      "D": "To encrypt data before transmission What is the primary purpose of a honeypot in cybersecurity?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hm8d00bq7go09dw30cz7",
+    "slug": "mockoa1-sec2-mcq-032-transmission-what-is-the-primary-purpose-of-a",
+    "title": "transmission What is the primary purpose of a honeypot in cybersecurity?",
+    "category": "Networking",
+    "options": {
+      "A": "To detect unauthorized access",
+      "B": "To act as a decoy to lure attackers",
+      "C": "To protect sensitive data",
+      "D": "To encrypt data before transmission Which security protocol is used to ensure secure communication over a wireless network?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6ho4z00bv7go0t6zzph9e",
+    "slug": "mockoa1-sec2-mcq-033-transmission-which-security-protocol-is-used-",
+    "title": "transmission Which security protocol is used to ensure secure communication over a wireles",
+    "category": "Networking",
+    "options": {
+      "A": "WPA3",
+      "B": "WEP",
+      "C": "HTTP",
+      "D": "FTP Which security protocol is used to ensure secure communication over a wireless network?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hpx600c07go0po1fpdwx",
+    "slug": "mockoa1-sec2-mcq-034-which-security-protocol-is-used-to-ensure-sec",
+    "title": "Which security protocol is used to ensure secure communication over a wireless network?",
+    "category": "Networking",
+    "options": {
+      "A": "WPA3",
+      "B": "WEP",
+      "C": "HTTP",
+      "D": "FTP What is the purpose of a digital certificate in a public key infrastructure (PKI)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hrrd00c57go0kbv0adlf",
+    "slug": "mockoa1-sec2-mcq-035-what-is-the-purpose-of-a-digital-certificate-",
+    "title": "What is the purpose of a digital certificate in a public key infrastructure (PKI)?",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "To verify the identity of the certificate holder",
+      "B": "To encrypt data during transmission",
+      "C": "To store encryption keys",
+      "D": "To sign digital documents What is the purpose of a digital certificate in a public key infrastructure (PKI)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hvb300cf7go0ie5eh1f6",
+    "slug": "mockoa1-sec2-mcq-037-which-of-the-following-is-a-key-benefit-of-se",
+    "title": "Which of the following is a key benefit of serverless computing?",
+    "category": "Networking",
+    "options": {
+      "A": "Automatic scaling",
+      "B": "Dedicated server management",
+      "C": "Fixed server costs",
+      "D": "In-house data storage Which of the following is a key benefit of serverless computing?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6hyq900cp7go03ff9q9yz",
+    "slug": "mockoa1-sec2-mcq-039-in-cloud-computing-what-is-auto--scaling",
+    "title": "In cloud computing, what is \"auto- scaling\"?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "The automatic adjustment of computing resources based on demand",
+      "B": "The manual scaling of resources to match user requirements",
+      "C": "A feature that reduces cloud storage costs",
+      "D": "A method to secure cloud data In cloud computing, what is \"auto- scaling\"?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6i2aw00cz7go08guhwwdt",
+    "slug": "mockoa1-sec2-mcq-041-which-of-the-following-is-a-characteristic-of",
+    "title": "Which of the following is a characteristic of Platform as a Service (PaaS)?",
+    "category": "Networking",
+    "options": {
+      "A": "Provides a platform to develop, run, and manage applications",
+      "B": "Offers raw computing resources like virtual machines",
+      "C": "Provides networking capabilities like VPN",
+      "D": "Supplies end-user software applications Which of the following is a characteristic of Platform as a Service (PaaS)?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6i5zd00d97go0qmldo6dn",
+    "slug": "mockoa1-sec2-mcq-043-which-cloud-deployment-model-is-most-suitable",
+    "title": "Which cloud deployment model is most suitable for companies that require dedicated infrast",
+    "category": "Network Security & Cyber Security",
+    "options": {
+      "A": "Private Cloud",
+      "B": "Public Cloud",
+      "C": "Hybrid Cloud",
+      "D": "Community Cloud Which cloud deployment model is most suitable for companies that require dedicated infrastructure with enhanced security?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6i9bx00dj7go0g1yyzlnh",
+    "slug": "mockoa1-sec2-mcq-045-which-of-the-following-cloud-service-models-a",
+    "title": "Which of the following cloud service models allows users to develop, run, and manage appli",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "PaaS",
+      "B": "SaaS",
+      "C": "IaaS",
+      "D": "DaaS Which of the following cloud service models allows users to develop, run, and manage applications without the complexity of building and maintaining the infrastructure?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6icqc00dt7go0n5o3rpou",
+    "slug": "mockoa1-sec2-mcq-047-which-of-the-following-cloud-services-is-most",
+    "title": "Which of the following cloud services is most commonly used for scalable storage?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Amazon S3",
+      "B": "Google Compute Engine",
+      "C": "Microsoft Azure VM",
+      "D": "IBM Watson Which of the following cloud services is most commonly used for scalable storage?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6kyqz000ajvczed6g3dk0",
+    "slug": "mockoa1-sec2-mcq-102-question",
+    "title": "Question",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "AUTO-REPLY",
+      "B": "VACATION MODE",
+      "C": "OUT OF OFFICE ASSISTANT",
+      "D": "AWAY MESSAGE WHAT IS THE SHORTCUT KEY TO OPEN A NEW DOCUMENT IN MS WORD?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6kyr4000djvczkdr4f2i0",
+    "slug": "mockoa1-sec2-mcq-101-question",
+    "title": "Question",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "AUTO-REPLY",
+      "B": "VACATION MODE",
+      "C": "OUT OF OFFICE ASSISTANT",
+      "D": "AWAY MESSAGE IN OUTLOOK, WHICH FEATURE ALLOWS YOU TO SET AN AUTOMATIC REPLY WHEN YOU ARE OUT OF THE OFFICE?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6kz720027jvczuog6kptp",
+    "slug": "mockoa1-sec2-mcq-119-representation-of-data",
+    "title": "REPRESENTATION OF DATA?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "CHARTS",
+      "B": "TABLES",
+      "C": "FILTERS",
+      "D": "CONDITIONAL FORMATTING WHICH FEATURE IN EXCEL ALLOWS YOU TO CREATE A GRAPHICAL REPRESENTATION OF DATA?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6kz720028jvczz5d1gljp",
+    "slug": "mockoa1-sec2-mcq-122-question",
+    "title": "Question",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "CTRL+X",
+      "B": "CTRL+C",
+      "C": "CTRL+V",
+      "D": "CTRL+P IN POWERPOINT, WHAT FEATURE ALLOWS YOU TO ADD SOUND EFFECTS TO YOUR PRESENTATION?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6kz74002fjvczs1am92z5",
+    "slug": "mockoa1-sec2-mcq-121-question",
+    "title": "Question",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "CTRL+X",
+      "B": "CTRL+C",
+      "C": "CTRL+V",
+      "D": "CTRL+P WHAT IS THE SHORTCUT KEY TO PASTE COPIED CONTENT IN MS OFFICE?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6kzjm0046jvczitycpnep",
+    "slug": "mockoa1-sec2-mcq-130-formatting-choices",
+    "title": "FORMATTING CHOICES?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "CELL STYLES",
+      "B": "CONDITIONAL FORMATTING",
+      "C": "THEMES",
+      "D": "TEMPLATES IN EXCEL, WHAT FEATURE ALLOWS YOU TO QUICKLY APPLY A SET OF FORMATTING CHOICES?"
+    },
+    "status": "MOCK_SOURCE",
+    "reason": "Directly sourced from Mock Assessment sections created by Prime Coding coaching."
+  },
+  {
+    "id": "cmua6l0bg00ahjvczcqbeuoij",
+    "slug": "mockoa1-sec3-nsc-mcq-039-a-limited-storage-capacity-b-high-maintenance",
+    "title": "• A) Limited storage capacity • B) High maintenance cost • C) Scalability and flexibili",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Oracle",
+      "B": "AWS (Amazon Web Services)",
+      "C": "SAP",
+      "D": "IBM What is the primary service offered by Google Cloud?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0bh00amjvczld3pkljg",
+    "slug": "mockoa1-sec3-nsc-mcq-041-a-cloud-computing-services-b-hardware-sales-c",
+    "title": "• A) Cloud computing services • B) Hardware sales • C) Internet browsing • D) Social ne",
+    "category": "Networking",
+    "options": {
+      "A": "Cloud computing services",
+      "B": "Hardware sales",
+      "C": "Internet browsing",
+      "D": "Social networking What is Microsoft Azure primarily known for?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0bg00afjvczmvg779b7",
+    "slug": "mockoa1-sec3-nsc-mcq-040-a-oracle-b-aws-amazon-web-services-c-sap-d-ib",
+    "title": "• A) Oracle • B) AWS (Amazon Web Services) • C) SAP • D) IBM What is the primary servic",
+    "category": "Networking",
+    "options": {
+      "A": "Cloud computing services",
+      "B": "Hardware sales",
+      "C": "Internet browsing",
+      "D": "Social networking What is the primary service offered by Google Cloud?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0bh00apjvczy6hmfj2h",
+    "slug": "mockoa1-sec3-nsc-mcq-051-a-to-increase-internet-speed-b-to-create-a-se",
+    "title": "• A) To increase internet speed • B) To create a secure connection over a less secure n",
+    "category": "Networking",
+    "options": {
+      "A": "FTP",
+      "B": "HTTP",
+      "C": "SSH (Secure Shell)",
+      "D": "SMTP Which protocol is used to ensure secure remote login?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jx00cijvcz0n2t4hzp",
+    "slug": "mockoa1-sec3-nsc-mcq-053-question",
+    "title": "Question",
+    "category": "Networking",
+    "options": {
+      "A": "Information Detection System",
+      "B": "Internet Data System",
+      "C": "Intrusion Detection System",
+      "D": "Internal Data System What does IDS stand for in network security?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6l0jx00cmjvczcvnmas1f",
+    "slug": "mockoa1-sec3-nsc-mcq-056-d-limited-storage-capacity-what-is-the-main-b",
+    "title": "• D) Limited storage capacity What is the main benefit of cloud elasticity?",
+    "category": "Cloud Computing",
+    "options": {
+      "D": "Limited storage capacity What does hybrid cloud refer to?",
+      "A": "Fixed resource allocation",
+      "B": "High maintenance cost",
+      "C": "The ability to scale computing resources up or down as needed"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cpjvczkyod16gx",
+    "slug": "mockoa1-sec3-nsc-mcq-052-a-ftp-b-http-c-ssh-secure-shell-d-smtp-which-",
+    "title": "• A) FTP • B) HTTP • C) SSH (Secure Shell) • D) SMTP Which protocol is used to ensure s",
+    "category": "Networking",
+    "options": {
+      "A": "FTP",
+      "B": "HTTP",
+      "C": "SSH (Secure Shell)",
+      "D": "SMTP What does IDS stand for in network security?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jx00ckjvczzb4pf3e3",
+    "slug": "mockoa1-sec3-nsc-mcq-054-question",
+    "title": "Question",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Information Detection System",
+      "B": "Internet Data System",
+      "C": "Intrusion Detection System",
+      "D": "Internal Data System What is the main benefit of cloud elasticity?"
+    },
+    "status": "SOURCE_INCONSISTENT",
+    "reason": "Question stem dropped or truncated in source PDF conversion, retaining only option keys."
+  },
+  {
+    "id": "cmua6l0jy00cnjvcz5epndmsa",
+    "slug": "mockoa1-sec3-nsc-mcq-060-what-is-cloud-migration",
+    "title": "What is cloud migration?",
+    "category": "Networking",
+    "options": {
+      "A": "The process of moving data, applications, or other business elements to a cloud computing environment",
+      "B": "The process of creating cloud applications",
+      "C": "The process of securing cloud data",
+      "D": "The process of networking cloud resources Which cloud service provider is known for its simple storage service (S3)?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00crjvczabwd3ixl",
+    "slug": "mockoa1-sec3-nsc-mcq-061-which-cloud-service-provider-is-known-for-its",
+    "title": "Which cloud service provider is known for its simple storage service (S3)?",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Google Cloud",
+      "B": "Microsoft Azure",
+      "C": "IBM Cloud",
+      "D": "AWS (Amazon Web Services) Which cloud service provider is known for its simple storage service (S3)?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cojvczkgplmllc",
+    "slug": "mockoa1-sec3-nsc-mcq-064-a-show-ip-access-list-b-show-ip-interface-c-s",
+    "title": "• A) show ip access-list • B) show ip interface • C) show ip route • D) show ip protoco",
+    "category": "Networking",
+    "options": {
+      "A": "show ip access-list",
+      "B": "show ip interface",
+      "C": "show ip route",
+      "D": "show ip protocol What router command will permit SMTP mail to only host 1.1.1.1?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jx00cljvczm1666zlb",
+    "slug": "mockoa1-sec3-nsc-mcq-058-a-a-private-cloud-only-b-a-public-cloud-only-",
+    "title": "• A) A private cloud only • B) A public cloud only • C) A combination of private and pu",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "A private cloud only",
+      "B": "A public cloud only",
+      "C": "A combination of private and public cloud environments",
+      "D": "A type of cloud storage What is cloud migration?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cwjvcz6gdknt6h",
+    "slug": "mockoa1-sec3-nsc-mcq-065-a-show-ip-access-list-b-show-ip-interface-c-s",
+    "title": "• A) show ip access-list • B) show ip interface • C) show ip route • D) show ip protoco",
+    "category": "Networking",
+    "options": {
+      "A": "access-list 110 deny tcp any host 1.1.1.1 eq smtp",
+      "B": "access-list 110 permit tcp any host 1.1.1.1 eq smtp",
+      "C": "access-list 110 permit udp any host 1.1.1.1 eq smtp",
+      "D": "access-list 110 permit icmp any host 1.1.1.1 eq smtp What router command will permit SMTP mail to only host 1.1.1.1?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00ctjvcza6ed2lq9",
+    "slug": "mockoa1-sec3-nsc-mcq-057-d-limited-storage-capacity-what-does-hybrid-c",
+    "title": "• D) Limited storage capacity What does hybrid cloud refer to?",
+    "category": "Cloud Computing",
+    "options": {
+      "D": "A type of cloud storage What does hybrid cloud refer to?",
+      "A": "A private cloud only",
+      "B": "A public cloud only",
+      "C": "A combination of private and public cloud environments"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cvjvcz87p2qakv",
+    "slug": "mockoa1-sec3-nsc-mcq-063-a-google-cloud-b-microsoft-azure-c-ibm-cloud-",
+    "title": "• A) Google Cloud • B) Microsoft Azure • C) IBM Cloud • D) AWS (Amazon Web Services) Wh",
+    "category": "Networking",
+    "options": {
+      "A": "show ip access-list",
+      "B": "show ip interface",
+      "C": "show ip route",
+      "D": "show ip protocol What command allows you to determine whether an IP access list is enabled on a particular interface?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cujvcztz7fy8qs",
+    "slug": "mockoa1-sec3-nsc-mcq-066-a-access-list-110-deny-tcp-any-host-1111-eq-s",
+    "title": "• A) access-list 110 deny tcp any host 1.1.1.1 eq smtp • B) access-list 110 permit tcp ",
+    "category": "Networking",
+    "options": {
+      "A": "access-list 110 deny tcp any host 1.1.1.1 eq smtp",
+      "B": "access-list 110 permit tcp any host 1.1.1.1 eq smtp",
+      "C": "access-list 110 permit udp any host 1.1.1.1 eq smtp",
+      "D": "access-list 110 permit icmp any host 1.1.1.1 eq smtp What type of network security device scans for viruses and malware?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00csjvczexj3g639",
+    "slug": "mockoa1-sec3-nsc-mcq-059-a-a-private-cloud-only-b-a-public-cloud-only-",
+    "title": "• A) A private cloud only • B) A public cloud only • C) A combination of private and pu",
+    "category": "Networking",
+    "options": {
+      "A": "The process of moving data, applications, or other business elements to a cloud computing environment",
+      "B": "The process of creating cloud applications",
+      "C": "The process of securing cloud data",
+      "D": "The process of networking cloud resources What is cloud migration?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jx00cjjvczqcrhznae",
+    "slug": "mockoa1-sec3-nsc-mcq-055-a-information-detection-system-b-internet-dat",
+    "title": "• A) Information Detection System • B) Internet Data System • C) Intrusion Detection Sy",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Fixed resource allocation",
+      "B": "High maintenance cost",
+      "C": "The ability to scale computing resources up or down as needed",
+      "D": "Limited storage capacity What is the main benefit of cloud elasticity?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0jy00cqjvczlsw971lt",
+    "slug": "mockoa1-sec3-nsc-mcq-062-a-google-cloud-b-microsoft-azure-c-ibm-cloud-",
+    "title": "• A) Google Cloud • B) Microsoft Azure • C) IBM Cloud • D) AWS (Amazon Web Services) Wh",
+    "category": "Cloud Computing",
+    "options": {
+      "A": "Google Cloud",
+      "B": "Microsoft Azure",
+      "C": "IBM Cloud",
+      "D": "AWS (Amazon Web Services) What command allows you to determine whether an IP access list is enabled on a particular interface?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t700emjvczy9ejvtzo",
+    "slug": "mockoa1-sec3-nsc-mcq-069-a-firewall-b-ids-c-antivirus-scanning-devices",
+    "title": "• A) Firewall • B) IDS • C) Antivirus scanning devices • D) VPN Which cloud service pro",
+    "category": "Networking",
+    "options": {
+      "A": "Google Cloud",
+      "B": "AWS",
+      "C": "Azure",
+      "D": "IBM Cloud Which cloud service provider should be chosen for extensive support of Linux, Windows Server, and SQL Server?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t700enjvczv650kc8h",
+    "slug": "mockoa1-sec3-nsc-mcq-068-a-firewall-b-ids-c-antivirus-scanning-devices",
+    "title": "• A) Firewall • B) IDS • C) Antivirus scanning devices • D) VPN What type of network se",
+    "category": "Networking",
+    "options": {
+      "A": "Firewall",
+      "B": "IDS",
+      "C": "Antivirus scanning devices",
+      "D": "VPN Which cloud service provider should be chosen for extensive support of Linux, Windows Server, and SQL Server?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t700epjvczn5ntbo3k",
+    "slug": "mockoa1-sec3-nsc-mcq-073-a-press-the-esc-key-b-press-the-enter-key-twi",
+    "title": "• A) Press the Esc key • B) Press the Enter key twice or click the Numbering button aga",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+Shift",
+      "B": "Ctrl+Alt",
+      "C": "Shift",
+      "D": "Alt+Tab Which key combination is used to select a word or phrase in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t700eljvcz1s33yurp",
+    "slug": "mockoa1-sec3-nsc-mcq-070-a-google-cloud-b-aws-c-azure-d-ibm-cloud-whic",
+    "title": "• A) Google Cloud • B) AWS • C) Azure • D) IBM Cloud Which cloud service provider shoul",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Google Cloud",
+      "B": "AWS",
+      "C": "Azure",
+      "D": "IBM Cloud How can you stop automatic numbering in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800eqjvcz32hw342n",
+    "slug": "mockoa1-sec3-nsc-mcq-071-a-google-cloud-b-aws-c-azure-d-ibm-cloud-how-",
+    "title": "• A) Google Cloud • B) AWS • C) Azure • D) IBM Cloud How can you stop automatic numberi",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Press the Esc key",
+      "B": "Press the Enter key twice or click the Numbering button again",
+      "C": "Click the Format menu",
+      "D": "Right-click and select Stop Numbering How can you stop automatic numbering in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800erjvczjhjzrnny",
+    "slug": "mockoa1-sec3-nsc-mcq-067-a-access-list-110-deny-tcp-any-host-1111-eq-s",
+    "title": "• A) access-list 110 deny tcp any host 1.1.1.1 eq smtp • B) access-list 110 permit tcp ",
+    "category": "Networking",
+    "options": {
+      "A": "Firewall",
+      "B": "IDS",
+      "C": "Antivirus scanning devices",
+      "D": "VPN What type of network security device scans for viruses and malware?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800eujvczbjp3mnhn",
+    "slug": "mockoa1-sec3-nsc-mcq-075-a-ctrlshift-b-ctrlalt-c-shift-d-alttab-what-i",
+    "title": "• A) Ctrl+Shift • B) Ctrl+Alt • C) Shift • D) Alt+Tab What is the shortcut key to open ",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+H",
+      "B": "Ctrl+G",
+      "C": "Ctrl+F",
+      "D": "Ctrl+P What is the shortcut key to open the Find dialog box in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800eyjvcz4lbqon0x",
+    "slug": "mockoa1-sec3-nsc-mcq-080-a-sum-b-avg-c-max-d-min-in-excel-what-functio",
+    "title": "• A) SUM • B) AVG • C) MAX • D) MIN In Excel, what function finds the highest value in ",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "SUM",
+      "B": "AVG",
+      "C": "MAX",
+      "D": "MIN Which command takes you two steps backward from any particular directory in the command prompt?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800evjvczsbio5gv7",
+    "slug": "mockoa1-sec3-nsc-mcq-074-a-ctrlshift-b-ctrlalt-c-shift-d-alttab-which-",
+    "title": "• A) Ctrl+Shift • B) Ctrl+Alt • C) Shift • D) Alt+Tab Which key combination is used to ",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+Shift",
+      "B": "Ctrl+Alt",
+      "C": "Shift",
+      "D": "Alt+Tab What is the shortcut key to open the Find dialog box in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800etjvcz1f9nlsab",
+    "slug": "mockoa1-sec3-nsc-mcq-078-a-ctrlt-b-ctrlw-c-ctrlq-d-ctrlr-how-would-you",
+    "title": "• A) Ctrl+T • B) Ctrl+W • C) Ctrl+Q • D) Ctrl+R How would you close a tab in a browser?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+T",
+      "B": "Ctrl+W",
+      "C": "Ctrl+Q",
+      "D": "Ctrl+R In Excel, what function finds the highest value in a range of cells?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800ewjvczuvhdgvmj",
+    "slug": "mockoa1-sec3-nsc-mcq-072-a-press-the-esc-key-b-press-the-enter-key-twi",
+    "title": "• A) Press the Esc key • B) Press the Enter key twice or click the Numbering button aga",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Press the Esc key",
+      "B": "Press the Enter key twice or click the Numbering button again",
+      "C": "Click the Format menu",
+      "D": "Right-click and select Stop Numbering Which key combination is used to select a word or phrase in MS Word?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800exjvczd4ku3sb5",
+    "slug": "mockoa1-sec3-nsc-mcq-076-a-ctrlh-b-ctrlg-c-ctrlf-d-ctrlp-what-is-the-s",
+    "title": "• A) Ctrl+H • B) Ctrl+G • C) Ctrl+F • D) Ctrl+P What is the shortcut key to open the Fi",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+H",
+      "B": "Ctrl+G",
+      "C": "Ctrl+F",
+      "D": "Ctrl+P How would you close a tab in a browser?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0ta00ezjvczsf2vv1r5",
+    "slug": "mockoa1-sec3-nsc-mcq-081-a-sum-b-avg-c-max-d-min-which-command-takes-y",
+    "title": "• A) SUM • B) AVG • C) MAX • D) MIN Which command takes you two steps backward from any",
+    "category": "Networking",
+    "options": {
+      "A": "cd ..",
+      "B": "cd ../..",
+      "C": "cd ~",
+      "D": "cd / Which command takes you two steps backward from any particular directory in the command prompt?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t800esjvczdu3z2q4q",
+    "slug": "mockoa1-sec3-nsc-mcq-079-a-ctrlt-b-ctrlw-c-ctrlq-d-ctrlr-in-excel-what",
+    "title": "• A) Ctrl+T • B) Ctrl+W • C) Ctrl+Q • D) Ctrl+R In Excel, what function finds the highe",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "SUM",
+      "B": "AVG",
+      "C": "MAX",
+      "D": "MIN In Excel, what function finds the highest value in a range of cells?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l0t700eojvczzsrgb6rb",
+    "slug": "mockoa1-sec3-nsc-mcq-077-a-ctrlh-b-ctrlg-c-ctrlf-d-ctrlp-how-would-you",
+    "title": "• A) Ctrl+H • B) Ctrl+G • C) Ctrl+F • D) Ctrl+P How would you close a tab in a browser?",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Ctrl+T",
+      "B": "Ctrl+W",
+      "C": "Ctrl+Q",
+      "D": "Ctrl+R How would you close a tab in a browser?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12s00gojvczz1cy5xh2",
+    "slug": "mockoa1-sec3-nsc-mcq-084-a-spelling-error-b-contextual-error-c-grammat",
+    "title": "• A) Spelling error • B) Contextual error • C) Grammatical error • D) Formatting error ",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Spelling error",
+      "B": "Contextual error",
+      "C": "Grammatical error",
+      "D": "Formatting error Which Excel feature quickly applies a set of formatting choices to a range of cells?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12t00gvjvcz2qed7l0i",
+    "slug": "mockoa1-sec3-nsc-mcq-085-a-spelling-error-b-contextual-error-c-grammat",
+    "title": "• A) Spelling error • B) Contextual error • C) Grammatical error • D) Formatting error ",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Cell Styles",
+      "B": "Conditional Formatting",
+      "C": "Data Validation",
+      "D": "PivotTable Which Excel feature quickly applies a set of formatting choices to a range of cells?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12t00gxjvczreh7ovay",
+    "slug": "mockoa1-sec3-nsc-mcq-082-a-cd-b-cd-c-cd-d-cd-which-command-takes-you-t",
+    "title": "• A) cd .. • B) cd ../.. • C) cd ~ • D) cd / Which command takes you two steps backward",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "cd ..",
+      "B": "cd ../..",
+      "C": "cd ~",
+      "D": "cd / What does a green underline in MS Word signify?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12s00gqjvczi6misbfh",
+    "slug": "mockoa1-sec3-nsc-mcq-083-a-cd-b-cd-c-cd-d-cd-what-does-a-green-underli",
+    "title": "• A) cd .. • B) cd ../.. • C) cd ~ • D) cd / What does a green underline in MS Word sig",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Spelling error",
+      "B": "Contextual error",
+      "C": "Grammatical error",
+      "D": "Formatting error What does a green underline in MS Word signify?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12t00gyjvczpe0brk9l",
+    "slug": "mockoa1-sec3-nsc-mcq-088-a-spoofing-b-phishing-c-hacking-d-spamming-in",
+    "title": "• A) Spoofing • B) Phishing • C) Hacking • D) Spamming In a network, what attack involv",
+    "category": "Networking",
+    "options": {
+      "A": "Spoofing",
+      "B": "Phishing",
+      "C": "Hacking",
+      "D": "Spamming"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12t00h1jvczlrsi97d3",
+    "slug": "mockoa1-sec3-nsc-mcq-087-a-cell-styles-b-conditional-formatting-c-data",
+    "title": "• A) Cell Styles • B) Conditional Formatting • C) Data Validation • D) PivotTable In a ",
+    "category": "Networking",
+    "options": {
+      "A": "Spoofing",
+      "B": "Phishing",
+      "C": "Hacking",
+      "D": "Spamming In a network, what attack involves forging an IP address to impersonate another device?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  },
+  {
+    "id": "cmua6l12t00gwjvczaayw6fxq",
+    "slug": "mockoa1-sec3-nsc-mcq-086-a-cell-styles-b-conditional-formatting-c-data",
+    "title": "• A) Cell Styles • B) Conditional Formatting • C) Data Validation • D) PivotTable Which",
+    "category": "Common Applications & MS Office",
+    "options": {
+      "A": "Cell Styles",
+      "B": "Conditional Formatting",
+      "C": "Data Validation",
+      "D": "PivotTable In a network, what attack involves forging an IP address to impersonate another device?"
+    },
+    "status": "UNVERIFIED",
+    "reason": "Technical MCQ slide deck from Section 3: Networking, Security & Cloud without explicit Accenture shift or pattern documentation."
+  }
+]

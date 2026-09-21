@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cmua6ii4w00e87go0k0l71wkb",
+    "slug": "mockoa1-sec2-mcq-050-reaches-or-exceeds-b-thus-a-becomes-6-12-then",
+    "title": "reaches or exceeds b. Thus, a becomes 6, 12, then 24. Function mystery(n) if (n <= 1) return 1 else return n * mystery(n - 2) End Function Output = mystery(5)",
+    "category": "Pseudocode",
+    "oldSolution": "B",
+    "newSolution": "B",
+    "oldStatus": "VERIFIED",
+    "newStatus": "VERIFIED",
+    "correctAnswerText": "15",
+    "reason": "Pseudocode mystery function evaluation yields 15 (Option B)"
+  },
+  {
+    "id": "cmua6l1b000j4jvczndnt80b2",
+    "slug": "mockoa1-sec3-pseudo-mcq-011-the-variable-x-to-10-and-then-prints-it-q-wha",
+    "title": "the variable x to 10 and then prints it. Q: What will be the output of the following pseudocode? Integer i for(i = 0 to 4) Print \"Hello\" end for",
+    "category": "Pseudocode",
+    "oldSolution": "B",
+    "newSolution": "B",
+    "oldStatus": "COMMUNITY_VERIFIED",
+    "newStatus": "COMMUNITY_VERIFIED",
+    "correctAnswerText": "\"Hello\" is printed 5 times",
+    "reason": "Question has verified solution in database record"
+  },
+  {
+    "id": "cmua6l1ax00ivjvcz16b8nhtu",
+    "slug": "mockoa1-sec3-pseudo-mcq-016-calculates-the-factorial-of-n-for-n-2-it-retu",
+    "title": "calculates the factorial of n. For n = 2, it returns 2 * fun(1) which results in 2. What does the following pseudocode do? Integer fun(Integer n) if (n == 0) return 1 else return n + fun(n - 1)",
+    "category": "Pseudocode",
+    "oldSolution": "B",
+    "newSolution": "B",
+    "oldStatus": "COMMUNITY_VERIFIED",
+    "newStatus": "COMMUNITY_VERIFIED",
+    "correctAnswerText": "Computes the sum of integers from n to 1",
+    "reason": "Question has verified solution in database record"
+  },
+  {
+    "id": "cmua6l1ip00kwjvczjx9wk08w",
+    "slug": "mockoa1-sec3-pseudo-mcq-025-is-even-or-odd-and-prints-the-appropriate-mes",
+    "title": "is even or odd and prints the appropriate message. Since 15 is odd, \"Odd\" is printed. What does the following pseudocode do? Stack s s.push(10) s.push(20) s.pop()",
+    "category": "Pseudocode",
+    "oldSolution": "B",
+    "newSolution": "B",
+    "oldStatus": "COMMUNITY_VERIFIED",
+    "newStatus": "COMMUNITY_VERIFIED",
+    "correctAnswerText": "Pushes 10 and 20 onto the stack, then pops 20",
+    "reason": "Question has verified solution in database record"
+  },
+  {
+    "id": "cmubfkped0002nvfh3eoybadm",
+    "slug": "acc-src-003",
+    "title": "A feature of MS Office that saves the document automatically after a certain interval is called:",
+    "category": "MS Office",
+    "oldSolution": "C",
+    "newSolution": "C",
+    "oldStatus": "SOURCE_CONFLICT",
+    "newStatus": "SOURCE_CONFLICT",
+    "correctAnswerText": "FrontPage",
+    "reason": "Source document marked FrontPage, but AutoRecover saves documents automatically; conflicting source records."
+  }
+]
