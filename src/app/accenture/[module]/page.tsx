@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import {
   ACCENTURE_MODULES,
   ACCENTURE_COMPANY_FILTER,
+  getAccentureModuleQuestions,
+  getAccentureSolvedQuestionIds,
 } from "@/lib/accentureModules";
 import { DifficultyBadge, SourceBadge } from "@/components/ui/Badge";
 import {
@@ -252,20 +254,10 @@ export default async function AccentureModulePage({
   }
 
   // Render Questions Module Table
-  const [questions, userProgress] = await Promise.all([
-    prisma.question.findMany({
-      where: {
-        AND: [ACCENTURE_COMPANY_FILTER, mod.queryFilter],
-      },
-      orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
-    }),
-    prisma.userProgress.findMany({
-      where: { isSolved: true },
-      select: { questionId: true },
-    }),
+  const [questions, solvedSet] = await Promise.all([
+    getAccentureModuleQuestions(mod.slug, mod.queryFilter),
+    getAccentureSolvedQuestionIds(),
   ]);
-
-  const solvedSet = new Set(userProgress.map((p) => p.questionId));
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-4 font-sans text-xs">

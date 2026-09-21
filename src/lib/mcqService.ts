@@ -299,8 +299,42 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
   };
 }
 
-// Fetch all MCQs formatted and ready for Practice Mode
-export async function getAccentureMcqPracticeList(filterCategory?: string) {
+// In-memory cache for practice questions
+const practiceListCache: Record<string, { data: McqQuestionItem[]; expiresAt: number }> = {};
+
+let distinctCategoriesCache: { data: string[]; expiresAt: number } | null = null;
+
+export async function getAccentureDistinctCategories(): Promise<string[]> {
+  const now = Date.now();
+  if (distinctCategoriesCache && distinctCategoriesCache.expiresAt > now) {
+    return distinctCategoriesCache.data;
+  }
+  const distinct = await prisma.question.findMany({
+    where: {
+      AND: [ACCENTURE_COMPANY_FILTER, { questionType: "MCQ" }],
+    },
+    select: { category: true },
+    distinct: ["category"],
+  });
+  const categories = distinct.map((c) => c.category).filter(Boolean) as string[];
+  distinctCategoriesCache = {
+    data: categories,
+    expiresAt: Date.now() + 5 * 60 * 1000, // 5 minutes cache
+  };
+  return categories;
+}
+
+// Fetch MCQs formatted and ready for Practice Mode (cached for 60 seconds)
+export async function getAccentureMcqPracticeList(
+  filterCategory?: string,
+  limit: number = 100
+): Promise<McqQuestionItem[]> {
+  const cacheKey = `${filterCategory || "all"}_${limit}`;
+  const now = Date.now();
+  if (practiceListCache[cacheKey] && practiceListCache[cacheKey].expiresAt > now) {
+    return practiceListCache[cacheKey].data;
+  }
+
   const whereClause: any = {
     AND: [
       ACCENTURE_COMPANY_FILTER,
@@ -316,11 +350,32 @@ export async function getAccentureMcqPracticeList(filterCategory?: string) {
 
   const questions = await prisma.question.findMany({
     where: whereClause,
+    take: limit,
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      description: true,
+      category: true,
+      difficulty: true,
+      sourceType: true,
+      solution: true,
+      explanation: true,
+      importanceReason: true,
+      starterCode: true,
+    },
     orderBy: [
       { frequency: "desc" },
       { createdAt: "asc" },
     ],
   });
 
-  return questions.map((q, idx) => formatMcqQuestion(q, idx + 1));
+  const formatted = questions.map((q, idx) => formatMcqQuestion(q, idx + 1));
+
+  practiceListCache[cacheKey] = {
+    data: formatted,
+    expiresAt: Date.now() + 60000,
+  };
+
+  return formatted;
 }

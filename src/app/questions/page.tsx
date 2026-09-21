@@ -87,19 +87,44 @@ export default async function QuestionsPage({
   const [questions, progress] = await Promise.all([
     prisma.question.findMany({
       where,
-      include: {
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        difficulty: true,
+        questionType: true,
+        sourceType: true,
+        sourceShift: true,
+        category: true,
+        frequency: true,
+        importance: true,
+        importanceReason: true,
+        topics: true,
+        companies: true,
         questionSources: {
-          include: { sourceDocument: true },
+          select: {
+            page: true,
+            shift: true,
+            sourceDocument: {
+              select: {
+                title: true,
+                company: true,
+              },
+            },
+          },
         },
       },
+      take: 100,
       orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
     }),
     prisma.userProgress.findMany({
-      select: { questionId: true, isSolved: true },
+      where: { isSolved: true },
+      select: { questionId: true },
+      take: 500,
     }),
   ]);
 
-  const solvedSet = new Set(progress.filter((p) => p.isSolved).map((p) => p.questionId));
+  const solvedSet = new Set(progress.map((p) => p.questionId));
 
   const activeFilter = filter || (importance === "MUST_DO" ? "MUST_DO" : difficulty || sourceType || (company ? "ACCENTURE" : type));
 

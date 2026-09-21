@@ -167,10 +167,19 @@ export const ACCENTURE_COMPANY_FILTER = {
   ],
 };
 
+// In-memory caches with 60-second TTL
+let moduleCountsCache: { data: Record<string, number>; expiresAt: number } | null = null;
+let headerStatsCache: { data: any; expiresAt: number } | null = null;
+
 /**
- * Fetch real database counts for all modules in parallel
+ * Fetch real database counts for all modules in parallel (with 60s in-memory cache)
  */
 export async function getAccentureModuleCounts(): Promise<Record<string, number>> {
+  const now = Date.now();
+  if (moduleCountsCache && moduleCountsCache.expiresAt > now) {
+    return moduleCountsCache.data;
+  }
+
   const counts: Record<string, number> = {};
 
   const questionPromises = ACCENTURE_MODULES.map(async (mod) => {
@@ -200,13 +209,24 @@ export async function getAccentureModuleCounts(): Promise<Record<string, number>
   });
 
   await Promise.all(questionPromises);
+
+  moduleCountsCache = {
+    data: counts,
+    expiresAt: Date.now() + 60000,
+  };
+
   return counts;
 }
 
 /**
- * Fetch real database stats for Accenture header
+ * Fetch real database stats for Accenture header (with 60s in-memory cache)
  */
 export async function getAccentureHeaderStats() {
+  const now = Date.now();
+  if (headerStatsCache && headerStatsCache.expiresAt > now) {
+    return headerStatsCache.data;
+  }
+
   const [totalQuestions, totalMockTests, totalAttempts] = await Promise.all([
     prisma.question.count({ where: ACCENTURE_COMPANY_FILTER }),
     prisma.mockTest.count({
@@ -228,10 +248,77 @@ export async function getAccentureHeaderStats() {
     accuracy = Math.round(agg._avg.accuracy || 0);
   }
 
-  return {
+  const result = {
     totalQuestions,
     totalMockTests,
     totalAttempts,
     accuracy,
   };
+
+  headerStatsCache = {
+    data: result,
+    expiresAt: Date.now() + 60000,
+  };
+
+  return result;
 }
+
+let moduleQuestionsCache: Record<string, { data: any[]; expiresAt: number }> = {};
+let userSolvedCache: { data: Set<string>; expiresAt: number } | null = null;
+
+export async function getAccentureModuleQuestions(slug: string, queryFilter: any) {
+  const now = Date.now();
+  if (moduleQuestionsCache[slug] && moduleQuestionsCache[slug].expiresAt > now) {
+    return moduleQuestionsCache[slug].data;
+  }
+
+  const questions = await prisma.question.findMany({
+    where: {
+      AND: [ACCENTURE_COMPANY_FILTER, queryFilter],
+    },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      difficulty: true,
+      questionType: true,
+      sourceType: true,
+      category: true,
+      frequency: true,
+      importance: true,
+      importanceReason: true,
+      sourceDocument: true,
+      sourcePage: true,
+    },
+    orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
+    take: 100,
+  });
+
+  moduleQuestionsCache[slug] = {
+    data: questions,
+    expiresAt: Date.now() + 60000,
+  };
+
+  return questions;
+}
+
+export async function getAccentureSolvedQuestionIds(): Promise<Set<string>> {
+  const now = Date.now();
+  if (userSolvedCache && userSolvedCache.expiresAt > now) {
+    return userSolvedCache.data;
+  }
+
+  const userProgress = await prisma.userProgress.findMany({
+    where: { isSolved: true },
+    select: { questionId: true },
+    take: 500,
+  });
+
+  const set = new Set(userProgress.map((p) => p.questionId));
+  userSolvedCache = {
+    data: set,
+    expiresAt: Date.now() + 30000,
+  };
+  return set;
+}
+

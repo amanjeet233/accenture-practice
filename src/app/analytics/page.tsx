@@ -17,12 +17,12 @@ export default async function AnalyticsPage() {
   const analytics = await getDashboardAnalytics();
   const { metrics, topicAnalysis, weakAreas, heatmap, history } = analytics;
 
-  const runtimes = history
-    .filter((s) => s.runtime !== null && s.runtime > 0)
-    .map((s) => s.runtime as number);
+  const runtimes = (history || [])
+    .filter((s: any) => s.runtime !== null && s.runtime > 0)
+    .map((s: any) => s.runtime as number);
 
   const avgRuntime =
-    runtimes.length > 0 ? Math.round(runtimes.reduce((a, b) => a + b, 0) / runtimes.length) : 0;
+    runtimes.length > 0 ? Math.round(runtimes.reduce((a: number, b: number) => a + b, 0) / runtimes.length) : 0;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 font-sans">

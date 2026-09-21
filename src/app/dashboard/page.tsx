@@ -32,11 +32,22 @@ export default async function PreparationDashboardPage() {
     getDashboardAnalytics(),
     prisma.question.findMany({
       take: 10,
-      orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
-      include: {
-        questionTopics: { include: { topic: true } },
-        questionSources: { include: { sourceDocument: true } },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        difficulty: true,
+        questionType: true,
+        sourceType: true,
+        sourceShift: true,
+        topics: true,
+        companies: true,
+        importance: true,
+        frequency: true,
+        questionTopics: { select: { topic: { select: { name: true } } } },
+        questionSources: { select: { page: true, shift: true, sourceDocument: { select: { title: true, company: true } } } },
       },
+      orderBy: [{ frequency: "desc" }, { createdAt: "desc" }],
     }),
   ]);
 
@@ -226,7 +237,7 @@ export default async function PreparationDashboardPage() {
           </div>
 
           <div className="space-y-2.5">
-            {dsaHighlights.concat(sqlHighlights).slice(0, 6).map((topic) => {
+            {dsaHighlights.concat(sqlHighlights).slice(0, 6).map((topic: any) => {
               const solvedRatio = topic.totalQuestions ? (topic.solvedCount / topic.totalQuestions) * 100 : 0;
               return (
                 <div key={topic.name} className="space-y-1">
@@ -257,7 +268,7 @@ export default async function PreparationDashboardPage() {
 
           {weakAreas.length > 0 ? (
             <div className="space-y-2">
-              {weakAreas.slice(0, 4).map((w) => (
+              {weakAreas.slice(0, 4).map((w: any) => (
                 <div
                   key={w.name}
                   className="p-2.5 rounded bg-[#0D1117] border border-[#30363D] flex items-center justify-between"
@@ -387,7 +398,7 @@ export default async function PreparationDashboardPage() {
 
         {history && history.length > 0 ? (
           <div className="divide-y divide-[#30363D]/60">
-            {history.slice(0, 5).map((item) => (
+            {history.slice(0, 5).map((item: any) => (
               <div
                 key={item.id}
                 className="py-2 flex items-center justify-between text-xs"

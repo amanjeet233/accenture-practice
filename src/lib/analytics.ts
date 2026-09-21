@@ -49,7 +49,15 @@ export interface SubmissionHistoryItem {
   submittedAt: Date;
 }
 
+// Lightweight in-memory cache for dashboard analytics
+let analyticsCache: { data: any; expiresAt: number } | null = null;
+
 export async function getDashboardAnalytics(userId?: string) {
+  const nowTime = Date.now();
+  if (analyticsCache && analyticsCache.expiresAt > nowTime) {
+    return analyticsCache.data;
+  }
+
   // If no userId provided, select the primary user
   let user = userId
     ? await prisma.user.findUnique({ where: { id: userId } })
@@ -65,6 +73,7 @@ export async function getDashboardAnalytics(userId?: string) {
   }
 
   // 1. Fetch User Progress, Submissions, Attempts, Bookmarks, and Revision Items
+  // Using tight column projections to eliminate transferring megabytes of unused code/description text
   const [
     allQuestions,
     userProgressList,
@@ -74,20 +83,52 @@ export async function getDashboardAnalytics(userId?: string) {
     revisionItemsList,
   ] = await Promise.all([
     prisma.question.findMany({
-      include: {
-        questionTopics: { include: { topic: true } },
+      select: {
+        id: true,
+        importance: true,
+        questionType: true,
+        topics: true,
+        questionTopics: {
+          select: {
+            topic: {
+              select: {
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
       },
     }),
     prisma.userProgress.findMany({
       where: { userId: user.id },
-      include: { question: true },
+      select: {
+        questionId: true,
+        isSolved: true,
+        question: {
+          select: {
+            questionType: true,
+          },
+        },
+      },
     }),
     prisma.submission.findMany({
       where: { userId: user.id },
-      include: {
+      select: {
+        id: true,
+        questionId: true,
+        status: true,
+        submittedAt: true,
+        language: true,
+        runtime: true,
+        memory: true,
         question: {
-          include: {
-            questionTopics: { include: { topic: true } },
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            difficulty: true,
+            questionType: true,
           },
         },
       },
@@ -100,11 +141,31 @@ export async function getDashboardAnalytics(userId?: string) {
     }),
     prisma.bookmark.findMany({
       where: { userId: user.id },
-      include: { question: true },
+      include: {
+        question: {
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            difficulty: true,
+            questionType: true,
+          },
+        },
+      },
     }),
     prisma.revisionItem.findMany({
       where: { userId: user.id },
-      include: { question: true },
+      include: {
+        question: {
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            difficulty: true,
+            questionType: true,
+          },
+        },
+      },
     }),
   ]);
 
@@ -410,7 +471,7 @@ export async function getDashboardAnalytics(userId?: string) {
     totalMustDo: mustDoQuestions.length,
   };
 
-  return {
+  const result = {
     user,
     metrics,
     topicAnalysis: {
@@ -436,4 +497,11 @@ export async function getDashboardAnalytics(userId?: string) {
     },
     history: submissionHistory,
   };
+
+  analyticsCache = {
+    data: result,
+    expiresAt: Date.now() + 30000,
+  };
+
+  return result;
 }
