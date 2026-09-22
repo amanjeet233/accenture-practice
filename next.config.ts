@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   // Performance optimizations
-  swcMinify: true,
   // Enable static generation
   output: "standalone",
   // Cache static assets
