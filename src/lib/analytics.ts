@@ -501,7 +501,7 @@ export async function getDashboardAnalytics(userId?: string) {
 
   analyticsCache[cacheKey] = {
     data: result,
-    expiresAt: Date.now() + 30000,
+    expiresAt: Date.now() + 300000,
   };
 
   return result;

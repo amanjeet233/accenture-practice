@@ -211,14 +211,15 @@ export const ACCENTURE_COMPANY_FILTER = {
   ],
 };
 
-// In-memory caches with TTL
+// In-memory caches with TTL (10 minutes)
+let globalTopicCountsCache: { data: Record<string, number>; expiresAt: number } | null = null;
 let moduleCountsCache: { data: Record<string, number>; expiresAt: number; userId?: string } | null = null;
 let headerStatsCache: { data: any; expiresAt: number; userId?: string } | null = null;
 
-const CACHE_TTL_MS = 120_000; // 2 minutes
+const CACHE_TTL_MS = 600_000; // 10 minutes
 
 /**
- * Fetch real database counts for all modules in parallel (cached 2 minutes)
+ * Fetch real database counts for all modules with high-performance caching
  */
 export async function getAccentureModuleCounts(userId?: string): Promise<Record<string, number>> {
   const now = Date.now();
@@ -230,46 +231,60 @@ export async function getAccentureModuleCounts(userId?: string): Promise<Record<
     return moduleCountsCache.data;
   }
 
-  const counts: Record<string, number> = {};
+  // 1. Get or compute global topic counts (shared across all users)
+  let baseCounts: Record<string, number> = {};
+  if (globalTopicCountsCache && globalTopicCountsCache.expiresAt > now) {
+    baseCounts = { ...globalTopicCountsCache.data };
+  } else {
+    const questionPromises = ACCENTURE_MODULES.map(async (mod) => {
+      if (mod.type === "MOCK_TESTS") {
+        const cnt = await prisma.mockTest.count({
+          where: {
+            OR: [
+              { company: { contains: "Accenture" } },
+              { companyRef: { slug: "accenture" } },
+            ],
+          },
+        });
+        baseCounts[mod.slug] = cnt;
+      } else if (mod.type !== "PROGRESS") {
+        const cnt = await prisma.question.count({
+          where: {
+            AND: [ACCENTURE_COMPANY_FILTER, mod.queryFilter],
+          },
+        });
+        baseCounts[mod.slug] = cnt;
+      }
+    });
 
-  const questionPromises = ACCENTURE_MODULES.map(async (mod) => {
-    if (mod.type === "MOCK_TESTS") {
-      const cnt = await prisma.mockTest.count({
-        where: {
-          OR: [
-            { company: { contains: "Accenture" } },
-            { companyRef: { slug: "accenture" } },
-          ],
-        },
-      });
-      counts[mod.slug] = cnt;
-    } else if (mod.type === "PROGRESS") {
-      const cnt = await prisma.userProgress.count({
-        where: {
-          isSolved: true,
-          ...(userId ? { userId } : { userId: "none" }),
-        },
-      });
-      counts[mod.slug] = cnt;
-    } else {
-      const cnt = await prisma.question.count({
-        where: {
-          AND: [ACCENTURE_COMPANY_FILTER, mod.queryFilter],
-        },
-      });
-      counts[mod.slug] = cnt;
-    }
+    await Promise.all(questionPromises);
+
+    globalTopicCountsCache = {
+      data: baseCounts,
+      expiresAt: now + CACHE_TTL_MS,
+    };
+  }
+
+  // 2. Fetch user solved progress count
+  const progressCount = await prisma.userProgress.count({
+    where: {
+      isSolved: true,
+      ...(userId ? { userId } : { userId: "none" }),
+    },
   });
 
-  await Promise.all(questionPromises);
+  const finalCounts = {
+    ...baseCounts,
+    progress: progressCount,
+  };
 
   moduleCountsCache = {
-    data: counts,
+    data: finalCounts,
     expiresAt: now + CACHE_TTL_MS,
     userId: userId || undefined,
   };
 
-  return counts;
+  return finalCounts;
 }
 
 /**

@@ -18,6 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 import { AuthProvider } from "@/components/auth/AuthContext";
+import { NavigationProgress } from "@/components/layout/NavigationProgress";
 
 export const metadata: Metadata = {
   title: "CodeTrack — Professional Developer Preparation Platform",
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark h-full ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F0F6FC] font-sans selection:bg-[#58A6FF]/20 selection:text-[#58A6FF]">
+        <NavigationProgress />
         <ReactQueryProvider>
           <ServiceWorkerRegistration />
           <AuthProvider>
