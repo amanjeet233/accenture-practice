@@ -88,6 +88,7 @@ async function main() {
             solution: q.correctOptionId,
             explanation: q.explanation,
             sourceDocument: docFileName,
+            companies: JSON.stringify(["accenture"]),
           },
           create: {
             id: q.id,
@@ -104,6 +105,7 @@ async function main() {
             solution: q.correctOptionId,
             explanation: q.explanation,
             sourceDocument: docFileName,
+            companies: JSON.stringify(["accenture"]),
           },
         });
       })

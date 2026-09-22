@@ -206,6 +206,7 @@ export const ACCENTURE_MODULES: AccentureModuleConfig[] = [
 export const ACCENTURE_COMPANY_FILTER = {
   OR: [
     { companies: { contains: "accenture" } },
+    { sourceDocument: { contains: "Accenture" } },
     { questionCompanies: { some: { company: { slug: "accenture" } } } },
   ],
 };
