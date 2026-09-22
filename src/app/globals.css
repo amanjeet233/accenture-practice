@@ -40,14 +40,16 @@ code, pre, .font-mono {
   font-family: var(--font-mono, "JetBrains Mono"), monospace;
 }
 
-/* Hide Next.js Dev Overlays, Toast Badges, and Turbopack Floating Indicators */
+/* Hide Next.js Dev Overlays, Toast Badges, Turbopack Floating Indicators & TanStack DevTools */
 nextjs-portal,
 [data-nextjs-toast],
 [data-nextjs-toast-wrapper],
 [nextjs-portal],
 #next-logo,
 [class*="nextjs-toast"],
-[class*="nextjs-portal"] {
+[class*="nextjs-portal"],
+.tsqd-parent-container,
+[class*="tsqd"] {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
