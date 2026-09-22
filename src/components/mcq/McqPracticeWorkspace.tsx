@@ -655,70 +655,43 @@ export function McqPracticeWorkspace({
           </div>
         </div>
 
-        {/* ─── RIGHT PANEL: QUESTION NAVIGATOR (desktop always visible) ─── */}
-        <aside className="hidden min-w-0 lg:flex flex-col border-l border-[#30363D] bg-[#0D1117]/50">
-          {/* Navigator Header */}
-          <div className="px-3 py-2.5 border-b border-[#30363D] shrink-0">
-            <h3 className="font-mono font-bold text-[11px] text-[#F0F6FC] uppercase tracking-wider">
-              Questions
-            </h3>
-            <div className="text-[10px] font-mono text-[#6E7681] mt-0.5">
-              {answeredList.length}/{questions.length} answered
-            </div>
-          </div>
+        {/* ─── RIGHT PANEL: VERTICAL TINY RAIL NODE STEPPER NAVIGATOR ─── */}
+        <aside aria-label="Question timeline" className="hidden min-h-0 overflow-y-auto border-l border-[#30363D] bg-[#0D1117] px-2 py-3 lg:block w-14 shrink-0">
+          <div className="relative mx-auto w-8 before:absolute before:left-1/2 before:top-3 before:bottom-3 before:w-px before:-translate-x-1/2 before:bg-[#30363D]">
+            {questions.map((q, idx) => {
+              const isCurrent = idx === currentIndex;
+              const ansState = answers[q.id];
+              const isAns = Boolean(ansState);
+              const isM = markedQuestions.has(q.id);
 
-          {/* Navigator Grid (scrollable) */}
-          <div ref={navigatorRef} className="flex-1 overflow-y-auto p-2.5 scrollbar-thin">
-            <div className="grid grid-cols-4 gap-1.5 justify-items-center">
-              {questions.map((q, idx) => {
-                const { bg, icon, ring, marked } = getNavPillStyle(q, idx);
-                const isCurrent = idx === currentIndex;
+              let nodeClass = "bg-[#21262D] text-[#8B949E] border-[#30363D]";
+              if (isAns) {
+                nodeClass = ansState.isCorrect
+                  ? "bg-[#238636] text-white border-[#3FB950]"
+                  : "bg-[#DA3633] text-white border-[#F85149]";
+              } else if (isM) {
+                nodeClass = "bg-[#D29922] text-[#0D1117] border-[#E3B341]";
+              }
 
-                return (
+              return (
+                <div key={q.id} className="relative z-10 flex justify-center pb-2">
                   <button
-                    key={q.id}
                     ref={isCurrent ? currentBtnRef : null}
                     onClick={() => setCurrentIndex(idx)}
-                    aria-label={`Question ${q.questionNumber}${answers[q.id] ? (answers[q.id].isCorrect ? ", answered correctly" : ", answered incorrectly") : marked ? ", marked for review" : ", unanswered"}`}
+                    aria-label={`Question ${idx + 1}`}
                     aria-current={isCurrent ? "step" : undefined}
-                    className={`relative h-7 w-7 rounded-md border font-mono text-[10px] font-semibold flex items-center justify-center transition-all ${bg} ${ring} hover:opacity-90`}
-                    title={`Question ${idx + 1}`}
+                    title={`Question ${idx + 1}${isAns ? (ansState.isCorrect ? " (Correct)" : " (Incorrect)") : isM ? " (Marked)" : ""}`}
+                    className={`h-7 w-7 rounded-full border font-mono text-[10px] font-bold transition-all flex items-center justify-center ${nodeClass} ${
+                      isCurrent
+                        ? "ring-2 ring-[#58A6FF] ring-offset-2 ring-offset-[#0D1117] scale-110"
+                        : "hover:border-[#58A6FF]"
+                    }`}
                   >
-                    <span>{q.questionNumber}</span>
-                    {icon && (
-                      <span className="absolute -top-0.5 -right-0.5">{icon}</span>
-                    )}
-                    {marked && !answers[q.id] && (
-                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#E3B341]" />
-                    )}
+                    {idx + 1}
                   </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Navigator Legend */}
-          <div className="px-3 py-2 border-t border-[#30363D] space-y-1.5 text-[9px] font-mono text-[#6E7681] shrink-0">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded bg-[#238636]/30 border border-[#3FB950]/50" />
-              <span>Correct</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded bg-[#DA3633]/30 border border-[#F85149]/50" />
-              <span>Incorrect</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded bg-[#D29922]/20 border border-[#D29922]/50" />
-              <span>Review</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded bg-[#21262D] border border-[#30363D]" />
-              <span>Unanswered</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded ring-1 ring-[#58A6FF] bg-[#0D1117]" />
-              <span>Current</span>
-            </div>
+                </div>
+              );
+            })}
           </div>
         </aside>
       </div>
