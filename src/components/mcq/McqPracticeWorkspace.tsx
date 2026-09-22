@@ -357,9 +357,11 @@ export function McqPracticeWorkspace({
 
           {/* Question Counter */}
           <div className="whitespace-nowrap font-mono text-[11px] text-[#8B949E] bg-[#0D1117] px-2 py-1 rounded border border-[#30363D]">
-            Q <span className="text-[#F0F6FC] font-semibold">{currentQ.questionNumber}</span>
-            <span className="text-[#6E7681]">/{totalQuestions}</span>
-            <span className="ml-1 text-[#6E7681]">(page {currentPage}/{totalPages})</span>
+            Q <span className="text-[#F0F6FC] font-semibold">{currentIndex + 1}</span>
+            <span className="text-[#6E7681]">/{questions.length}</span>
+            {totalPages > 1 && (
+              <span className="ml-1 text-[#6E7681]">(page {currentPage}/{totalPages})</span>
+            )}
           </div>
         </div>
 
@@ -398,7 +400,7 @@ export function McqPracticeWorkspace({
       {/* ========================================================================= */}
       {/* 3-PANEL MAIN BODY */}
       {/* ========================================================================= */}
-      <div className="flex-1 min-h-0 grid overflow-hidden lg:grid-cols-[minmax(320px,1.05fr)_minmax(360px,1fr)_220px] xl:grid-cols-[minmax(380px,1.1fr)_minmax(420px,1fr)_220px]">
+      <div className="flex-1 min-h-0 grid overflow-hidden lg:grid-cols-[minmax(320px,1.05fr)_minmax(360px,1fr)_76px] xl:grid-cols-[minmax(380px,1.1fr)_minmax(420px,1fr)_80px]">
         {/* ─── LEFT PANEL: QUESTION ─── */}
         <div className="hidden min-w-0 lg:flex flex-col border-r border-[#30363D] overflow-y-auto">
           <div className="p-5 xl:p-7 space-y-5 flex-1">
@@ -656,7 +658,7 @@ export function McqPracticeWorkspace({
         </div>
 
         {/* ─── RIGHT PANEL: VERTICAL TINY RAIL NODE STEPPER NAVIGATOR ─── */}
-        <aside aria-label="Question timeline" className="hidden min-h-0 overflow-y-auto border-l border-[#30363D] bg-[#0D1117] px-2 py-3 lg:block w-14 shrink-0">
+        <aside aria-label="Question timeline" className="hidden min-h-0 overflow-y-auto border-l border-[#30363D] bg-[#0D1117] px-2 py-3 lg:block w-full">
           <div className="relative mx-auto w-8 before:absolute before:left-1/2 before:top-3 before:bottom-3 before:w-px before:-translate-x-1/2 before:bg-[#30363D]">
             {questions.map((q, idx) => {
               const isCurrent = idx === currentIndex;

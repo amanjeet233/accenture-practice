@@ -43,7 +43,7 @@ export default async function AccentureMcqPracticePage({
   const currentPage = Math.max(1, parseInt(pageParam || "1", 10) || 1);
 
   // Fetch all questions for this topic in one session so the side nav shows all questions
-  const paginatedQuestions = await getAccentureMcqPracticeList(canonicalTopicId, currentPage, 500);
+  const paginatedQuestions = await getAccentureMcqPracticeList(canonicalTopicId, currentPage, 5000);
 
   // Available topics for the selector dropdown
   const topicOptions = CANONICAL_TOPIC_LIST.filter(

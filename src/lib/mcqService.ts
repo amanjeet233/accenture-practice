@@ -394,11 +394,11 @@ export async function getAccentureDistinctCategories(): Promise<string[]> {
 export async function getAccentureMcqPracticeList(
   filterCategory?: string,
   page: number = 1,
-  limit: number = 500
+  limit: number = 5000
 ): Promise<PaginatedMcqPracticeResult> {
   const canonical = resolveCanonicalTopic(filterCategory);
   const safePage = Math.max(1, page);
-  const safeLimit = Math.min(1000, Math.max(1, limit));
+  const safeLimit = Math.min(10000, Math.max(1, limit));
   const cacheKey = `${canonical ? `topic_${canonical.id}` : filterCategory || "all"}_p${safePage}_l${safeLimit}`;
   const now = Date.now();
   if (practiceListCache[cacheKey] && practiceListCache[cacheKey].expiresAt > now) {
