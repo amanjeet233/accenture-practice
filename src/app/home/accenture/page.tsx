@@ -154,13 +154,13 @@ export default async function AccentureHomePage() {
             </h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {[
-                ["All Mock Tests", "/accenture/test?count=300&duration=240", Timer],
+                ["All Mock Tests", "/accenture/test", Timer],
                 ["100 Questions · Mixed", "/accenture/test?count=100&duration=90", ClipboardList],
                 ["200 Questions · Mixed", "/accenture/test?count=200&duration=150", ClipboardList],
                 ["300 Questions · Mixed", "/accenture/test?count=300&duration=240", ClipboardList],
               ].map(([label, href, Icon]) => (
                 <Link
-                  key={href as string}
+                  key={label as string}
                   href={href as string}
                   className="flex items-center gap-2 border border-[#30363D] bg-[#161B22] px-3 py-2.5 text-[#8B949E] transition-colors hover:border-[#D29922]/60 hover:text-[#F0F6FC]"
                 >
@@ -183,7 +183,7 @@ export default async function AccentureHomePage() {
                 ["MCQ Practice", "/accenture/mcq/practice", CheckCircle2],
               ].map(([label, href, Icon]) => (
                 <Link
-                  key={href as string}
+                  key={label as string}
                   href={href as string}
                   className="flex items-center gap-2 border border-[#30363D] bg-[#161B22] px-3 py-2.5 text-[#8B949E] transition-colors hover:border-[#58A6FF]/60 hover:text-[#F0F6FC]"
                 >
