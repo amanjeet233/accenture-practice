@@ -39,3 +39,17 @@ body {
 code, pre, .font-mono {
   font-family: var(--font-mono, "JetBrains Mono"), monospace;
 }
+
+/* Hide Next.js Dev Overlays, Toast Badges, and Turbopack Floating Indicators */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-toast-wrapper],
+[nextjs-portal],
+#next-logo,
+[class*="nextjs-toast"],
+[class*="nextjs-portal"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
