@@ -2,7 +2,13 @@ import { PrismaClient } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: "file:./dev.db",
+    },
+  },
+});
 
 async function main() {
   console.log('Exporting data from SQLite dev.db...');
