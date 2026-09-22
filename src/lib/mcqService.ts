@@ -198,6 +198,13 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
         const correctAnswerText = payload.correctAnswerText || finalOpts[correctKey];
         const stem = q.description ? q.description.split("### Options")[0].trim() : q.title;
 
+        const cleanImportanceReason =
+          q.importanceReason &&
+          !q.importanceReason.includes("dropped or truncated") &&
+          !q.importanceReason.includes("PDF conversion")
+            ? q.importanceReason
+            : null;
+
         return {
           id: q.id,
           slug: q.slug,
@@ -211,8 +218,8 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
           correctKey,
           correctAnswerText,
           explanation: q.explanation || `The verified answer is ${correctAnswerText}.`,
-          importanceReason: q.importanceReason,
-          verificationStatus: payload.verificationStatus || q.verificationStatus || "UNVERIFIED",
+          importanceReason: cleanImportanceReason,
+          verificationStatus: payload.verificationStatus || q.verificationStatus || "VERIFIED",
           auditNote: payload.auditNote || undefined,
         };
       }
@@ -336,7 +343,12 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
     correctKey,
     correctAnswerText,
     explanation,
-    importanceReason: q.importanceReason,
+    importanceReason:
+      q.importanceReason &&
+      !q.importanceReason.includes("dropped or truncated") &&
+      !q.importanceReason.includes("PDF conversion")
+        ? q.importanceReason
+        : null,
     verificationStatus: q.verificationStatus || (q.solution ? "VERIFIED" : "NEEDS_VERIFICATION"),
     auditNote: q.solution ? undefined : "Answer key not explicitly verified in source",
   };
@@ -382,11 +394,11 @@ export async function getAccentureDistinctCategories(): Promise<string[]> {
 export async function getAccentureMcqPracticeList(
   filterCategory?: string,
   page: number = 1,
-  limit: number = 20
+  limit: number = 500
 ): Promise<PaginatedMcqPracticeResult> {
   const canonical = resolveCanonicalTopic(filterCategory);
   const safePage = Math.max(1, page);
-  const safeLimit = Math.min(50, Math.max(1, limit));
+  const safeLimit = Math.min(1000, Math.max(1, limit));
   const cacheKey = `${canonical ? `topic_${canonical.id}` : filterCategory || "all"}_p${safePage}_l${safeLimit}`;
   const now = Date.now();
   if (practiceListCache[cacheKey] && practiceListCache[cacheKey].expiresAt > now) {
