@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { COMPANY_LIST } from "@/lib/constants";
 import { DifficultyBadge, ImportanceBadge, SourceBadge } from "@/components/ui/Badge";
@@ -22,6 +22,10 @@ export default async function CompanyDetailPage({
   params: Promise<{ company: string }>;
 }) {
   const { company: companyId } = await params;
+  if (companyId.toLowerCase() === "accenture") {
+    redirect("/home/accenture");
+  }
+
   const company = COMPANY_LIST.find((c) => c.id.toLowerCase() === companyId.toLowerCase());
 
   if (!company) {

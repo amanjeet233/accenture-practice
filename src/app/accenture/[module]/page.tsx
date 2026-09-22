@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import {
   ACCENTURE_MODULES,
@@ -8,6 +8,7 @@ import {
   getAccentureModuleQuestions,
   getAccentureSolvedQuestionIds,
 } from "@/lib/accentureModules";
+import { resolveCanonicalTopic } from "@/lib/canonicalTopics";
 import { DifficultyBadge, SourceBadge } from "@/components/ui/Badge";
 import {
   CheckCircle2,
@@ -52,10 +53,22 @@ export default async function AccentureModulePage({
 }) {
   const { module } = await params;
   const { page: pageParam } = await searchParams;
+
+  // If this matches any canonical topic, redirect directly to MCQ practice workspace
+  const canonical = resolveCanonicalTopic(module);
+  if (canonical) {
+    redirect(`/accenture/mcq/practice?module=${encodeURIComponent(canonical.slug)}`);
+  }
+
   const mod = ACCENTURE_MODULES.find((m) => m.slug === module);
 
   if (!mod) {
     notFound();
+  }
+
+  // If this is a Question module or MCQ practice, redirect directly
+  if (mod.type === "QUESTIONS" || mod.canonicalTopicId || mod.slug === "mcq") {
+    redirect(`/accenture/mcq/practice?module=${encodeURIComponent(mod.slug)}`);
   }
 
   const Icon = mod.icon;

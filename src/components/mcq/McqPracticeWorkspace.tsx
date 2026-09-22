@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { McqQuestionItem } from "@/lib/mcqService";
@@ -22,6 +22,12 @@ import {
   Check,
   Filter,
   Award,
+  ChevronDown,
+  LayoutGrid,
+  ShieldCheck,
+  FileCode2,
+  CornerDownLeft,
+  Search,
 } from "lucide-react";
 
 interface TopicOption {
@@ -62,7 +68,7 @@ export function McqPracticeWorkspace({
   // Category filtering state
   const [currentCategory, setCurrentCategory] = useState<string>(selectedCategory);
 
-  // Questions are authoritative from server - never fall back to global dataset
+  // Questions are authoritative from server
   const questions = initialQuestions;
 
   // Active question index
@@ -73,15 +79,6 @@ export function McqPracticeWorkspace({
 
   // Marked for review set of question IDs
   const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(new Set());
-
-  // Reset answer states and index when topic / initialQuestions changes
-  useEffect(() => {
-    setCurrentIndex(0);
-    setAnswers({});
-    setMarkedQuestions(new Set());
-    setSecondsElapsed(0);
-    setCurrentCategory(selectedCategory);
-  }, [initialQuestions, selectedCategory]);
 
   // Timer state
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
@@ -96,13 +93,73 @@ export function McqPracticeWorkspace({
   // Mobile navigator visibility
   const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
 
+  // Topic dropdown state
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [topicSearchQuery, setTopicSearchQuery] = useState<string>("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside or Escape
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsDropdownOpen(false);
+      }
+    }
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleEscape);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isDropdownOpen]);
+
+  // Topic list computation
+  const allTopicItems = useMemo(() => {
+    const list: { slug: string; name: string }[] = [{ slug: "all", name: "All Topics" }];
+    if (topicOptions && topicOptions.length > 0) {
+      topicOptions.forEach((opt) => list.push({ slug: opt.slug, name: opt.name }));
+    } else {
+      allCategories.forEach((cat) => list.push({ slug: cat, name: cat }));
+    }
+    return list;
+  }, [topicOptions, allCategories]);
+
+  const currentTopicName = useMemo(() => {
+    if (currentCategory === "all") return "All Topics";
+    const found = allTopicItems.find(
+      (o) => o.slug === currentCategory || o.name.toLowerCase() === currentCategory.toLowerCase()
+    );
+    return found ? found.name : currentCategory;
+  }, [currentCategory, allTopicItems]);
+
+  const filteredTopicItems = useMemo(() => {
+    if (!topicSearchQuery.trim()) return allTopicItems;
+    const q = topicSearchQuery.toLowerCase();
+    return allTopicItems.filter((item) => item.name.toLowerCase().includes(q));
+  }, [allTopicItems, topicSearchQuery]);
+
+  // Reset answer states and index when topic / initialQuestions changes
+  useEffect(() => {
+    setCurrentIndex(0);
+    setAnswers({});
+    setMarkedQuestions(new Set());
+    setSecondsElapsed(0);
+    setCurrentCategory(selectedCategory);
+  }, [initialQuestions, selectedCategory]);
+
   const currentQ = questions[currentIndex] || questions[0];
   const currentAnswer = currentQ ? answers[currentQ.id] : undefined;
   const isAnswered = !!currentAnswer;
   const isMarked = currentQ ? markedQuestions.has(currentQ.id) : false;
 
   // Ref for scrolling navigator to current question
-  const navigatorRef = useRef<HTMLDivElement>(null);
   const currentBtnRef = useRef<HTMLButtonElement>(null);
 
   // Timer effect
@@ -229,25 +286,25 @@ export function McqPracticeWorkspace({
   // Handle empty question set
   if (questions.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none items-center justify-center p-6">
-        <div className="max-w-md text-center space-y-4 font-mono">
-          <div className="w-12 h-12 rounded-full bg-[#21262D] border border-[#30363D] flex items-center justify-center mx-auto text-[#8B949E]">
-            <HelpCircle className="w-6 h-6" />
+      <div className="fixed inset-0 z-50 bg-[#0A0D12] text-[#F0F6FC] flex flex-col font-sans select-none items-center justify-center p-6">
+        <div className="max-w-md text-center space-y-4">
+          <div className="w-14 h-14 rounded-2xl bg-[#161B22] border border-[#30363D] flex items-center justify-center mx-auto text-[#8B949E] shadow-xl">
+            <HelpCircle className="w-7 h-7 text-[#58A6FF]" />
           </div>
-          <h2 className="text-base font-bold text-[#F0F6FC]">No questions found</h2>
-          <p className="text-xs text-[#8B949E]">
+          <h2 className="text-lg font-bold text-[#F0F6FC]">No questions found</h2>
+          <p className="text-xs text-[#8B949E] leading-relaxed">
             There are currently no MCQs available in the database for this topic.
           </p>
           <div className="pt-2 flex items-center justify-center gap-3">
             <Link
               href={returnUrl}
-              className="px-3 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#58A6FF] border border-[#30363D] text-xs"
+              className="px-4 py-2 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-[#58A6FF] border border-[#30363D] text-xs font-medium transition-colors"
             >
               ← Back to Module
             </Link>
             <Link
               href="/accenture/mcq/practice"
-              className="px-3 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold"
+              className="px-4 py-2 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold shadow-md transition-colors"
             >
               Browse All MCQs
             </Link>
@@ -264,135 +321,172 @@ export function McqPracticeWorkspace({
   const markedCount = markedQuestions.size;
   const accuracyPct =
     answeredList.length > 0 ? Math.round((correctCount / answeredList.length) * 100) : 0;
-
-  // Get navigator pill style for a question
-  const getNavPillStyle = (q: McqQuestionItem, idx: number) => {
-    const ans = answers[q.id];
-    const isCurrent = idx === currentIndex;
-    const marked = markedQuestions.has(q.id);
-
-    let bg = "bg-[#21262D] text-[#6E7681] border-[#30363D]";
-    let icon = null;
-
-    if (ans) {
-      if (ans.isCorrect) {
-        bg = "bg-[#238636]/20 text-[#3FB950] border-[#3FB950]/50";
-        icon = <Check className="w-2.5 h-2.5" />;
-      } else {
-        bg = "bg-[#DA3633]/20 text-[#F85149] border-[#F85149]/50";
-        icon = <X className="w-2.5 h-2.5" />;
-      }
-    }
-
-    if (marked && !ans) {
-      bg = "bg-[#D29922]/15 text-[#E3B341] border-[#D29922]/50";
-    }
-
-    const ring = isCurrent ? "ring-2 ring-[#58A6FF] ring-offset-1 ring-offset-[#0D1117]" : "";
-
-    return { bg, icon, ring, marked };
-  };
+  const progressPct = Math.round(((currentIndex + 1) / questions.length) * 100);
 
   return (
-    <div className="fixed inset-0 z-50 min-w-0 bg-[#0D1117] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
+    <div className="fixed inset-0 z-50 min-w-0 bg-[#0B0E14] text-[#F0F6FC] flex flex-col font-sans select-none overflow-hidden">
+      {/* ─── PROGRESS BAR ─── */}
+      <div className="w-full h-[2px] bg-[#161B22] shrink-0">
+        <div
+          className="h-full bg-gradient-to-r from-[#1F6FEB] via-[#58A6FF] to-[#3FB950] transition-all duration-300"
+          style={{ width: `${progressPct}%` }}
+        />
+      </div>
+
       {/* ========================================================================= */}
       {/* TOP HEADER BAR */}
       {/* ========================================================================= */}
-      <header className="h-14 border-b border-[#30363D] bg-[#161B22]/95 backdrop-blur px-3 sm:px-5 flex items-center justify-between gap-3 shrink-0 z-20">
+      <header className="h-14 border-b border-[#21262D] bg-[#0D1117]/90 backdrop-blur-md px-3 sm:px-5 flex items-center justify-between gap-3 shrink-0 z-20">
         {/* Left: Exit + Brand */}
         <div className="min-w-0 flex items-center gap-2 sm:gap-3">
           <Link
             href={returnUrl}
-            className="flex items-center gap-1 px-2 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] font-mono text-[11px] transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#161B22] hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D]/80 font-mono text-[11px] transition-all"
             title="Exit Practice Mode"
           >
-            <ArrowLeft className="w-3 h-3" />
-            <span className="hidden sm:inline">Exit</span>
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline font-medium">Exit</span>
           </Link>
 
-          <div className="h-4 w-[1px] bg-[#30363D] hidden sm:block" />
+          <div className="h-4 w-[1px] bg-[#21262D] hidden sm:block" />
 
-          <span className="truncate font-mono font-bold text-[11px] tracking-wider text-[#F0F6FC] hidden sm:inline">
-            ACCENTURE PRACTICE
-          </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30 font-mono font-semibold">
-            MCQ
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-xs tracking-wide text-[#F0F6FC] hidden sm:inline">
+              Accenture MCQ
+            </span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#1F6FEB]/15 text-[#58A6FF] border border-[#1F6FEB]/30 font-mono font-bold tracking-wider">
+              PRACTICE
+            </span>
+          </div>
         </div>
 
-        {/* Center: Topic + Progress */}
-        <div className="min-w-0 flex items-center justify-center gap-2">
-          {/* Category Selector */}
-          <div className="hidden md:flex items-center gap-1 bg-[#0D1117] border border-[#30363D] rounded px-2 py-0.5 text-[11px] font-mono">
-            <Filter className="w-3 h-3 text-[#8B949E]" />
-            <select
-              value={currentCategory}
-              onChange={(e) => {
-                const val = e.target.value;
-                setCurrentCategory(val);
-                if (val === "all") {
-                  router.push("/accenture/mcq/practice");
-                } else {
-                  router.push(`/accenture/mcq/practice?topic=${encodeURIComponent(val)}`);
-                }
+        {/* Center: Topic Dropdown & Question Counter */}
+        <div className="min-w-0 flex items-center justify-center gap-2.5">
+          {/* Custom Styled Topic Dropdown Popover */}
+          <div ref={dropdownRef} className="relative hidden md:block">
+            <button
+              onClick={() => {
+                setIsDropdownOpen((prev) => !prev);
+                setTopicSearchQuery("");
               }}
-              className="bg-transparent text-[#C9D1D9] focus:outline-none cursor-pointer text-[11px]"
+              className="flex items-center gap-2 bg-[#161B22] hover:bg-[#1C2128] border border-[#30363D] hover:border-[#58A6FF]/50 rounded-lg px-3 py-1 text-xs transition-all shadow-sm"
+              title="Filter by topic"
             >
-              <option value="all" className="bg-[#161B22] text-[#F0F6FC]">
-                All Topics
-              </option>
-              {topicOptions && topicOptions.length > 0
-                ? topicOptions.map((opt) => (
-                    <option key={opt.slug} value={opt.slug} className="bg-[#161B22] text-[#F0F6FC]">
-                      {opt.name}
-                    </option>
-                  ))
-                : allCategories.map((cat) => (
-                    <option key={cat} value={cat} className="bg-[#161B22] text-[#F0F6FC]">
-                      {cat}
-                    </option>
-                  ))}
-            </select>
+              <Filter className="w-3.5 h-3.5 text-[#58A6FF] shrink-0" />
+              <span className="font-medium text-[#E6EDF3] max-w-[200px] truncate">
+                {currentTopicName}
+              </span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#8B949E] transition-transform duration-200 ${
+                  isDropdownOpen ? "rotate-180 text-[#58A6FF]" : ""
+                }`}
+              />
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute left-0 top-full mt-2 w-72 rounded-xl bg-[#161B22]/98 backdrop-blur-xl border border-[#30363D] shadow-2xl p-2 z-50 flex flex-col animate-in fade-in-50 zoom-in-95 duration-150">
+                {/* Search Header */}
+                <div className="relative mb-2 shrink-0">
+                  <Search className="w-3.5 h-3.5 text-[#8B949E] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={topicSearchQuery}
+                    onChange={(e) => setTopicSearchQuery(e.target.value)}
+                    placeholder="Search topics..."
+                    className="w-full bg-[#0D1117] border border-[#30363D] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#F0F6FC] placeholder-[#6E7681] focus:outline-none focus:border-[#58A6FF]/60"
+                    autoFocus
+                  />
+                </div>
+
+                {/* Items List */}
+                <div className="overflow-y-auto space-y-0.5 max-h-64 pr-0.5">
+                  {filteredTopicItems.length === 0 ? (
+                    <div className="py-3 text-center text-xs text-[#6E7681] font-mono">
+                      No matching topics
+                    </div>
+                  ) : (
+                    filteredTopicItems.map((item) => {
+                      const isSelected =
+                        item.slug === currentCategory ||
+                        (item.slug !== "all" && item.name.toLowerCase() === currentCategory.toLowerCase());
+
+                      return (
+                        <button
+                          key={item.slug}
+                          onClick={() => {
+                            setCurrentCategory(item.slug);
+                            setIsDropdownOpen(false);
+                            if (item.slug === "all") {
+                              router.push("/accenture/mcq/practice");
+                            } else {
+                              router.push(`/accenture/mcq/practice?topic=${encodeURIComponent(item.slug)}`);
+                            }
+                          }}
+                          className={`w-full text-left px-2.5 py-2 rounded-lg text-xs flex items-center justify-between transition-colors ${
+                            isSelected
+                              ? "bg-[#1F6FEB]/15 text-[#58A6FF] font-medium border border-[#1F6FEB]/30"
+                              : "text-[#C9D1D9] hover:bg-[#21262D] hover:text-[#F0F6FC] border border-transparent"
+                          }`}
+                        >
+                          <span className="truncate pr-2">{item.name}</span>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-[#58A6FF] shrink-0" />}
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Question Counter */}
-          <div className="whitespace-nowrap font-mono text-[11px] text-[#8B949E] bg-[#0D1117] px-2 py-1 rounded border border-[#30363D]">
-            Q <span className="text-[#F0F6FC] font-semibold">{currentIndex + 1}</span>
+          {/* Question Index Pill */}
+          <div className="whitespace-nowrap font-mono text-xs text-[#8B949E] bg-[#161B22] px-2.5 py-1 rounded-lg border border-[#30363D] shadow-sm">
+            <span className="text-[#8B949E] text-[10px]">QUESTION</span>{" "}
+            <span className="text-[#F0F6FC] font-bold">{currentIndex + 1}</span>
             <span className="text-[#6E7681]">/{questions.length}</span>
             {totalPages > 1 && (
-              <span className="ml-1 text-[#6E7681]">(page {currentPage}/{totalPages})</span>
+              <span className="ml-1 text-[#58A6FF]/80 text-[10px]">(p.{currentPage})</span>
             )}
           </div>
         </div>
 
-        {/* Right: Timer, Score, Fullscreen */}
+        {/* Right: Timer, Live Score & Controls */}
         <div className="shrink-0 flex items-center gap-2">
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-[#0D1117] border border-[#30363D] text-[11px] font-mono text-[#8B949E]">
-            <Clock className="w-3 h-3 text-[#58A6FF]" />
-            <span>{formatTime(secondsElapsed)}</span>
+          {/* Timer */}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#161B22] border border-[#30363D] text-xs font-mono text-[#8B949E] shadow-sm">
+            <Clock className="w-3.5 h-3.5 text-[#58A6FF]" />
+            <span className="text-[#E6EDF3] font-medium tracking-wide">{formatTime(secondsElapsed)}</span>
           </div>
 
+          {/* Live Score */}
           {answeredList.length > 0 && (
-            <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-[#0D1117] border border-[#30363D] text-[11px] font-mono">
-              <span className="text-[#3FB950] font-semibold">{correctCount}✓</span>
-              <span className="text-[#F85149] font-semibold">{incorrectCount}✕</span>
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#161B22] border border-[#30363D] text-xs font-mono shadow-sm">
+              <span className="inline-flex items-center text-[#3FB950] font-bold">
+                {correctCount} <span className="text-[10px] ml-0.5 text-[#3FB950]/80">✓</span>
+              </span>
+              <span className="text-[#30363D]">•</span>
+              <span className="inline-flex items-center text-[#F85149] font-bold">
+                {incorrectCount} <span className="text-[10px] ml-0.5 text-[#F85149]/80">✕</span>
+              </span>
             </div>
           )}
 
-          {/* Mobile navigator toggle */}
+          {/* Mobile navigator button */}
           <button
             onClick={() => setShowMobileNav(!showMobileNav)}
-            className="lg:hidden flex items-center gap-1 px-2 py-0.5 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] border border-[#30363D] text-[11px] font-mono transition-colors"
+            className="lg:hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] text-xs font-mono transition-colors"
           >
+            <LayoutGrid className="w-3.5 h-3.5 text-[#58A6FF]" />
             <span>Nav</span>
           </button>
 
+          {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
-            className="p-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] transition-colors"
-            title="Toggle Fullscreen"
+            className="p-1.5 rounded-lg bg-[#161B22] hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC] border border-[#30363D] transition-colors shadow-sm"
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
           >
-            {isFullscreen ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
+            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5 text-[#8B949E]" />}
           </button>
         </div>
       </header>
@@ -401,101 +495,119 @@ export function McqPracticeWorkspace({
       {/* 3-PANEL MAIN BODY */}
       {/* ========================================================================= */}
       <div className="flex-1 min-h-0 grid overflow-hidden lg:grid-cols-[minmax(320px,1.05fr)_minmax(360px,1fr)_76px] xl:grid-cols-[minmax(380px,1.1fr)_minmax(420px,1fr)_80px]">
-        {/* ─── LEFT PANEL: QUESTION ─── */}
-        <div className="hidden min-w-0 lg:flex flex-col border-r border-[#30363D] overflow-y-auto">
-          <div className="p-5 xl:p-7 space-y-5 flex-1">
-            {/* Question Number + Meta */}
-            <div className="space-y-3">
+        {/* ─── LEFT PANEL: QUESTION DETAILS ─── */}
+        <div className="hidden min-w-0 lg:flex flex-col border-r border-[#21262D] bg-[#0D1117] overflow-y-auto">
+          <div className="p-6 xl:p-8 space-y-6 flex-1">
+            {/* Unified Meta Bar */}
+            <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
-                  Question {currentQ.questionNumber}
+                <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-[#1F6FEB]/15 text-[#58A6FF] border border-[#1F6FEB]/30">
+                  Q{currentQ.questionNumber}
                 </span>
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">
+                <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded-md bg-[#238636]/15 text-[#3FB950] border border-[#3FB950]/30">
+                  {currentQ.id}
+                </span>
+                <span className="font-mono text-[11px] px-2 py-0.5 rounded-md bg-[#161B22] text-[#8B949E] border border-[#30363D]">
                   {currentQ.category}
                 </span>
-              </div>
-
-              <div className="flex items-center gap-2 flex-wrap">
                 <DifficultyBadge difficulty={currentQ.difficulty as any} />
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#161B22] text-[#6E7681] border border-[#30363D]">
-                  {currentQ.sourceType}
+                <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-[#161B22] text-[#6E7681] border border-[#30363D]">
+                  {currentQ.sourceType.replace(/_/g, " ")}
                 </span>
               </div>
-            </div>
 
-            {/* Mark for Review */}
-            <button
-              onClick={toggleMarkForReview}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded border font-mono text-xs transition-colors ${
-                isMarked
-                  ? "bg-[#D29922]/20 text-[#E3B341] border-[#D29922]"
-                  : "bg-[#161B22] text-[#8B949E] hover:text-[#F0F6FC] border-[#30363D] hover:bg-[#21262D]"
-              }`}
-              title="Mark / Unmark for Review (Key: M)"
-            >
-              {isMarked ? (
-                <>
-                  <BookmarkCheck className="w-3.5 h-3.5 text-[#E3B341]" />
-                  <span className="font-semibold text-[#E3B341]">Marked for Review</span>
-                </>
-              ) : (
-                <>
-                  <Bookmark className="w-3.5 h-3.5" />
-                  <span>Mark for Review</span>
-                </>
-              )}
-            </button>
+              {/* Mark for Review Button */}
+              <button
+                onClick={toggleMarkForReview}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border font-mono text-xs transition-all shadow-sm ${
+                  isMarked
+                    ? "bg-[#D29922]/20 text-[#E3B341] border-[#D29922] shadow-[0_0_12px_rgba(210,153,34,0.15)]"
+                    : "bg-[#161B22] text-[#8B949E] hover:text-[#F0F6FC] border-[#30363D] hover:bg-[#21262D]"
+                }`}
+                title="Mark / Unmark for Review (Hotkey: M)"
+              >
+                {isMarked ? (
+                  <>
+                    <BookmarkCheck className="w-3.5 h-3.5 text-[#E3B341]" />
+                    <span className="font-semibold text-[#E3B341]">Marked</span>
+                    <span className="text-[10px] bg-[#D29922]/30 px-1 rounded text-[#E3B341] ml-0.5">M</span>
+                  </>
+                ) : (
+                  <>
+                    <Bookmark className="w-3.5 h-3.5" />
+                    <span>Review</span>
+                    <span className="text-[10px] bg-[#21262D] px-1 rounded text-[#6E7681] ml-0.5">M</span>
+                  </>
+                )}
+              </button>
+            </div>
 
             {/* Question Stem */}
-            <div className="space-y-3">
-              <h2 className="max-w-3xl text-lg xl:text-xl font-medium text-[#F0F6FC] leading-[1.5] tracking-normal font-sans">
+            <div className="space-y-4 pt-1">
+              <h2 className="text-lg xl:text-xl font-semibold text-[#F0F6FC] leading-relaxed tracking-normal font-sans">
                 {currentQ.stem}
               </h2>
+
+              {/* Code Snippet Box */}
+              {currentQ.codeBlock && (
+                <div className="rounded-xl border border-[#30363D] bg-[#0A0D12] overflow-hidden shadow-md">
+                  <div className="px-3.5 py-1.5 border-b border-[#21262D] bg-[#161B22]/60 flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-[#8B949E] flex items-center gap-1.5">
+                      <FileCode2 className="w-3.5 h-3.5 text-[#58A6FF]" />
+                      {currentQ.codeLanguage || "Snippet"}
+                    </span>
+                    <span className="text-[10px] font-mono text-[#6E7681]">Syntax</span>
+                  </div>
+                  <pre className="p-4 font-mono text-xs sm:text-sm text-[#79C0FF] overflow-x-auto whitespace-pre leading-relaxed">
+                    <code>{currentQ.codeBlock}</code>
+                  </pre>
+                </div>
+              )}
+
+              {/* Importance Note / Verified Source */}
               {currentQ.importanceReason && (
-                <p className="text-xs text-[#8B949E] font-mono border-l-2 border-[#58A6FF]/40 pl-3">
-                  {currentQ.importanceReason}
-                </p>
+                <div className="flex items-center gap-2.5 p-3 rounded-lg bg-[#161B22]/70 border border-[#30363D]/70 text-xs text-[#8B949E] font-mono">
+                  <ShieldCheck className="w-4 h-4 text-[#58A6FF] shrink-0" />
+                  <span>{currentQ.importanceReason}</span>
+                </div>
               )}
             </div>
 
-            {/* Explanation (shown after answering, in left panel to keep options clean) */}
+            {/* Explanation / Answer Feedback Card */}
             {isAnswered && (
-              <div className="space-y-3 pt-3 border-t border-[#30363D]/80">
+              <div className="space-y-3.5 pt-4 border-t border-[#21262D] animate-in fade-in-50 duration-200">
                 {currentAnswer!.isCorrect ? (
-                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span className="font-bold">✓ Correct Answer</span>
+                  <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#238636]/15 border border-[#3FB950]/50 text-[#3FB950] font-mono text-xs shadow-[0_0_15px_rgba(63,185,80,0.1)]">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-[#3FB950]" />
+                    <span className="font-bold">Correct! Great job.</span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
-                    <XCircle className="w-4 h-4" />
-                    <span className="font-bold">✕ Incorrect — Expected: Option {currentQ.correctKey}</span>
+                  <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#DA3633]/15 border border-[#F85149]/50 text-[#F85149] font-mono text-xs shadow-[0_0_15px_rgba(248,81,73,0.1)]">
+                    <XCircle className="w-4 h-4 shrink-0 text-[#F85149]" />
+                    <span className="font-bold">Incorrect. Correct answer is Option {currentQ.correctKey}.</span>
                   </div>
                 )}
 
-                {/* Explanation Card */}
-                <div className="rounded-md border border-[#30363D] bg-[#161B22] p-4 space-y-2.5">
-                  <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2">
+                {/* Explanation Content Box */}
+                <div className="rounded-xl border border-[#30363D] bg-[#161B22]/80 p-4 space-y-3 shadow-lg">
+                  <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2.5">
                     <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Explanation</span>
+                      <span>Explanation & Key Concept</span>
                     </div>
-                    <div className="text-[10px] font-mono text-[#8B949E]">
-                      Correct:{" "}
-                      <strong className="text-[#3FB950]">
-                        Option {currentQ.correctKey}
-                      </strong>
+                    <div className="text-[11px] font-mono text-[#8B949E]">
+                      Correct: <strong className="text-[#3FB950] ml-1">Option {currentQ.correctKey}</strong>
                     </div>
                   </div>
 
-                  <div className="p-2 rounded bg-[#0D1117] border border-[#30363D] text-xs font-mono text-[#C9D1D9]">
-                    <span className="text-[#8B949E] mr-1.5">{currentQ.correctKey}:</span>
-                    <span className="text-[#F0F6FC] font-medium">
+                  <div className="p-2.5 rounded-lg bg-[#0D1117] border border-[#30363D]/80 text-xs font-mono text-[#C9D1D9] flex items-start gap-2">
+                    <span className="text-[#8B949E] font-bold">[{currentQ.correctKey}]:</span>
+                    <span className="text-[#F0F6FC] font-medium leading-relaxed">
                       {currentQ.options[currentQ.correctKey]}
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans">
+                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans pt-1">
                     {currentQ.explanation}
                   </p>
                 </div>
@@ -504,65 +616,80 @@ export function McqPracticeWorkspace({
           </div>
         </div>
 
-        {/* ─── CENTER PANEL: OPTIONS + CONTROLS ─── */}
-        <div className="min-w-0 flex min-h-0 flex-col overflow-y-auto">
-          <div className="p-4 sm:p-5 xl:p-7 space-y-4 flex-1">
-            {/* Mobile-only: Question stem (shown above options on mobile/tablet where left panel is hidden) */}
+        {/* ─── CENTER PANEL: ANSWER OPTIONS & FOOTER ─── */}
+        <div className="min-w-0 flex min-h-0 flex-col bg-[#0B0E14] overflow-y-auto">
+          <div className="p-5 sm:p-6 xl:p-8 space-y-5 flex-1">
+            {/* Mobile Question Summary (hidden on desktop) */}
             <div className="lg:hidden space-y-3">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#58A6FF]/10 text-[#58A6FF] border border-[#58A6FF]/30">
-                  Question {currentQ.questionNumber}
+                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#1F6FEB]/15 text-[#58A6FF] border border-[#1F6FEB]/30">
+                  Q{currentQ.questionNumber}
                 </span>
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#21262D] text-[#8B949E] border border-[#30363D] uppercase">
+                <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-[#238636]/15 text-[#3FB950] border border-[#3FB950]/30">
+                  {currentQ.id}
+                </span>
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#161B22] text-[#8B949E] border border-[#30363D]">
                   {currentQ.category}
                 </span>
                 <DifficultyBadge difficulty={currentQ.difficulty as any} />
               </div>
 
-              <h2 className="text-sm sm:text-base font-medium text-[#F0F6FC] leading-relaxed">
+              <h2 className="text-base font-medium text-[#F0F6FC] leading-relaxed">
                 {currentQ.stem}
               </h2>
 
-              {/* Mobile Mark for Review */}
+              {currentQ.codeBlock && (
+                <pre className="p-3 rounded-lg bg-[#0D1117] border border-[#30363D] font-mono text-xs text-[#79C0FF] overflow-x-auto whitespace-pre leading-relaxed my-2">
+                  <code>{currentQ.codeBlock}</code>
+                </pre>
+              )}
+
               <button
                 onClick={toggleMarkForReview}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded border font-mono text-[11px] transition-colors ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-mono text-[11px] transition-colors ${
                   isMarked
                     ? "bg-[#D29922]/20 text-[#E3B341] border-[#D29922]"
                     : "bg-[#161B22] text-[#8B949E] border-[#30363D]"
                 }`}
               >
                 {isMarked ? <BookmarkCheck className="w-3 h-3" /> : <Bookmark className="w-3 h-3" />}
-                <span>{isMarked ? "Marked" : "Mark"}</span>
+                <span>{isMarked ? "Marked for Review" : "Mark for Review"}</span>
               </button>
             </div>
 
-            {/* ANSWER heading */}
-            <div className="flex items-center justify-between border-b border-[#30363D] pb-2">
-              <h3 className="font-mono text-[11px] font-semibold text-[#8B949E] uppercase tracking-wider">
-                Answer options
-              </h3>
-              <span className="text-[10px] font-mono text-[#6E7681]">Choose one response</span>
+            {/* ANSWER OPTIONS Heading */}
+            <div className="flex items-center justify-between border-b border-[#21262D] pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#58A6FF] animate-pulse" />
+                <h3 className="font-mono text-xs font-bold text-[#8B949E] uppercase tracking-wider">
+                  Answer Options
+                </h3>
+              </div>
+              <span className="text-[11px] font-mono text-[#6E7681]">Choose one response [A - D]</span>
             </div>
 
-            {/* Four Clickable Options */}
-            <div className="space-y-2.5">
+            {/* Clickable Option Cards */}
+            <div className="space-y-3">
               {(["A", "B", "C", "D"] as const).map((key) => {
                 const optionText = currentQ.options[key];
+                if (!optionText) return null;
                 const isSelected = currentAnswer?.selectedKey === key;
                 const isOptionCorrect = currentQ.correctKey === key;
 
-                let cardStyle = "border-[#30363D] bg-[#161B22] text-[#F0F6FC] hover:border-[#58A6FF]/60 hover:bg-[#21262D]/60";
-                let badgeStyle = "bg-[#21262D] text-[#8B949E] border-[#30363D]";
+                let cardStyle =
+                  "border-[#30363D]/80 bg-[#161B22] text-[#E6EDF3] hover:border-[#58A6FF]/60 hover:bg-[#1C2128] hover:shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:scale-[1.006]";
+                let badgeStyle = "bg-[#21262D] text-[#8B949E] border-[#30363D] group-hover:border-[#58A6FF]/60 group-hover:text-[#58A6FF]";
                 let statusIcon = null;
 
                 if (isAnswered) {
                   if (isSelected && isOptionCorrect) {
-                    cardStyle = "border-[#3FB950] bg-[#238636]/15 text-[#3FB950] font-medium shadow-[0_0_12px_rgba(63,185,80,0.12)]";
-                    badgeStyle = "bg-[#3FB950] text-[#0D1117] border-[#3FB950] font-bold";
+                    cardStyle =
+                      "border-[#3FB950] bg-[#238636]/15 text-[#3FB950] font-medium shadow-[0_0_16px_rgba(63,185,80,0.18)]";
+                    badgeStyle = "bg-[#3FB950] text-[#0A0D12] border-[#3FB950] font-bold";
                     statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
                   } else if (isSelected && !isOptionCorrect) {
-                    cardStyle = "border-[#F85149] bg-[#DA3633]/15 text-[#F85149] font-medium shadow-[0_0_12px_rgba(248,81,73,0.12)]";
+                    cardStyle =
+                      "border-[#F85149] bg-[#DA3633]/15 text-[#F85149] font-medium shadow-[0_0_16px_rgba(248,81,73,0.18)]";
                     badgeStyle = "bg-[#F85149] text-[#FFFFFF] border-[#F85149] font-bold";
                     statusIcon = <X className="w-4 h-4 text-[#F85149] shrink-0" />;
                   } else if (isOptionCorrect) {
@@ -570,8 +697,8 @@ export function McqPracticeWorkspace({
                     badgeStyle = "bg-[#3FB950]/20 text-[#3FB950] border-[#3FB950] font-bold";
                     statusIcon = <Check className="w-4 h-4 text-[#3FB950] shrink-0" />;
                   } else {
-                    cardStyle = "border-[#30363D]/50 bg-[#161B22]/40 text-[#6E7681]";
-                    badgeStyle = "bg-[#21262D]/50 text-[#6E7681] border-[#30363D]/40";
+                    cardStyle = "border-[#21262D]/60 bg-[#161B22]/30 text-[#6E7681] opacity-60";
+                    badgeStyle = "bg-[#21262D]/40 text-[#6E7681] border-[#30363D]/30";
                   }
                 }
 
@@ -582,40 +709,46 @@ export function McqPracticeWorkspace({
                     onClick={() => handleSelectOption(key)}
                     aria-label={`Option ${key}: ${optionText}`}
                     aria-pressed={isSelected}
-                    className={`w-full min-w-0 text-left p-3.5 sm:p-4 rounded-md border transition-colors duration-150 flex items-start gap-3 group cursor-pointer disabled:cursor-default ${cardStyle}`}
+                    className={`w-full min-w-0 text-left p-4 rounded-xl border transition-all duration-150 flex items-start gap-3.5 group cursor-pointer disabled:cursor-default ${cardStyle}`}
                   >
                     <span
-                      className={`w-6 h-6 rounded flex items-center justify-center font-mono text-xs shrink-0 border transition-colors ${badgeStyle}`}
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 border transition-all ${badgeStyle}`}
                     >
                       {key}
                     </span>
-                    <span className="flex-1 text-xs sm:text-sm leading-relaxed pt-0.5">
+                    <span className="flex-1 text-sm leading-relaxed pt-0.5">
                       {optionText}
                     </span>
-                    {statusIcon}
+                    {statusIcon ? (
+                      statusIcon
+                    ) : (
+                      <span className="text-[10px] font-mono text-[#6E7681] opacity-0 group-hover:opacity-100 transition-opacity pt-1">
+                        [{key}]
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Mobile-only: Feedback + Explanation (below options) */}
+            {/* Mobile-only: Feedback + Explanation below options */}
             {isAnswered && (
-              <div className="lg:hidden space-y-3 pt-3 border-t border-[#30363D]/80">
+              <div className="lg:hidden space-y-3 pt-3 border-t border-[#21262D]">
                 {currentAnswer!.isCorrect ? (
-                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
+                  <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#238636]/15 border border-[#3FB950] text-[#3FB950] font-mono text-xs">
                     <CheckCircle2 className="w-4 h-4" />
                     <span className="font-bold">✓ Correct</span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 p-2.5 rounded-md bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
+                  <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#DA3633]/15 border border-[#F85149] text-[#F85149] font-mono text-xs">
                     <XCircle className="w-4 h-4" />
                     <span className="font-bold">✕ Expected: {currentQ.correctKey}</span>
                   </div>
                 )}
 
-                <div className="rounded-md border border-[#30363D] bg-[#161B22] p-3 space-y-2">
+                <div className="rounded-xl border border-[#30363D] bg-[#161B22] p-3.5 space-y-2">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
-                    <Sparkles className="w-3 h-3" />
+                    <Sparkles className="w-3.5 h-3.5" />
                     <span>Explanation</span>
                   </div>
                   <p className="text-xs text-[#8B949E] leading-relaxed font-sans">
@@ -626,23 +759,40 @@ export function McqPracticeWorkspace({
             )}
           </div>
 
-          {/* ─── COMPACT FOOTER NAV (inside center panel) ─── */}
-          <div className="h-12 border-t border-[#30363D] bg-[#161B22] px-4 sm:px-5 flex items-center justify-between shrink-0">
+          {/* ─── SLEEK FOOTER NAVIGATION ─── */}
+          <div className="h-14 border-t border-[#21262D] bg-[#0D1117] px-5 sm:px-6 flex items-center justify-between shrink-0">
             <button
               onClick={handlePrevious}
               disabled={currentIndex === 0}
-              className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#21262D] hover:bg-[#30363D] disabled:opacity-40 disabled:hover:bg-[#21262D] text-[#F0F6FC] border border-[#30363D] font-mono text-[11px] font-medium transition-colors disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#161B22] hover:bg-[#21262D] disabled:opacity-30 disabled:hover:bg-[#161B22] text-[#F0F6FC] border border-[#30363D] font-mono text-xs font-medium transition-all disabled:cursor-not-allowed shadow-sm"
               title="Previous (←)"
             >
-              <ChevronLeft className="w-3.5 h-3.5" />
+              <ChevronLeft className="w-4 h-4" />
               <span>Previous</span>
+              <span className="hidden sm:inline text-[10px] text-[#6E7681]">←</span>
             </button>
 
-            <div className="flex-1" />
+            {/* Keyboard Shortcuts Hint Bar */}
+            <div className="hidden md:flex items-center gap-3 text-[11px] font-mono text-[#6E7681]">
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 rounded bg-[#161B22] border border-[#30363D] text-[#8B949E]">A-D</kbd>
+                <span>Select</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 rounded bg-[#161B22] border border-[#30363D] text-[#8B949E]">M</kbd>
+                <span>Mark</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 rounded bg-[#161B22] border border-[#30363D] text-[#8B949E]">← →</kbd>
+                <span>Move</span>
+              </span>
+            </div>
 
             <button
               onClick={handleNext}
-              className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#238636] hover:bg-[#2ea043] text-[#FFFFFF] font-mono text-[11px] font-semibold shadow-sm transition-colors"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#238636] to-[#2ea043] hover:from-[#2ea043] hover:to-[#3fb950] text-white font-mono text-xs font-semibold shadow-md transition-all active:scale-95"
               title="Next (→)"
             >
               <span>
@@ -652,31 +802,35 @@ export function McqPracticeWorkspace({
                     : "Finish"
                   : "Next"}
               </span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline text-[10px] opacity-80">→</span>
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
 
         {/* ─── RIGHT PANEL: VERTICAL TINY RAIL NODE STEPPER NAVIGATOR ─── */}
-        <aside aria-label="Question timeline" className="hidden min-h-0 overflow-y-auto border-l border-[#30363D] bg-[#0D1117] px-2 py-3 lg:block w-full">
-          <div className="relative mx-auto w-8 before:absolute before:left-1/2 before:top-3 before:bottom-3 before:w-px before:-translate-x-1/2 before:bg-[#30363D]">
+        <aside
+          aria-label="Question timeline"
+          className="hidden min-h-0 overflow-y-auto border-l border-[#21262D] bg-[#0B0E14] px-2 py-4 lg:block w-full"
+        >
+          <div className="relative mx-auto w-8 before:absolute before:left-1/2 before:top-3 before:bottom-3 before:w-px before:-translate-x-1/2 before:bg-[#21262D]">
             {questions.map((q, idx) => {
               const isCurrent = idx === currentIndex;
               const ansState = answers[q.id];
               const isAns = Boolean(ansState);
               const isM = markedQuestions.has(q.id);
 
-              let nodeClass = "bg-[#21262D] text-[#8B949E] border-[#30363D]";
+              let nodeClass = "bg-[#161B22] text-[#8B949E] border-[#30363D] hover:border-[#58A6FF]/60 hover:text-white";
               if (isAns) {
                 nodeClass = ansState.isCorrect
-                  ? "bg-[#238636] text-white border-[#3FB950]"
-                  : "bg-[#DA3633] text-white border-[#F85149]";
+                  ? "bg-[#238636] text-white border-[#3FB950] font-bold"
+                  : "bg-[#DA3633] text-white border-[#F85149] font-bold";
               } else if (isM) {
-                nodeClass = "bg-[#D29922] text-[#0D1117] border-[#E3B341]";
+                nodeClass = "bg-[#D29922] text-[#0B0E14] border-[#E3B341] font-bold";
               }
 
               return (
-                <div key={q.id} className="relative z-10 flex justify-center pb-2">
+                <div key={q.id} className="relative z-10 flex justify-center pb-2.5">
                   <button
                     ref={isCurrent ? currentBtnRef : null}
                     onClick={() => setCurrentIndex(idx)}
@@ -685,8 +839,8 @@ export function McqPracticeWorkspace({
                     title={`Question ${idx + 1}${isAns ? (ansState.isCorrect ? " (Correct)" : " (Incorrect)") : isM ? " (Marked)" : ""}`}
                     className={`h-7 w-7 rounded-full border font-mono text-[10px] font-bold transition-all flex items-center justify-center ${nodeClass} ${
                       isCurrent
-                        ? "ring-2 ring-[#58A6FF] ring-offset-2 ring-offset-[#0D1117] scale-110"
-                        : "hover:border-[#58A6FF]"
+                        ? "ring-[2.5px] ring-[#58A6FF] ring-offset-2 ring-offset-[#0B0E14] scale-110 shadow-lg"
+                        : ""
                     }`}
                   >
                     {idx + 1}
@@ -699,55 +853,68 @@ export function McqPracticeWorkspace({
       </div>
 
       {/* ========================================================================= */}
-      {/* MOBILE NAVIGATOR (bottom sheet) */}
+      {/* MOBILE NAVIGATOR DRAWER */}
       {/* ========================================================================= */}
       {showMobileNav && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col justify-end">
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex flex-col justify-end">
           <div
-            className="bg-[#161B22] border-t border-[#30363D] rounded-t-xl max-h-[60vh] flex flex-col shadow-2xl"
+            className="bg-[#161B22] border-t border-[#30363D] rounded-t-2xl max-h-[70vh] flex flex-col shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Mobile Nav Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#30363D] shrink-0">
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#30363D] shrink-0">
               <div className="flex items-center gap-2">
+                <LayoutGrid className="w-4 h-4 text-[#58A6FF]" />
                 <h3 className="font-mono font-bold text-xs text-[#F0F6FC]">Question Navigator</h3>
-                <span className="text-[10px] font-mono text-[#6E7681]">
-                  {answeredList.length}/{questions.length}
+                <span className="text-[10px] font-mono text-[#8B949E]">
+                  ({answeredList.length}/{questions.length})
                 </span>
               </div>
               <button
                 onClick={() => setShowMobileNav(false)}
-                className="p-1 rounded hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC]"
+                className="p-1 rounded-lg hover:bg-[#21262D] text-[#8B949E] hover:text-[#F0F6FC]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Mobile Nav Stats */}
-            <div className="px-4 py-2 grid grid-cols-4 gap-2 text-center font-mono border-b border-[#30363D] shrink-0">
-              <div className="p-1.5 rounded bg-[#0D1117] border border-[#30363D]">
+            {/* Stats Bar */}
+            <div className="px-5 py-2.5 grid grid-cols-4 gap-2 text-center font-mono border-b border-[#30363D] shrink-0">
+              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[9px] text-[#8B949E]">Total</div>
                 <div className="text-xs font-bold text-[#F0F6FC]">{questions.length}</div>
               </div>
-              <div className="p-1.5 rounded bg-[#0D1117] border border-[#3FB950]/30">
+              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#3FB950]/30">
                 <div className="text-[9px] text-[#3FB950]">Correct</div>
                 <div className="text-xs font-bold text-[#3FB950]">{correctCount}</div>
               </div>
-              <div className="p-1.5 rounded bg-[#0D1117] border border-[#F85149]/30">
+              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#F85149]/30">
                 <div className="text-[9px] text-[#F85149]">Wrong</div>
                 <div className="text-xs font-bold text-[#F85149]">{incorrectCount}</div>
               </div>
-              <div className="p-1.5 rounded bg-[#0D1117] border border-[#D29922]/30">
+              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#D29922]/30">
                 <div className="text-[9px] text-[#E3B341]">Marked</div>
                 <div className="text-xs font-bold text-[#E3B341]">{markedCount}</div>
               </div>
             </div>
 
-            {/* Mobile Nav Grid */}
-            <div className="flex-1 overflow-y-auto p-3">
+            {/* Grid */}
+            <div className="flex-1 overflow-y-auto p-4">
               <div className="grid grid-cols-6 sm:grid-cols-8 gap-2">
                 {questions.map((q, idx) => {
-                  const { bg, icon, ring, marked } = getNavPillStyle(q, idx);
+                  const isCurrent = idx === currentIndex;
+                  const ansState = answers[q.id];
+                  const isAns = Boolean(ansState);
+                  const isM = markedQuestions.has(q.id);
+
+                  let btnBg = "bg-[#0D1117] text-[#8B949E] border-[#30363D]";
+                  if (isAns) {
+                    btnBg = ansState.isCorrect
+                      ? "bg-[#238636]/20 text-[#3FB950] border-[#3FB950]/50"
+                      : "bg-[#DA3633]/20 text-[#F85149] border-[#F85149]/50";
+                  } else if (isM) {
+                    btnBg = "bg-[#D29922]/20 text-[#E3B341] border-[#D29922]/60";
+                  }
 
                   return (
                     <button
@@ -756,12 +923,13 @@ export function McqPracticeWorkspace({
                         setCurrentIndex(idx);
                         setShowMobileNav(false);
                       }}
-                      className={`relative h-10 rounded border font-mono text-xs font-semibold flex items-center justify-center transition-all ${bg} ${ring} hover:opacity-90`}
+                      className={`relative h-11 rounded-lg border font-mono text-xs font-semibold flex items-center justify-center transition-all ${btnBg} ${
+                        isCurrent ? "ring-2 ring-[#58A6FF] font-bold text-white" : ""
+                      }`}
                     >
                       <span>{idx + 1}</span>
-                      {icon && <span className="absolute -top-0.5 -right-0.5">{icon}</span>}
-                      {marked && !answers[q.id] && (
-                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#E3B341]" />
+                      {isM && (
+                        <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#E3B341]" />
                       )}
                     </button>
                   );
@@ -776,42 +944,42 @@ export function McqPracticeWorkspace({
       {/* SESSION SUMMARY MODAL */}
       {/* ========================================================================= */}
       {showSummaryModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#161B22] border border-[#30363D] rounded-lg max-w-md w-full p-6 space-y-5 shadow-2xl animate-in zoom-in-95 duration-150">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#58A6FF]/15 border border-[#58A6FF]/40 flex items-center justify-center text-[#58A6FF]">
-                <Award className="w-5 h-5" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#161B22] border border-[#30363D] rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl animate-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#1F6FEB]/20 to-[#3FB950]/20 border border-[#58A6FF]/40 flex items-center justify-center text-[#58A6FF] shadow-inner">
+                <Award className="w-6 h-6 text-[#58A6FF]" />
               </div>
               <div>
-                <h3 className="font-mono font-bold text-base text-[#F0F6FC]">
+                <h3 className="font-bold text-base text-[#F0F6FC]">
                   Practice Session Completed
                 </h3>
-                <p className="text-xs text-[#8B949E]">Accenture MCQ Preparation</p>
+                <p className="text-xs text-[#8B949E] font-mono">Accenture Assessment Preparation</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 font-mono text-xs">
-              <div className="p-3 rounded bg-[#0D1117] border border-[#30363D]">
+              <div className="p-3.5 rounded-xl bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[#8B949E] text-[10px]">Total Answered</div>
-                <div className="text-lg font-bold text-[#F0F6FC] mt-0.5">
-                  {answeredList.length} / {questions.length}
+                <div className="text-xl font-bold text-[#F0F6FC] mt-0.5">
+                  {answeredList.length} <span className="text-xs text-[#6E7681]">/ {questions.length}</span>
                 </div>
               </div>
-              <div className="p-3 rounded bg-[#0D1117] border border-[#30363D]">
+              <div className="p-3.5 rounded-xl bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[#8B949E] text-[10px]">Accuracy</div>
-                <div className="text-lg font-bold text-[#3FB950] mt-0.5">
+                <div className="text-xl font-bold text-[#3FB950] mt-0.5">
                   {accuracyPct}%
                 </div>
               </div>
-              <div className="p-3 rounded bg-[#0D1117] border border-[#30363D]">
+              <div className="p-3.5 rounded-xl bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[#8B949E] text-[10px]">Correct Answers</div>
-                <div className="text-lg font-bold text-[#3FB950] mt-0.5">
+                <div className="text-xl font-bold text-[#3FB950] mt-0.5">
                   {correctCount}
                 </div>
               </div>
-              <div className="p-3 rounded bg-[#0D1117] border border-[#30363D]">
+              <div className="p-3.5 rounded-xl bg-[#0D1117] border border-[#30363D]">
                 <div className="text-[#8B949E] text-[10px]">Time Spent</div>
-                <div className="text-lg font-bold text-[#58A6FF] mt-0.5">
+                <div className="text-xl font-bold text-[#58A6FF] mt-0.5">
                   {formatTime(secondsElapsed)}
                 </div>
               </div>
@@ -820,13 +988,13 @@ export function McqPracticeWorkspace({
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={() => setShowSummaryModal(false)}
-                className="flex-1 py-2 rounded bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] font-mono text-xs font-medium transition-colors"
+                className="flex-1 py-2.5 rounded-xl bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] font-mono text-xs font-medium transition-colors"
               >
                 Review Questions
               </button>
               <Link
                 href={returnUrl}
-                className="flex-1 py-2 rounded bg-[#238636] hover:bg-[#2ea043] text-[#FFFFFF] font-mono text-xs font-semibold text-center transition-colors"
+                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#238636] to-[#2ea043] hover:from-[#2ea043] hover:to-[#3fb950] text-white font-mono text-xs font-semibold text-center shadow-md transition-all"
               >
                 Return to Hub
               </Link>
@@ -837,3 +1005,4 @@ export function McqPracticeWorkspace({
     </div>
   );
 }
+

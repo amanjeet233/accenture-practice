@@ -425,11 +425,11 @@ export function ProblemWorkspace({ question }: ProblemWorkspaceProps) {
       <header className="flex items-center justify-between px-3 py-1.5 border-b border-[#30363D] bg-[#161B22] text-xs font-mono shrink-0">
         <div className="flex items-center gap-2 truncate">
           <Link
-            href="/questions"
+            href="/home/accenture?tab=CODING"
             className="flex items-center gap-1 text-[#8B949E] hover:text-[#F0F6FC] transition-colors"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
-            <span>Problems</span>
+            <span>Accenture DSA</span>
           </Link>
           <span className="text-[#30363D]">/</span>
           <span className="font-semibold text-[#F0F6FC] truncate max-w-xs sm:max-w-md">

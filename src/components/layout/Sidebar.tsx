@@ -46,9 +46,28 @@ export function Sidebar() {
             <span className="truncate">Home</span>
           </Link>
 
-          {/* Problems */}
+          {/* Accenture Hub */}
           <Link
-            href="/questions"
+            href="/home/accenture"
+            className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs transition-colors ${
+              pathname.startsWith("/home/accenture") || pathname.startsWith("/accenture")
+                ? "bg-[#21262D] text-[#F0F6FC] font-medium border-l-2 border-[#58A6FF]"
+                : "text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#161B22]"
+            }`}
+          >
+            <Building2
+              className={`w-3.5 h-3.5 shrink-0 ${
+                pathname.startsWith("/home/accenture") || pathname.startsWith("/accenture")
+                  ? "text-[#58A6FF]"
+                  : "text-[#8B949E]"
+              }`}
+            />
+            <span className="truncate">Accenture Hub</span>
+          </Link>
+
+          {/* DSA & Coding */}
+          <Link
+            href="/home/accenture?tab=CODING"
             className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs transition-colors ${
               pathname.startsWith("/questions")
                 ? "bg-[#21262D] text-[#F0F6FC] font-medium border-l-2 border-[#58A6FF]"
@@ -60,31 +79,12 @@ export function Sidebar() {
                 pathname.startsWith("/questions") ? "text-[#58A6FF]" : "text-[#8B949E]"
               }`}
             />
-            <span className="truncate">Problems</span>
-          </Link>
-
-          {/* Accenture PYQs (existing company page preserved) */}
-          <Link
-            href="/companies/accenture"
-            className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs transition-colors ${
-              pathname.startsWith("/companies/accenture")
-                ? "bg-[#21262D] text-[#F0F6FC] font-medium border-l-2 border-[#58A6FF]"
-                : "text-[#8B949E] hover:text-[#F0F6FC] hover:bg-[#161B22]"
-            }`}
-          >
-            <Building2
-              className={`w-3.5 h-3.5 shrink-0 ${
-                pathname.startsWith("/companies/accenture")
-                  ? "text-[#58A6FF]"
-                  : "text-[#8B949E]"
-              }`}
-            />
-            <span className="truncate">Accenture PYQs</span>
+            <span className="truncate">DSA & Coding</span>
           </Link>
 
           {/* SQL */}
           <Link
-            href="/sql"
+            href="/home/accenture?tab=SQL"
             className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs transition-colors ${
               pathname.startsWith("/sql")
                 ? "bg-[#21262D] text-[#F0F6FC] font-medium border-l-2 border-[#58A6FF]"
@@ -96,12 +96,12 @@ export function Sidebar() {
                 pathname.startsWith("/sql") ? "text-[#58A6FF]" : "text-[#8B949E]"
               }`}
             />
-            <span className="truncate">SQL</span>
+            <span className="truncate">SQL Queries</span>
           </Link>
 
           {/* Frontend */}
           <Link
-            href="/frontend"
+            href="/home/accenture?tab=FRONTEND"
             className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs transition-colors ${
               pathname.startsWith("/frontend")
                 ? "bg-[#21262D] text-[#F0F6FC] font-medium border-l-2 border-[#58A6FF]"
@@ -113,7 +113,7 @@ export function Sidebar() {
                 pathname.startsWith("/frontend") ? "text-[#58A6FF]" : "text-[#8B949E]"
               }`}
             />
-            <span className="truncate">Frontend</span>
+            <span className="truncate">Frontend Lab</span>
           </Link>
 
           {/* Mock Tests */}

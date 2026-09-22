@@ -110,7 +110,7 @@ export const CANONICAL_TOPICS: Record<CanonicalTopicId, CanonicalTopicDefinition
     shortName: "Java / OOP",
     description: "Java fundamentals, OOP principles (inheritance, polymorphism, abstraction, encapsulation), collections, and JVM.",
     questionType: "MCQ",
-    dbCategories: ["Java", "Java & OOP"],
+    dbCategories: ["Java", "Java & OOP", "Java / OOP"],
   },
   CODING: {
     id: "CODING",

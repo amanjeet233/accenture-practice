@@ -97,6 +97,10 @@ export function QuestionCard({
     metaParts.push(question.shift);
   }
 
+  const targetHref = question.questionType === "SQL"
+    ? `/sql/${question.slug}`
+    : `/questions/${question.slug}`;
+
   return (
     <div
       className={cn(
@@ -117,7 +121,7 @@ export function QuestionCard({
         <div className="space-y-0.5 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <Link
-              href={`/questions/${question.slug}`}
+              href={targetHref}
               className="font-medium text-[#F0F6FC] hover:text-[#58A6FF] transition-colors truncate"
             >
               {question.title}
@@ -166,7 +170,7 @@ export function QuestionCard({
           </button>
 
           <Link
-            href={`/questions/${question.slug}`}
+            href={targetHref}
             className="px-2.5 py-1 rounded bg-[#21262D] hover:bg-[#30363D] text-[#F0F6FC] border border-[#30363D] text-[11px] font-medium transition-colors"
           >
             Solve

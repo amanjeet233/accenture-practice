@@ -28,6 +28,8 @@ export interface McqQuestionItem {
   importanceReason?: string | null;
   verificationStatus?: string;
   auditNote?: string;
+  codeBlock?: string | null;
+  codeLanguage?: string | null;
 }
 
 // Parse options A-D and clean prompt leakage
@@ -187,7 +189,7 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
   if (q.starterCode) {
     try {
       const payload = JSON.parse(q.starterCode);
-      if (payload.options && payload.options.length === 4) {
+      if (payload.options && payload.options.length >= 2) {
         const finalOpts = {
           A: payload.options.find((o: any) => o.id === "A")?.text || "",
           B: payload.options.find((o: any) => o.id === "B")?.text || "",
@@ -196,7 +198,7 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
         };
         const correctKey = (payload.correctOptionId || q.solution || "A") as "A" | "B" | "C" | "D";
         const correctAnswerText = payload.correctAnswerText || finalOpts[correctKey];
-        const stem = q.description ? q.description.split("### Options")[0].trim() : q.title;
+        const stem = payload.stem || (q.description ? q.description.split("### Options")[0].trim() : q.title);
 
         const cleanImportanceReason =
           q.importanceReason &&
@@ -221,6 +223,8 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
           importanceReason: cleanImportanceReason,
           verificationStatus: payload.verificationStatus || q.verificationStatus || "VERIFIED",
           auditNote: payload.auditNote || undefined,
+          codeBlock: payload.codeBlock || null,
+          codeLanguage: payload.codeLanguage || null,
         };
       }
     } catch {

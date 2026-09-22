@@ -1,8 +1,8 @@
-import React from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { toQuestionDetailDTO } from "@/lib/dto";
 import { ProblemWorkspace } from "./ProblemWorkspace";
+import { FrontendWorkspace } from "./FrontendWorkspace";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +53,15 @@ export default async function QuestionDetailPage({
     notFound();
   }
 
+  if (question.questionType === "SQL") {
+    redirect(`/sql/${slug}`);
+  }
+
   const formatted = toQuestionDetailDTO(question);
+
+  if (question.questionType === "HTML_CSS_JS" || question.questionType === "FRONTEND") {
+    return <FrontendWorkspace question={formatted} />;
+  }
 
   return <ProblemWorkspace question={formatted} />;
 }

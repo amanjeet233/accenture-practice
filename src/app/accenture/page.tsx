@@ -177,7 +177,15 @@ export default async function AccentureHubPage() {
           return (
             <Link
               key={mod.slug}
-              href={`/accenture/${mod.slug}`}
+              href={
+                mod.slug === "mcq"
+                  ? "/accenture/mcq/practice"
+                  : mod.type === "MOCK_TESTS"
+                  ? "/accenture/test"
+                  : mod.type === "PROGRESS"
+                  ? "/accenture/progress"
+                  : `/accenture/mcq/practice?module=${mod.slug}`
+              }
               className="group p-3.5 rounded border border-[#30363D] bg-[#161B22] hover:bg-[#21262D] hover:border-[#58A6FF]/40 transition-all flex items-start justify-between gap-3"
             >
               <div className="flex items-start gap-3 min-w-0">
