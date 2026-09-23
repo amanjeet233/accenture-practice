@@ -6,13 +6,21 @@ import { Sidebar } from "@/components/layout/Sidebar";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  // The complete Accenture experience is one workspace. Keeping its routes out
-  // of the product dashboard shell prevents dashboard navigation from leaking
-  // into a test, practice, or tracking flow.
-  const isAccentureWorkspace =
-    pathname === "/home/accenture" || pathname.startsWith("/accenture/");
 
-  if (isAccentureWorkspace) {
+  // Full-screen workspaces without the dashboard sidebar:
+  // - Accenture workspace & MCQ practice
+  // - DSA & Frontend IDE (/questions/[slug], /problems/[slug])
+  // - SQL IDE (/sql/[slug])
+  // - Mock test exam interface (/mock-tests/[id])
+  const isFullScreenWorkspace =
+    pathname === "/home/accenture" ||
+    pathname.startsWith("/accenture") ||
+    pathname.startsWith("/questions/") ||
+    pathname.startsWith("/sql/") ||
+    pathname.startsWith("/problems/") ||
+    pathname.startsWith("/mock-tests/");
+
+  if (isFullScreenWorkspace) {
     return (
       <div className="flex h-screen flex-col overflow-hidden">
         <Navbar />

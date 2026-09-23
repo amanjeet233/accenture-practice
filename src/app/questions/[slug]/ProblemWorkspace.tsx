@@ -418,7 +418,7 @@ export function ProblemWorkspace({ question }: ProblemWorkspaceProps) {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2.75rem)] bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
+    <div className="flex flex-col h-full bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
       {/* ============================================================ */}
       {/* TOP WORKSPACE TOOLBAR                                        */}
       {/* ============================================================ */}
