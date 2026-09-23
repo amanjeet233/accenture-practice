@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { extractSchemaMetadata } from "@/lib/sqlEngine";
+import { extractSchemaMetadata, executeSandboxedSql } from "@/lib/sqlEngine";
 import { toQuestionDetailDTO } from "@/lib/dto";
 import { SqlWorkspace } from "./SqlWorkspace";
 
@@ -61,10 +61,27 @@ export default async function SqlDetailPage({
     question.sqlSeedData
   );
 
+  // Pre-calculate expected output for the question's seed data so it's instantly available in the UI
+  let initialExpectedOutput: { columns: string[]; rows: Record<string, any>[] } | null = null;
+  if (question.sqlExpectedQuery) {
+    const res = executeSandboxedSql({
+      schemaSql: question.sqlSchemaSql,
+      seedSql: question.sqlSeedData,
+      userQuery: question.sqlExpectedQuery,
+    });
+    if (res.success) {
+      initialExpectedOutput = {
+        columns: res.columns,
+        rows: res.rows,
+      };
+    }
+  }
+
   return (
     <SqlWorkspace
       question={formattedQuestion}
       schemaMetadata={schemaMetadata}
+      initialExpectedOutput={initialExpectedOutput}
     />
   );
 }
