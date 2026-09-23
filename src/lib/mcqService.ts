@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { cleanExplanationText } from "@/lib/explanationUtils";
 import { ACCENTURE_COMPANY_FILTER } from "@/lib/accentureModules";
 import { resolveCanonicalTopic, getTopicPrismaFilter } from "@/lib/canonicalTopics";
 
@@ -219,7 +220,7 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
           options: finalOpts,
           correctKey,
           correctAnswerText,
-          explanation: q.explanation || `The verified answer is ${correctAnswerText}.`,
+          explanation: cleanExplanationText(q.explanation) || `The verified answer is ${correctAnswerText}.`,
           importanceReason: cleanImportanceReason,
           verificationStatus: payload.verificationStatus || q.verificationStatus || "VERIFIED",
           auditNote: payload.auditNote || undefined,
@@ -346,7 +347,7 @@ export function formatMcqQuestion(q: any, questionNumber: number): McqQuestionIt
     options: finalOpts,
     correctKey,
     correctAnswerText,
-    explanation,
+    explanation: cleanExplanationText(explanation),
     importanceReason:
       q.importanceReason &&
       !q.importanceReason.includes("dropped or truncated") &&

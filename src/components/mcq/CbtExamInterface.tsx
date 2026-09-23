@@ -29,6 +29,7 @@ import {
   FileText,
 } from "lucide-react";
 import { SafeMockQuestion, MockTestEvaluationResult } from "@/lib/mockTestService";
+import { ExplanationBox } from "@/components/mcq/ExplanationBox";
 
 export type QuestionStatus =
   | "NOT_VISITED"
@@ -529,15 +530,7 @@ export function CbtExamInterface({
 
                   {/* Explanation Block */}
                   {q.explanation && (
-                    <div className="p-3.5 rounded bg-[#F8FAFC] border border-[#E2E8F0] space-y-1">
-                      <div className="text-[11px] font-bold text-[#2563EB] uppercase font-mono tracking-wider flex items-center gap-1">
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>Explanation</span>
-                      </div>
-                      <p className="text-xs text-[#475569] leading-relaxed">
-                        {q.explanation}
-                      </p>
-                    </div>
+                    <ExplanationBox explanation={q.explanation} className="mt-3" />
                   )}
                 </div>
               ))}

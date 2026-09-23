@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from "react"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { McqQuestionItem } from "@/lib/mcqService";
+import { ExplanationBox } from "@/components/mcq/ExplanationBox";
 import { DifficultyBadge } from "@/components/ui/Badge";
 import {
   ArrowLeft,
@@ -588,29 +589,8 @@ export function McqPracticeWorkspace({
                   </div>
                 )}
 
-                {/* Explanation Content Box */}
-                <div className="rounded-xl border border-[#30363D] bg-[#161B22]/80 p-4 space-y-3 shadow-lg">
-                  <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2.5">
-                    <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Explanation & Key Concept</span>
-                    </div>
-                    <div className="text-[11px] font-mono text-[#8B949E]">
-                      Correct: <strong className="text-[#3FB950] ml-1">Option {currentQ.correctKey}</strong>
-                    </div>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-[#0D1117] border border-[#30363D]/80 text-xs font-mono text-[#C9D1D9] flex items-start gap-2">
-                    <span className="text-[#8B949E] font-bold">[{currentQ.correctKey}]:</span>
-                    <span className="text-[#F0F6FC] font-medium leading-relaxed">
-                      {currentQ.options[currentQ.correctKey]}
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans pt-1">
-                    {currentQ.explanation}
-                  </p>
-                </div>
+                {/* Standardized Explanation Box */}
+                <ExplanationBox explanation={currentQ.explanation} />
               </div>
             )}
           </div>
@@ -746,15 +726,7 @@ export function McqPracticeWorkspace({
                   </div>
                 )}
 
-                <div className="rounded-xl border border-[#30363D] bg-[#161B22] p-3.5 space-y-2">
-                  <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#58A6FF]">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Explanation</span>
-                  </div>
-                  <p className="text-xs text-[#8B949E] leading-relaxed font-sans">
-                    {currentQ.explanation}
-                  </p>
-                </div>
+                <ExplanationBox explanation={currentQ.explanation} className="mt-2" />
               </div>
             )}
           </div>

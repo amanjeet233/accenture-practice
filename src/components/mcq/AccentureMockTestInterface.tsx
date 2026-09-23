@@ -8,6 +8,7 @@ import {
   MockTestEvaluationResult,
   ReviewQuestionItem,
 } from "@/lib/mockTestService";
+import { ExplanationBox } from "@/components/mcq/ExplanationBox";
 import { DifficultyBadge } from "@/components/ui/Badge";
 import {
   Clock,
@@ -587,20 +588,7 @@ export function AccentureMockTestInterface({
             </div>
 
             {/* Explanation Section */}
-            <div className="rounded-md border border-[#30363D] bg-[#161B22] p-4 sm:p-5 space-y-2.5 font-sans">
-              <div className="flex items-center justify-between border-b border-[#30363D]/60 pb-2 font-mono text-xs">
-                <span className="text-[#58A6FF] font-semibold flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Technical Explanation</span>
-                </span>
-                <span className="text-[#8B949E]">
-                  Answer: <strong className="text-[#3FB950]">Option {currentReviewQ.correctKey}</strong>
-                </span>
-              </div>
-              <p className="text-xs text-[#8B949E] leading-relaxed">
-                {currentReviewQ.explanation}
-              </p>
-            </div>
+            <ExplanationBox explanation={currentReviewQ.explanation} className="mt-4" />
           </div>
         </main>
 

@@ -1,0 +1,452 @@
+[
+  {
+    "batchNumber": 1,
+    "topic": "Networking",
+    "total": 262,
+    "rewritten": 201,
+    "alreadyGood": 61,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "NET-P001",
+        "title": "[NET-P001] What is the default port number of HTTP?",
+        "solution": "B",
+        "type": "ALREADY_GOOD",
+        "explanation": "The standard default port for HTTP is 80. HTTP is used for Hypertext Transfer Protocol (unencrypted World Wide Web traffic), operating primarily over transport protocol TCP."
+      },
+      {
+        "id": "NET-P002",
+        "title": "[NET-P002] Which protocol uses default port 80?",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Port 80 is the well-known port assigned by IANA to HTTP. It handles Hypertext Transfer Protocol (unencrypted World Wide Web traffic) using transport layer TCP."
+      },
+      {
+        "id": "NET-P004",
+        "title": "[NET-P004] Which protocol uses default port 443?",
+        "solution": "B",
+        "type": "ALREADY_GOOD",
+        "explanation": "Port 443 is the well-known port assigned by IANA to HTTPS. It handles Hypertext Transfer Protocol Secure (HTTP over TLS/SSL encryption) using transport layer TCP."
+      },
+      {
+        "id": "NET-P006",
+        "title": "[NET-P006] Which protocol uses default port 21?",
+        "solution": "B",
+        "type": "ALREADY_GOOD",
+        "explanation": "Port 21 is the well-known port assigned by IANA to FTP (control). It handles File Transfer Protocol (Command/Control Connection) using transport layer TCP."
+      },
+      {
+        "id": "NET-P008",
+        "title": "[NET-P008] Which protocol uses default port 22?",
+        "solution": "B",
+        "type": "ALREADY_GOOD",
+        "explanation": "Port 22 is the well-known port assigned by IANA to SSH. It handles Secure Shell (Encrypted remote login and secure file transfer) using transport layer TCP."
+      }
+    ]
+  },
+  {
+    "batchNumber": 2,
+    "topic": "Cloud Computing",
+    "total": 267,
+    "rewritten": 118,
+    "alreadyGood": 149,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "CLD-P131",
+        "title": "[CLD-P131] Which Google Cloud service provides block storage volumes for VMs?",
+        "solution": "D",
+        "type": "ALREADY_GOOD",
+        "explanation": "Under Google Cloud, the service dedicated to block storage volumes for VMs is Persistent Disk."
+      },
+      {
+        "id": "CLD-P132",
+        "title": "[CLD-P132] Which Azure service is the equivalent of Amazon EBS?",
+        "solution": "B",
+        "type": "GENERAL_CONCEPT",
+        "explanation": "Azure Managed Disks represents the direct cloud architectural equivalent of Amazon EBS, providing matched functionality and service tier."
+      },
+      {
+        "id": "CLD-P158",
+        "title": "[CLD-P158] What is multi-cloud?",
+        "solution": "D",
+        "type": "ALREADY_GOOD",
+        "explanation": "Using services from more than one cloud provider. ."
+      },
+      {
+        "id": "CLD-P169",
+        "title": "[CLD-P169] Why deploy across multiple availability zones?",
+        "solution": "D",
+        "type": "ALREADY_GOOD",
+        "explanation": "To improve resilience to data-center failures. ."
+      },
+      {
+        "id": "CLD-P172",
+        "title": "[CLD-P172] In SaaS, who is responsible for the application infrastructure?",
+        "solution": "A",
+        "type": "SEMANTIC_FACTUAL",
+        "explanation": "The provider directly fulfills the required technical specification for \"In SaaS, who is responsible for the application infrastructure\"."
+      }
+    ]
+  },
+  {
+    "batchNumber": 3,
+    "topic": "Cybersecurity",
+    "total": 218,
+    "rewritten": 70,
+    "alreadyGood": 148,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "CYB-S003",
+        "title": "[CYB-S003] Which of the following is considered a form of social engineering attack?",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Phishing directly fulfills the required technical specification for \"Which of the following is considered a form of social engineering attack\"."
+      },
+      {
+        "id": "CYB-S009",
+        "title": "[CYB-S009] Which of the following is a technique used to identify vulnerabilities in a syst",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Penetration Testing directly fulfills the required technical specification for \"Which of the following is a technique used to identify vulnerabilities in a system by simulating an attack\"."
+      },
+      {
+        "id": "CYB-S010",
+        "title": "[CYB-S010] Which cryptographic algorithm is most commonly used for securing internet commun",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Ambiguous: TLS uses RSA/ECDHE for key exchange and AES for bulk encryption. AES is the most commonly reported key."
+      },
+      {
+        "id": "CYB-S013",
+        "title": "[CYB-S013] What is the purpose of a digital certificate in a public key infrastructure (PKI",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "To verify the identity of the certificate holder directly fulfills the required technical specification for \"What is the purpose of a digital certificate in a public key infrastructure (PKI)\"."
+      },
+      {
+        "id": "CYB-S018",
+        "title": "[CYB-S018] Which encryption algorithm uses a 56-bit key?",
+        "solution": "C",
+        "type": "ALREADY_GOOD",
+        "explanation": "DES directly fulfills the required technical specification for \"Which encryption algorithm uses a 56-bit key\"."
+      }
+    ]
+  },
+  {
+    "batchNumber": 4,
+    "topic": "Pseudocode",
+    "total": 252,
+    "rewritten": 107,
+    "alreadyGood": 145,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "PSE-S003",
+        "title": "[PSE-S003] What is the output of the following pseudocode?",
+        "solution": "B",
+        "type": "COMPUTED_PSEUDOCODE",
+        "explanation": "The loop tests each element for divisibility by 4: 4 % 4 == 0 and 8 % 4 == 0. Summing these matching elements yields 4 + 8 = 12."
+      },
+      {
+        "id": "PSE-S005",
+        "title": "[PSE-S005] What will be the output of the following pseudocode?",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Source key said B (7, 5, 7) but the source's own explanation computes a = 7 − 3 = 4, so the output is 4, 5, 7. Corrected to A."
+      },
+      {
+        "id": "PSE-S012",
+        "title": "[PSE-S012] What is the output of the following pseudocode?",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "10 directly fulfills the required technical specification for \"What is the output of the following pseudocode\"."
+      },
+      {
+        "id": "PSE-S015",
+        "title": "[PSE-S015] What will be the output of the following pseudocode for input a = 30, b = 60, c ",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Success directly fulfills the required technical specification for \"What will be the output of the following pseudocode for input a = 30, b = 60, c = 90\"."
+      },
+      {
+        "id": "PSE-S019",
+        "title": "[PSE-S019] What will be the output of the following pseudocode?",
+        "solution": "B",
+        "type": "COMPUTED_PSEUDOCODE",
+        "explanation": "Bitwise XOR (^) between 2 and 2 compares binary bits, evaluating to 4."
+      }
+    ]
+  },
+  {
+    "batchNumber": 5,
+    "topic": "Computer Fundamentals",
+    "total": 246,
+    "rewritten": 227,
+    "alreadyGood": 19,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "CFU-P137",
+        "title": "[CFU-P137] A full binary tree has 6 internal nodes. How many leaf nodes does it have?",
+        "solution": "C",
+        "type": "COMPUTED_CONVERSION",
+        "explanation": "In any full binary tree where every internal node has two children, the number of leaf nodes equals internal nodes plus one (L = I + 1): 6 + 1 = 7."
+      },
+      {
+        "id": "CFU-P138",
+        "title": "[CFU-P138] A full binary tree has 9 internal nodes. How many leaf nodes does it have?",
+        "solution": "C",
+        "type": "COMPUTED_CONVERSION",
+        "explanation": "In any full binary tree where every internal node has two children, the number of leaf nodes equals internal nodes plus one (L = I + 1): 9 + 1 = 10."
+      },
+      {
+        "id": "CFU-P139",
+        "title": "[CFU-P139] A full binary tree has 12 internal nodes. How many leaf nodes does it have?",
+        "solution": "C",
+        "type": "COMPUTED_CONVERSION",
+        "explanation": "In any full binary tree where every internal node has two children, the number of leaf nodes equals internal nodes plus one (L = I + 1): 12 + 1 = 13."
+      },
+      {
+        "id": "CFU-P140",
+        "title": "[CFU-P140] What does CPU stand for?",
+        "solution": "D",
+        "type": "HARDWARE_CONCEPT",
+        "explanation": "CPU stands for Central Processing Unit, the primary hardware component that interprets and executes machine instructions."
+      },
+      {
+        "id": "CFU-P141",
+        "title": "[CFU-P141] Which component of the CPU performs arithmetic and logical operations?",
+        "solution": "D",
+        "type": "HARDWARE_CONCEPT",
+        "explanation": "The ALU (Arithmetic Logic Unit) executes all basic arithmetic calculations and logical comparisons within the processor."
+      }
+    ]
+  },
+  {
+    "batchNumber": 6,
+    "topic": "DevOps",
+    "total": 243,
+    "rewritten": 238,
+    "alreadyGood": 5,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "DVO-P128",
+        "title": "[DVO-P128] What does the Linux command `wget` do?",
+        "solution": "C",
+        "type": "PAIR_PATTERN",
+        "explanation": "The `wget` utility in Linux is used to download a file from a url."
+      },
+      {
+        "id": "DVO-P129",
+        "title": "[DVO-P129] Which Linux command is used to: transfer data with URLs (HTTP requests)?",
+        "solution": "C",
+        "type": "PAIR_PATTERN",
+        "explanation": "The `curl` utility in Linux is used to transfer data with urls (http requests)."
+      },
+      {
+        "id": "DVO-P048",
+        "title": "[DVO-P048] What does the Docker command `docker run` do?",
+        "solution": "A",
+        "type": "PAIR_PATTERN",
+        "explanation": "The command `docker run` in Docker is used to run a container from an image."
+      },
+      {
+        "id": "DVO-P049",
+        "title": "[DVO-P049] Which Docker command is used to: list running containers?",
+        "solution": "B",
+        "type": "SEMANTIC_FACTUAL",
+        "explanation": "docker ps directly fulfills the required technical specification for \"Which Docker command is used to: list running containers\"."
+      },
+      {
+        "id": "DVO-P020",
+        "title": "[DVO-P020] What does the Git command `git pull` do?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "Running `git pull` in Git performs the operation to download and integrate changes from a remote (fetch + merge)."
+      }
+    ]
+  },
+  {
+    "batchNumber": 7,
+    "topic": "DBMS",
+    "total": 227,
+    "rewritten": 185,
+    "alreadyGood": 42,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "DBM-P078",
+        "title": "[DBM-P078] How many candidate keys does R(A, B, C, D) have with the functional dependencies",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "Candidate keys: BD."
+      },
+      {
+        "id": "DBM-P087",
+        "title": "[DBM-P087] How many levels are there in the three-schema architecture?",
+        "solution": "A",
+        "type": "PAIR_PATTERN",
+        "explanation": "The ANSI-SPARC three-schema architecture comprises exactly three abstraction levels: external (view), conceptual (logical), and internal (physical)."
+      },
+      {
+        "id": "DBM-P097",
+        "title": "[DBM-P097] In an ER diagram, what shape represents an attribute?",
+        "solution": "D",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Chen's ER diagram notation, an ellipse (oval) represents an attribute of an entity set."
+      },
+      {
+        "id": "DBM-P098",
+        "title": "[DBM-P098] In an ER diagram, what shape represents a relationship?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Chen's ER diagram notation, a diamond represents a relationship set between entity sets."
+      },
+      {
+        "id": "DBM-P125",
+        "title": "[DBM-P125] If R has 3 attributes and S has 2 attributes, how many attributes does R × S hav",
+        "solution": "C",
+        "type": "PAIR_PATTERN",
+        "explanation": "The degree (number of attributes) of a Cartesian product R × S equals the sum of the degrees of the relations: 3 + 2 = 5."
+      }
+    ]
+  },
+  {
+    "batchNumber": 8,
+    "topic": "SQL",
+    "total": 211,
+    "rewritten": 185,
+    "alreadyGood": 26,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "SQL-P002",
+        "title": "[SQL-P002] What is the output of the following SQL?",
+        "solution": "C",
+        "type": "SQL_QUERY_METRIC",
+        "explanation": "COUNT(dept_id) counts all non-null values in dept_id; 9 of the 10 employee records contain an assigned department, resulting in 9."
+      },
+      {
+        "id": "SQL-P003",
+        "title": "[SQL-P003] What is the output of the following SQL?",
+        "solution": "C",
+        "type": "SQL_QUERY_METRIC",
+        "explanation": "COUNT(manager_id) excludes NULLs, counting the 9 employees who have an assigned direct manager, yielding 9."
+      },
+      {
+        "id": "SQL-P004",
+        "title": "[SQL-P004] What is the output of the following SQL?",
+        "solution": "A",
+        "type": "SQL_QUERY_METRIC",
+        "explanation": "COUNT(DISTINCT dept_id) evaluates unique non-null departments present across all employees, giving 3 distinct departments."
+      },
+      {
+        "id": "SQL-P005",
+        "title": "[SQL-P005] What is the output of the following SQL?",
+        "solution": "A",
+        "type": "SQL_QUERY_METRIC",
+        "explanation": "COUNT(DISTINCT city) counts the unique cities where employees are located, resulting in 3 distinct cities."
+      },
+      {
+        "id": "SQL-P006",
+        "title": "[SQL-P006] What is the output of the following SQL?",
+        "solution": "B",
+        "type": "SQL_QUERY_METRIC",
+        "explanation": "COUNT(DISTINCT salary) filters out duplicate compensation amounts across employees, identifying 8 unique salaries."
+      }
+    ]
+  },
+  {
+    "batchNumber": 9,
+    "topic": "Java / OOP",
+    "total": 220,
+    "rewritten": 174,
+    "alreadyGood": 46,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "JAV-P087",
+        "title": "[JAV-P087] What is the size of a char in Java?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Java, a char is 16 bits (2 bytes) unsigned because Java uses 16-bit Unicode character representation (UTF-16)."
+      },
+      {
+        "id": "JAV-P088",
+        "title": "[JAV-P088] What is the default value of a boolean instance variable?",
+        "solution": "D",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Java, primitive boolean instance variables default to false upon object allocation."
+      },
+      {
+        "id": "JAV-P089",
+        "title": "[JAV-P089] What is the default value of an object reference field?",
+        "solution": "C",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Java, uninitialized instance reference variables default to null."
+      },
+      {
+        "id": "JAV-P090",
+        "title": "[JAV-P090] What is the default value of an int array element?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "When an int array is instantiated in Java, all elements are initialized to the default value 0."
+      },
+      {
+        "id": "JAV-P091",
+        "title": "[JAV-P091] What are the four pillars of OOP?",
+        "solution": "C",
+        "type": "PAIR_PATTERN",
+        "explanation": "The four foundational pillars of Object-Oriented Programming are Encapsulation (data hiding), Inheritance (code reuse), Polymorphism (dynamic behavior), and Abstraction (interface simplicity)."
+      }
+    ]
+  },
+  {
+    "batchNumber": 10,
+    "topic": "MS Office",
+    "total": 464,
+    "rewritten": 182,
+    "alreadyGood": 282,
+    "flagged": 0,
+    "samples": [
+      {
+        "id": "MSO-S003",
+        "title": "[MSO-S003] Which key combination is used to insert a new slide in a PowerPoint presentation",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "In Microsoft PowerPoint, pressing Ctrl + M inserts a new blank slide immediately following the currently active slide."
+      },
+      {
+        "id": "MSO-S004",
+        "title": "[MSO-S004] In MS Outlook, what does the \"Out of Office\" feature do?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": "The Out of Office feature in Microsoft Outlook configures automated reply messages to incoming emails while you are away."
+      },
+      {
+        "id": "MSO-S005",
+        "title": "[MSO-S005] What is the default file extension for an Excel 2016 workbook?",
+        "solution": "B",
+        "type": "PAIR_PATTERN",
+        "explanation": ".xlsx is the default XML-based workbook file format introduced in Microsoft Excel 2007 and utilized in all subsequent versions."
+      },
+      {
+        "id": "MSO-S006",
+        "title": "[MSO-S006] Which MS Word feature automatically corrects common typing errors as you type?",
+        "solution": "B",
+        "type": "ALREADY_GOOD",
+        "explanation": "AutoCorrect directly fulfills the required technical specification for \"Which MS Word feature automatically corrects common typing errors as you type\"."
+      },
+      {
+        "id": "MSO-S007",
+        "title": "[MSO-S007] Which Excel function would you use to count the number of cells in a range that ",
+        "solution": "A",
+        "type": "ALREADY_GOOD",
+        "explanation": "COUNTIF directly fulfills the required technical specification for \"Which Excel function would you use to count the number of cells in a range that meet a single condition\"."
+      }
+    ]
+  }
+]
