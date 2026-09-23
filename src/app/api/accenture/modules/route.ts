@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ACCENTURE_MODULES } from "@/lib/accentureModules";
+import { ACCENTURE_MODULES } from "@/lib/accentureModuleDefs";
 
 
 export async function GET() {

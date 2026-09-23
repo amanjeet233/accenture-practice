@@ -24,7 +24,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ACCENTURE_MODULES } from "@/lib/accentureModules";
+import { ACCENTURE_MODULES } from "@/lib/accentureModuleDefs";
 
 export type HubTab = "OVERVIEW" | "MCQ" | "CODING" | "SQL" | "FRONTEND" | "MOCK_TEST";
 
