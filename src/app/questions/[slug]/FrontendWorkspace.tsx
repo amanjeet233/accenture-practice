@@ -116,7 +116,7 @@ export function FrontendWorkspace({ question }: FrontendWorkspaceProps) {
   const evidence = analyzeQuestionEvidence(question);
 
   return (
-    <div className="flex flex-col h-full bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
+    <div className="fixed inset-0 z-50 flex flex-col bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
       {/* ─── TOP TOOLBAR ─── */}
       <header className="flex items-center justify-between px-3 py-1.5 border-b border-[#30363D] bg-[#161B22] text-xs font-mono shrink-0">
         <div className="flex items-center gap-2 truncate">

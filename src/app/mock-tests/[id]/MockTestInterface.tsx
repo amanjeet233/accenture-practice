@@ -964,7 +964,7 @@ public class Solution {
   const isFrontend = currentQuestion?.questionType === "HTML_CSS_JS" || currentQuestion?.questionType === "FRONTEND";
 
   return (
-    <div className="flex flex-col h-[calc(100vh-3.5rem)] bg-[#09090f] overflow-hidden select-none">
+    <div className="fixed inset-0 z-50 flex flex-col bg-[#09090f] overflow-hidden select-none">
       {/* 1. TOP HEADER: TITLE, TRIPLE TIMERS, SUBMIT BUTTON */}
       <div className="flex items-center justify-between px-3 sm:px-5 py-2.5 bg-zinc-950 border-b border-zinc-800 text-xs font-mono z-10 shrink-0">
         {/* Left: Title & Strict Mock Type */}

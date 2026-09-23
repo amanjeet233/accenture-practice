@@ -226,18 +226,18 @@ export function SqlWorkspace({ question, schemaMetadata }: SqlWorkspaceProps) {
   const activeTable = schemaMetadata[activeRightTableIdx] || null;
 
   return (
-    <div className="flex flex-col h-full bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
+    <div className="fixed inset-0 z-50 flex flex-col bg-[#0D1117] text-[#F0F6FC] overflow-hidden font-sans select-none">
       {/* ============================================================ */}
       {/* TOP SQL WORKSPACE TOOLBAR                                    */}
       {/* ============================================================ */}
       <header className="flex items-center justify-between px-3 py-1.5 border-b border-[#30363D] bg-[#161B22] text-xs font-mono shrink-0">
         <div className="flex items-center gap-2 truncate">
           <Link
-            href="/sql"
+            href="/home/accenture?tab=SQL"
             className="flex items-center gap-1 text-[#8B949E] hover:text-[#F0F6FC] transition-colors"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
-            <span>SQL</span>
+            <span>Accenture SQL</span>
           </Link>
           <span className="text-[#30363D]">/</span>
           <span className="font-semibold text-[#F0F6FC] truncate max-w-xs sm:max-w-md flex items-center gap-1.5">
