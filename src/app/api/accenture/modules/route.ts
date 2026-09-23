@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { ACCENTURE_MODULES } from "@/lib/accentureModules";
 
-// Edge runtime for faster responses - modules data is static
-export const runtime = "edge";
 
 export async function GET() {
   try {
