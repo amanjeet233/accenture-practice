@@ -97,9 +97,10 @@ export function extractSchemaMetadata(
         notNull: Boolean(c.notnull),
       }));
 
-      // Fetch sample rows (up to 10 rows)
+      // Fetch sample rows (up to 10 rows) - convert from node:sqlite null-prototype objects to plain objects
       const sampleStmt = db.prepare(`SELECT * FROM "${tableName}" LIMIT 10;`);
-      const sampleRows = sampleStmt.all() as Record<string, any>[];
+      const rawSampleRows = sampleStmt.all() as Record<string, any>[];
+      const sampleRows = rawSampleRows.map((r) => ({ ...r }));
 
       // Fetch total count
       const countStmt = db.prepare(`SELECT COUNT(*) as cnt FROM "${tableName}";`);
@@ -109,11 +110,12 @@ export function extractSchemaMetadata(
         tableName,
         columns,
         sampleRows,
-        totalRows: countRow?.cnt || sampleRows.length,
+        totalRows: Number(countRow?.cnt ?? sampleRows.length),
       });
     }
 
-    return result;
+    // Return as sanitized plain objects for React Server Component serialization
+    return JSON.parse(JSON.stringify(result));
   } catch (err) {
     console.error("extractSchemaMetadata error:", err);
     return [];
@@ -202,10 +204,11 @@ export function executeSandboxedSql(options: {
     // Prepare and execute user query
     const stmt = db.prepare(trimmed);
     const rawRows = stmt.all() as Record<string, any>[];
+    const rows = rawRows.map((r) => ({ ...r }));
     const executionTimeMs = Math.max(Date.now() - startTime, 1);
 
     // Extract columns from first row, or column metadata
-    const columns = rawRows.length > 0 ? Object.keys(rawRows[0]) : [];
+    const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
 
     // Explain query plan
     let explainPlan: string[] = [];
@@ -225,9 +228,9 @@ export function executeSandboxedSql(options: {
         const expectedStmt = db.prepare(expectedQuery.trim().replace(/;+$/, ""));
         const rawExpectedRows = expectedStmt.all() as Record<string, any>[];
         expectedColumns = rawExpectedRows.length > 0 ? Object.keys(rawExpectedRows[0]) : [];
-        expectedRows = rawExpectedRows;
+        expectedRows = rawExpectedRows.map((r) => ({ ...r }));
 
-        isCorrect = compareSqlResultSets(rawRows, rawExpectedRows);
+        isCorrect = compareSqlResultSets(rows, expectedRows);
       } catch (err: any) {
         console.error("Error executing expected query:", err);
       }
@@ -244,8 +247,8 @@ export function executeSandboxedSql(options: {
       success: true,
       verdict,
       columns,
-      rows: rawRows,
-      rowCount: rawRows.length,
+      rows,
+      rowCount: rows.length,
       executionTimeMs,
       isCorrect,
       expectedColumns,
