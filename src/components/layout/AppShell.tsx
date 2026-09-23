@@ -14,12 +14,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // - Mock test exam interface (/mock-tests)
   const isFullScreenWorkspace =
     pathname === "/home/accenture" ||
-    pathname.startsWith("/accenture") ||
-    pathname.startsWith("/questions") ||
-    pathname.startsWith("/sql") ||
-    pathname.startsWith("/problems") ||
-    pathname.startsWith("/frontend") ||
-    pathname.startsWith("/mock-tests");
+    Boolean(
+      pathname?.startsWith("/accenture") ||
+      pathname?.startsWith("/questions") ||
+      pathname?.startsWith("/sql") ||
+      pathname?.startsWith("/problems") ||
+      pathname?.startsWith("/frontend") ||
+      pathname?.startsWith("/mock-tests")
+    );
 
   if (isFullScreenWorkspace) {
     return (
